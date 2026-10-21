@@ -1,0 +1,18 @@
+\problem{P31}{Competing Signals with Simultaneous Arrivals}{Factoring a joint law}
+In each round, signals $A$ and $B$ occur independently with probabilities $\alpha$ and $\beta$, where $0<\alpha,\beta<1$. Different rounds are independent. Stop at the first round containing at least one signal. Let $T$ be that round and let $J$ record whether only $A$, only $B$, or both occurred. Find the joint law of $(T,J)$, determine whether they are independent, and compute the mean and variance of $T$.
+\solution Put $q=(1-\alpha)(1-\beta)$ and $s=1-q$. The three stopping causes have one-round probabilities
+\[
+w_A=\alpha(1-\beta),\quad w_B=(1-\alpha)\beta,
+\quad w_{AB}=\alpha\beta,
+\]
+whose sum is $s=\alpha+\beta-\alpha\beta$. Stopping in round $n$ requires $n-1$ rounds with neither signal, so
+\[
+\Prob(T=n,J=j)=q^{n-1}w_j
+=(s q^{n-1})\frac{w_j}{s},\quad n\ge1.
+\]
+The two factors are precisely the marginal probabilities. Thus $T$ and $J$ are independent. Even conditioning on simultaneous signals at termination leaves the waiting-time law unchanged. Differentiating the geometric series gives
+\[
+\boxed{\E T=\frac1s,\qquad \Var T=\frac q{s^2},
+\qquad \Prob(J=j)=\frac{w_j}{s}.}
+\]
+\pitfall The total stopping probability is not $\alpha+\beta$, because both signals occur with probability $\alpha\beta$. Independence of time and cause must be established by factorization, not by their different interpretations.

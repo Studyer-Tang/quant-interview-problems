@@ -1,0 +1,48 @@
+\answer{OR16}
+From every unabsorbed state, $a+b$ consecutive rightward steps force absorption. Such a block has probability $2^{-(a+b)}$. Hence $\tau$ has a geometric tail and all its moments are finite.
+
+The symmetric independent increments make the following processes martingales:
+\[
+ S_n,\qquad S_n^2-n,\qquad S_n^3-3nS_n,
+\]
+\[
+ S_n^4-6nS_n^2+3n^2+2n.
+\]
+These identities follow by expanding $(S_n\pm1)^j$ and averaging. Apply optional stopping first at the bounded time $\tau\wedge N$, then let $N\to\infty$. The stopped position is bounded in absolute value by $\max(a,b)$, and $\tau$ has finite moments, so dominated convergence justifies the limit.
+
+Set $r=\Prob(S_\tau=b)$. The first two martingales give
+\[
+ br-a(1-r)=0,\qquad
+ \E\tau=\E S_\tau^2=b^2r+a^2(1-r).
+\]
+Therefore
+\[
+ \boxed{r=\frac a{a+b}},\qquad \boxed{\E\tau=ab}.
+\]
+To obtain the second moment, write $A=\E[\tau\ind_{\{S_\tau=b\}}]$ and $B=\E[\tau\ind_{\{S_\tau=-a\}}]$. The cubic martingale yields
+\[
+ A+B=ab,\qquad
+ bA-aB=\frac{\E S_\tau^3}{3}=\frac{ab(b-a)}3.
+\]
+Solving these two linear equations gives
+\[
+ A=\frac{ab(2a+b)}{3(a+b)},\qquad
+ B=\frac{ab(a+2b)}{3(a+b)}.
+\]
+Consequently,
+\[
+ \E(\tau S_\tau^2)=b^2A+a^2B
+       =\frac{ab(a^2+ab+b^2)}3,
+\]
+\[
+ \E S_\tau^4=ab(a^2-ab+b^2).
+\]
+Substitute these values into the stopped quartic identity
+\[
+ 0=\E S_\tau^4-6\E(\tau S_\tau^2)
+       +3\E\tau^2+2\E\tau
+\]
+to obtain
+\[
+ \boxed{\E\tau^2=\frac{ab(a^2+3ab+b^2-2)}3}.
+\]

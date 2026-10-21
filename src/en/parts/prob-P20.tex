@@ -1,0 +1,28 @@
+\problem{P20}{Crossing after Two Shrinks per Round}{Exponential arrivals and parity}
+Each round multiplies a length by two fresh independent $\operatorname{Unif}(0,1)$ variables; all variables are independent. Starting from $R_0=1$, let $R_n=\prod_{i=1}^nU_iV_i$ and stop at the first $R_n<x$, where $0<x<1$. Find the law and mean of the stopping round $N$, and the density of $Y=R_N/x$.
+\solution Put $t=-\log x$. Each negative logarithm is an independent rate-one exponential increment. Unpack the pairs into individual increments, and let $K$ count arrivals completed by time $t$. For $k\ge1$, integrating over the $k$th arrival time gives
+\[
+\Prob(K=k)=\int_0^t\frac{s^{k-1}e^{-s}}{(k-1)!}e^{-(t-s)}\dd s
+=e^{-t}\frac{t^k}{k!}.
+\]
+The probability for $k=0$ is $e^{-t}$, so $K\sim\operatorname{Pois}(t)$.
+
+Lengths are checked only after pairs of increments. Thus $N=\lfloor K/2\rfloor+1$, giving
+\[
+\boxed{\Prob(N=n)=e^{-t}\left[\frac{t^{2n-2}}{(2n-2)!}
++\frac{t^{2n-1}}{(2n-1)!}\right],\quad n\ge1.}
+\]
+The Poisson generating function gives $\Prob(K\text{ odd})=(1-e^{-2t})/2$. Therefore
+\[
+\boxed{\E N=1+\frac{\E K-\Prob(K\text{ odd})}{2}
+=\frac{3+2t+e^{-2t}}4.}
+\]
+By exponential memorylessness, the distance $O=-\log Y$ from $t$ to the next inspection is one exponential waiting time if $K$ is odd, and the sum of two if $K$ is even. With $w_o=(1-e^{-2t})/2$ and $w_e=(1+e^{-2t})/2$,
+\[
+f_O(o)=e^{-o}(w_o+w_eo),\quad o>0.
+\]
+Transforming by $y=e^{-o}$ yields
+\[
+\boxed{f_Y(y)=w_o-w_e\log y,\quad0<y<1.}
+\]
+\insight Inspecting in batches changes the residual waiting time. Depending on parity, one or two exponential increments remain, so the terminal ratio is no longer uniform.

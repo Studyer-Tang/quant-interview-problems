@@ -1,0 +1,12 @@
+\answer{OP26}
+Count the non-aces left after the last ace. For each non-ace $i$, let $I_i$ indicate that it appears after all four aces. The relative order of that card and the four aces is uniform, so the specified non-ace is last among those five cards with probability $1/5$. Hence $\E I_i=1/5$.
+
+There are $48$ non-aces. If $R$ is the number of cards after the last ace, then
+\[
+R=\sum_{i=1}^{48}I_i,\qquad \E R=\frac{48}{5}.
+\]
+Since $T+R=52$, the answer is
+\[
+\boxed{\E T=52-\frac{48}{5}=\frac{212}{5}=42.4.}
+\]
+This is the stopping position including the fourth ace. The number of cards strictly before that ace would be smaller by one.

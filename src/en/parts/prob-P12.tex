@@ -1,0 +1,25 @@
+\problem{P12}{Correlation Induced by Selection}{Rotation and truncated moments}
+Let $X,Z$ be independent standard normal variables. Retain only observations with $X+Z>c$, where $c\ge0$. Find the retained population's means, variances, covariance, and correlation. Prove that the correlation is negative and evaluate the case $c=0$. Write $\phi,\Phi$ for the standard normal density and distribution function.
+\solution Rotate the coordinates:
+\[
+S=\frac{X+Z}{\sqrt2},\quad D=\frac{X-Z}{\sqrt2},
+\quad a=\frac c{\sqrt2}.
+\]
+Then $S,D$ are independent standard normals. Selection restricts only $S>a$, leaving $D$ standard normal and independent of the truncated $S$. Integration by parts using $\phi'(s)=-s\phi(s)$ yields
+\[
+\lambda:=\E(S\mid S>a)=\frac{\phi(a)}{1-\Phi(a)},\quad
+\E(S^2\mid S>a)=1+a\lambda.
+\]
+Put $v=1+a\lambda-\lambda^2$. Since $X=(S+D)/\sqrt2$ and $Z=(S-D)/\sqrt2$, all moments below are conditional on selection:
+\[
+\boxed{\begin{gathered}
+\E X=\E Z=\lambda/\sqrt2,\qquad
+\Var X=\Var Z=(v+1)/2,\\
+\Cov(X,Z)=(v-1)/2,\qquad
+\operatorname{Corr}(X,Z)=\frac{v-1}{v+1}.
+\end{gathered}}
+\]
+Under the conditional law $S>a$, we have $\lambda>a$. As $\lambda>0$, it follows that $v=1-\lambda(\lambda-a)<1$, proving negative correlation. Nondegeneracy also gives $v>0$.
+
+For $c=0$, $\lambda=\sqrt{2/\pi}$ and $v=1-2/\pi$. Each mean is $1/\sqrt\pi$, each variance is $1-1/\pi$, the covariance is $-1/\pi$, and the correlation is $-1/(\pi-1)$.
+\insight Selection based on a sum destroys the original independence. Coordinates along the sum and difference reduce the calculation to one truncated normal variable.

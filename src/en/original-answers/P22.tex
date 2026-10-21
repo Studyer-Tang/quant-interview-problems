@@ -1,0 +1,22 @@
+\answer{OP22}
+While the pattern is still valid and the current value is $x$, let $f(x)$ be the expected number of additional draws when the next comparison must be an increase; let $g(x)$ be the corresponding expectation when a decrease is required. One draw is always made, and continuation occurs only if that comparison succeeds. Thus
+\[
+f(x)=1+\int_x^1g(y)\dd y,\qquad
+ g(x)=1+\int_0^xf(y)\dd y.
+\]
+The expectations are finite. If the first $n$ values obey the pattern, every disjoint pair $(U_1,U_2),(U_3,U_4),\ldots$ must increase, so the survival probability is at most $2^{-\lfloor n/2\rfloor}$. The same geometric bound controls the remaining draws from any state and justifies the integral equations.
+
+Differentiating gives $f'=-g$ and $g'=f$, hence $f''+f=0$. The boundary conditions $f(1)=1$ and $g(0)=1$, or $f'(0)=-1$, yield
+\[
+f(x)=A\cos x-\sin x,\qquad
+A=\frac{1+\sin1}{\cos1}=\sec1+\tan1.
+\]
+After the first draw, the next comparison must be an increase. Therefore,
+\[
+\begin{aligned}
+\E T&=1+\int_0^1f(x)\dd x\\
+&=A\sin1+\cos1
+=\boxed{\sec1+\tan1}.
+\end{aligned}
+\]
+The trigonometric arguments are in radians.

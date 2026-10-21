@@ -1,0 +1,22 @@
+\problem{P27}{The Number of Isolated Red Cards}{Uniform compositions}
+Uniformly arrange $m\ge2$ red cards and $n\ge2$ black cards. Let $J$ count red runs of length exactly one, including runs at either end. Find its mean and variance.
+\solution Put $N=m+n$. The black cards define $n+1$ gaps, including both end gaps. Let $G_i$ be the red count in gap $i$. Each nonnegative integer vector with sum $m$ corresponds to one color sequence, so the $\binom Nn$ such vectors are equally likely. A singleton red run is precisely a gap with $G_i=1$.
+
+Fixing one gap at one leaves $m-1$ cards in $n$ gaps; fixing two leaves $m-2$ cards in $n-1$ gaps. Hence
+\[
+\begin{aligned}
+p&:=\Prob(G_i=1)=\frac{\binom{N-2}{n-1}}{\binom Nn}
+=\frac{mn}{N(N-1)},\\
+p_2&:=\Prob(G_i=G_j=1)
+=\frac{\binom{N-4}{n-2}}{\binom Nn}\\
+&=\frac{m(m-1)n(n-1)}{N(N-1)(N-2)(N-3)},\quad i\ne j.
+\end{aligned}
+\]
+Expanding $J=\sum_{i=0}^n\ind\{G_i=1\}$ and its second moment yields
+\[
+\boxed{\begin{aligned}
+\E J&=(n+1)p,\\
+\Var J&=(n+1)p(1-p)+n(n+1)(p_2-p^2).
+\end{aligned}}
+\]
+\pitfall Uniform compositions do not arise by placing each red card independently into a gap. Gap sizes are dependent, and the two end gaps must be treated on the same footing as the internal gaps.

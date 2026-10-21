@@ -1,0 +1,21 @@
+\problem{P05}{The First Repeated Type}{Birthday collisions}
+Draw independently and uniformly from $m\ge1$ types. Let $T$ be the first draw whose type has appeared before, and let $L$ be that repeated type. Find the distribution and mean of $T$, determine whether $L$ and $T$ are independent, and find the number of distinct types observed at stopping.
+\solution Write $(m)_k=m(m-1)\cdots(m-k+1)$, with $(m)_0=1$. The event $T>k$ means that the first $k$ types are distinct, so
+\[
+\Prob(T>k)=\frac{(m)_k}{m^k},\quad0\le k\le m,
+\]
+and the tail is zero for $k\ge m+1$. There must be $t-1$ distinct draws followed by a repeat of one of them. Therefore
+\[
+\boxed{\Prob(T=t)=\frac{(m)_{t-1}}{m^{t-1}}\frac{t-1}{m},
+\quad2\le t\le m+1.}
+\]
+The tail-sum identity gives
+\[
+\boxed{\E T=\sum_{k=0}^m\frac{(m)_k}{m^k}.}
+\]
+For fixed $t$, relabeling types preserves every sequence probability. Thus $\Prob(T=t,L=\ell)$ is the same for every $\ell$, and these $m$ probabilities sum to $\Prob(T=t)$. Consequently,
+\[
+\Prob(T=t,L=\ell)=\Prob(T=t)/m.
+\]
+This proves that $L$ is uniform and independent of $T$. Exactly $T-1$ distinct types have appeared at stopping, with mean $\E T-1$. The formulas also cover $m=1$, when $T=2$.
+\insight Count collision-free prefixes first. This avoids tracking both the repeated type and all possible locations of its earlier occurrence.

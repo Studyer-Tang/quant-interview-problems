@@ -1,0 +1,21 @@
+\problem{P18}{Short Cycles in a Random Permutation}{Counting and factorial moments}
+In a uniform permutation of $n$ elements, let $C_k$ be the number of cycles of length $k$, where $1\le k\le n$. Find $\E C_k$, $\Var C_k$, and $\Cov(C_j,C_k)$ for $j\ne k$. Explain the effect of the finite supply of elements.
+\solution For each $k$-element subset $A$, let $I_A$ indicate that its elements form one cycle. There are $(k-1)!$ internal cycles and $(n-k)!$ permutations of the other elements. Hence
+\[
+\Prob(I_A=1)=\frac{(k-1)!(n-k)!}{n!},
+\qquad \boxed{\E C_k=\frac1k.}
+\]
+The product $C_k(C_k-1)$ counts ordered pairs of distinct $k$-cycles. Their supports must be disjoint. If $2k\le n$, its expectation is
+\[
+\binom nk\binom{n-k}k
+\frac{[(k-1)!]^2(n-2k)!}{n!}=\frac1{k^2}.
+\]
+If $2k>n$, two such cycles cannot coexist, so this factorial moment is zero. Therefore
+\[
+\boxed{\Var C_k=\frac1k-\frac{\ind\{2k>n\}}{k^2}.}
+\]
+Similarly, for $j\ne k$ and $j+k\le n$, choosing disjoint supports and cyclic orders gives $\E(C_jC_k)=1/(jk)$. When $j+k>n$, the product is identically zero. Thus
+\[
+\boxed{\Cov(C_j,C_k)=-\frac{\ind\{j+k>n\}}{jk},\quad j\ne k.}
+\]
+\pitfall Zero covariance does not imply independence: all cycle counts still satisfy $\sum_k kC_k=n$. Factorial moments are useful because they count distinct cycles without counting a cycle twice.

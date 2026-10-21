@@ -1,0 +1,26 @@
+\problem{P13}{Bayesian Prediction with Abstention}{Posterior decisions}
+A coin's head probability $p$ has the uniform prior on $(0,1)$. Conditional on $p$, tosses are independent. After observing $h$ heads in $k\ge0$ tosses, one may predict the next outcome or abstain. A correct prediction earns $1$, an incorrect prediction loses $\lambda>1$, and abstention earns zero. Find the optimal rule and its expected payoff before observing the data. Evaluate $k=4,\lambda=2$.
+\solution The posterior density is proportional to $p^h(1-p)^{k-h}$. Hence the predictive head probability is
+\[
+r=\frac{\int_0^1p^{h+1}(1-p)^{k-h}\dd p}
+{\int_0^1p^h(1-p)^{k-h}\dd p}
+=\frac{h+1}{k+2}.
+\]
+The conditional payoffs from predicting heads, predicting tails, and abstaining are respectively
+\[
+(\lambda+1)r-\lambda,\qquad 1-(\lambda+1)r,\qquad0.
+\]
+Predict heads if $r>\lambda/(\lambda+1)$ and tails if $r<1/(\lambda+1)$; otherwise abstain. At either boundary, the corresponding prediction and abstention tie.
+
+The prior predictive count is uniform:
+\[
+\Prob(H=h)=\binom kh\int_0^1p^h(1-p)^{k-h}\dd p
+=\frac1{k+1},\quad 0\le h\le k.
+\]
+Using the symmetry between $h$ and $k-h$, and writing $[z]_+=\max(z,0)$, gives
+\[
+\boxed{V_k=\frac{2}{(k+1)(k+2)}
+\sum_{h=0}^k[(\lambda+1)(h+1)-\lambda(k+2)]_+.}
+\]
+For $k=4,\lambda=2$, only $h=0,4$ make prediction strictly profitable; each yields conditional payoff $1/2$. Abstention is optimal otherwise, with zero-payoff ties at $h=1,3$. Thus $V_4=1/5$.
+\insight First obtain a predictive probability, then compare action payoffs. Asymmetric losses create an abstention region; choosing the more probable outcome alone is not the optimal rule.

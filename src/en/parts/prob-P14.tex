@@ -1,0 +1,31 @@
+\problem{P14}{A Threshold for High-Dimensional Volume}{Limit theorems}
+Define the volume
+\[
+V_n(\alpha)=\int_{[0,1]^n}
+\ind\!\left\{\sum_{i=1}^n x_i^2\le\alpha\sum_{i=1}^nx_i\right\}
+\dd x_1\cdots\dd x_n.
+\]
+Find its limit as $n\to\infty$ for fixed real $\alpha$. Then find the limit when $\alpha_n=2/3+c/\sqrt n$ for fixed real $c$.
+\solution Let $U_i$ be independent uniforms on $(0,1)$. The volume is the probability of the indicated event, and
+\[
+\E(U_i^2-\alpha U_i)=\frac13-\frac\alpha2.
+\]
+The law of large numbers makes the sample average converge to this constant. A positive constant gives limiting probability zero, and a negative constant gives one. The threshold is therefore $\alpha=2/3$.
+
+At the threshold, put $Y_i=U_i^2-2U_i/3$. Then $\E Y_i=0$ and
+\[
+\sigma^2=\E Y_i^2
+=\frac15-\frac13+\frac4{27}=\frac2{135}>0.
+\]
+The central limit theorem gives $\sum_iY_i/\sqrt n\Rightarrow N(0,\sigma^2)$. For the moving threshold, the event becomes
+\[
+\frac1{\sqrt n}\sum_{i=1}^nY_i
+\le c\left(\frac1n\sum_{i=1}^nU_i\right).
+\]
+The right side converges in probability to $c/2$. Continuity of the limiting normal law therefore gives
+\[
+\boxed{\lim_{n\to\infty}V_n(\alpha_n)
+=\Phi\!\left(c\sqrt{\frac{135}{8}}\right).}
+\]
+Taking $c=0$ gives $1/2$ at the fixed threshold. For fixed $\alpha$, the limiting volumes are consequently $0$, $1/2$, and $1$ according as $\alpha<2/3$, $\alpha=2/3$, or $\alpha>2/3$.
+\insight The law of large numbers locates the threshold. When the mean cancels, fluctuations on the $n^{-1/2}$ scale determine the probability; a zero limiting mean alone does not answer the question.

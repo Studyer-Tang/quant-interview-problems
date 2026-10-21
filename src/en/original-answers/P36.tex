@@ -1,0 +1,20 @@
+\answer{OP36}
+Let the piece lengths be $D_1,\ldots,D_n$, with total length one. Positive lengths form a nondegenerate polygon if and only if the largest is strictly smaller than the sum of the others. Thus the event of interest is
+\[
+\max_iD_i<\frac12.
+\]
+Necessity follows from the strict triangle inequality along the other sides. For sufficiency, a convex construction also rules out self-intersections. Write $L$ for the largest length and $S$ for the total, with $2L<S$. On a circle of radius $r\ge L/2$, the smaller central angle for side $D_i$ is
+\[
+\theta_i(r)=2\arcsin\frac{D_i}{2r}.
+\]
+If the angle sum at $r=L/2$ is at least $2\pi$, continuity and its decrease to zero give a radius where the sum is exactly $2\pi$. Otherwise use the major arc $2\pi-\theta_L(r)$ for the longest side. We then need the other angles to sum to $\theta_L(r)$. Their sum minus $\theta_L(r)$ is negative at $r=L/2$, but for large $r$ it is asymptotic to $(S-2L)/r>0$. Continuity again gives the required radius. In either case, take these positive arcs successively around the circle and join neighboring vertices. This gives a convex polygon with the specified side lengths and no self-intersections.
+
+The ordered uniform cut points have constant joint density $(n-1)!$. Transforming to spacings gives a constant density on the simplex $D_i>0$, $\sum D_i=1$, so the piece lengths are exchangeable. The first piece exceeds $1/2$ exactly when all cut points lie to the right of $1/2$. Hence
+\[
+\Prob(D_i>1/2)=\Prob(D_1>1/2)=2^{-(n-1)}.
+\]
+Two pieces cannot both exceed $1/2$, and equality has probability zero. Therefore,
+\[
+\boxed{\Prob(\text{a polygon can be formed})=1-\frac{n}{2^{n-1}}.}
+\]
+This gives $1/4$ for $n=3$ and $1/2$ for $n=4$.

@@ -1,0 +1,27 @@
+\problem{P33}{共同故障下的多数表决}{混合模型}
+二元真值 $T$ 满足 $\Prob(T=1)=\pi\in(0,1)$。三个传感器以概率 $c\in[0,1]$ 遇到共同故障，此时全部输出相反真值；无共同故障时，三者独立以概率 $\varepsilon\in(0,1/2)$ 翻转真值。故障机制与真值独立。求多数表决的错误率、观察到多数输出为 $1$ 后的真值后验，并与单个传感器比较。另求任意两个传感器错误指示变量的协方差。
+\solution 无共同故障时，多数出错要求恰有两个或三个传感器出错，其概率为
+\[
+3\varepsilon^2(1-\varepsilon)+\varepsilon^3
+=3\varepsilon^2-2\varepsilon^3.
+\]
+因此多数错误率与单个错误率分别为
+\[
+e=c+(1-c)(3\varepsilon^2-2\varepsilon^3),\quad
+e_1=c+(1-c)\varepsilon.
+\]
+两者之差
+\[
+e_1-e=(1-c)\varepsilon(1-\varepsilon)(1-2\varepsilon)
+\]
+在 $c<1$ 时为正。共同故障部分不能通过增加表决者消除。设 $M$ 为多数输出，由两类真值下相同的翻转率，
+\[
+\boxed{\Prob(T=1\mid M=1)=
+\frac{\pi(1-e)}{\pi(1-e)+(1-\pi)e}.}
+\]
+对错误指示变量 $E_i,E_j$，联合出错概率为 $c+(1-c)\varepsilon^2$，故
+\[
+\boxed{\Cov(E_i,E_j)=c+(1-c)\varepsilon^2-e_1^2
+=c(1-c)(1-\varepsilon)^2.}
+\]
+\insight 先按共同故障分层，再在无故障层内使用二项分布。把三个传感器直接当作独立变量，会漏掉无法由多数表决平均掉的风险。

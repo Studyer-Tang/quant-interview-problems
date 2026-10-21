@@ -1,0 +1,68 @@
+\problem{CT01}{Unbiased Estimation of a Squared Probability}{Sufficiency; Rao--Blackwell}
+Let $X_1,\ldots,X_n$ be independent $\operatorname{Bernoulli}(p)$ variables, where $n\ge2$ and $0<p<1$. Starting with the unbiased estimator $X_1X_2$, construct an unbiased estimator of $p^2$ with no larger variance. Find its exact variance and prove minimum variance among all unbiased estimators.
+\solution Put $S=\sum_iX_i$. Given $S=s$, the success locations are uniform over subsets of size $s$, so
+\[
+ U:=\E[X_1X_2\mid S]=\frac{S(S-1)}{n(n-1)}.
+\]
+This conditional law does not involve $p$, making $S$ sufficient. Total variance gives $\Var(X_1X_2)=\Var(U)+\E\Var(X_1X_2\mid S)$, so conditioning preserves unbiasedness and cannot increase variance.
+Also, $U$ is the average of all $\binom n2$ products $X_iX_j$. Each has variance $p^2(1-p^2)$; two products sharing one index have covariance $p^3(1-p)$; disjoint products are independent. There are $n\binom{n-1}{2}$ unordered pairs sharing an index. Hence
+\[
+ \Var(U)=\frac{2p^2(1-p^2)+4(n-2)p^3(1-p)}{n(n-1)}.
+\]
+To prove minimum variance, first establish completeness. If $\E_p h(S)=0$ for every $p\in(0,1)$, divide by $(1-p)^n$. The resulting polynomial in $p/(1-p)$ vanishes identically, so every coefficient $\binom ns h(s)$ is zero.
+For any other unbiased estimator $W$, its conditional mean given $S$ is a parameter-free function with the same expectation as $U$. Completeness forces equality. Total variance then gives $\Var(W)\ge\Var(U)$; an estimator without finite variance cannot improve the bound either. For $n=2$, $U=X_1X_2$ and the variance formula still applies.
+\insight Conditioning removes parameter-free randomness. Completeness rules out any different unbiased function of the sufficient statistic that could improve the result.
+
+\problem{CT02}{A Most Powerful Exponential Test}{Likelihood ratios; exact power}
+Let $X_1,\ldots,X_n$ be independent exponential variables with rate $\theta$. Test $H_0:\theta=\theta_0$ against $H_1:\theta=\theta_1>\theta_0$. Find the most powerful test among those with type I error at most $\alpha\in(0,1)$, and calculate its power. Give the explicit cutoff and power for $n=2,\theta_0=1,\theta_1=2,\alpha=1-2/e$.
+\solution Set $T=\sum_iX_i$. The joint likelihood ratio of alternative to null is
+\[
+ L=\left(\frac{\theta_1}{\theta_0}\right)^n
+      e^{-(\theta_1-\theta_0)T}.
+\]
+It decreases strictly in $T$, suggesting $\phi_*=\ind_{\{T<c\}}$, where $c>0$ uniquely satisfies $\Prob_{\theta_0}(T<c)=\alpha$. Continuity makes boundary randomization unnecessary.
+Let $k$ be the corresponding likelihood-ratio threshold. Every competing test $0\le\phi\le1$ satisfies $(\phi_* -\phi)(L-k)\ge0$. If its size is at most $\alpha$, then
+\[
+ \E_{\theta_1}(\phi_* -\phi)
+ \ge k\E_{\theta_0}(\phi_* -\phi)\ge0.
+\]
+Thus the candidate maximizes power, proving the likelihood-ratio principle in this setting.
+The sum has density $\theta^nt^{n-1}e^{-\theta t}/(n-1)!$, obtainable by induction through convolution. Repeated integration by parts gives
+\[
+ \Prob_\theta(T<c)=1-e^{-\theta c}
+       \sum_{j=0}^{n-1}\frac{(\theta c)^j}{j!}.
+\]
+Use $\theta_0$ to solve for the cutoff and $\theta_1$ to obtain power. In the specified case, $c=1$ and power is $1-3e^{-2}$. A larger rate makes total waiting time shorter, so rejection lies in the left tail.
+\insight The likelihood ratio determines which tail to use; the null distribution calibrates the size. The rejection direction should not be guessed from the parameter's name.
+
+\problem{CT03}{Risk Reduction by Normal Shrinkage}{Stein's identity; squared loss}
+Observe $X\sim N_d(\theta,I_d)$, where $d\ge3$ and $\theta\in\R^d$ is unknown. Within the family
+\[
+ \delta_a(X)=\left(1-\frac a{\|X\|^2}\right)X,
+\]
+find the constant $a$ minimizing squared-error risk and show that it improves on $X$ for every $\theta$. Define the estimator arbitrarily at $X=0$, a null event. How does the risk change if the same estimator predicts an independent $Y\sim N_d(\theta,I_d)$?
+\solution Write $\delta_a=X+g(X)$, where $g(x)=-ax/\|x\|^2$. Integration by parts against the normal density gives
+\[
+ \E[(X_i-\theta_i)g_i(X)]=\E[\partial_i g_i(X)].
+\]
+The singularity at zero is harmless here. First integrate over $\|x\|>\varepsilon$: the spherical boundary term has order $\varepsilon^{d-2}\to0$. The derivative has local order $\|x\|^{-2}$, integrable when $d>2$; Gaussian decay removes the boundary at infinity.
+Direct differentiation gives
+\[
+ \|g(x)\|^2=\frac{a^2}{\|x\|^2},\qquad
+ \sum_i\partial_i g_i(x)=-\frac{a(d-2)}{\|x\|^2}.
+\]
+Expanding risk and using the identity yields
+\[
+ \begin{aligned}
+ R_\theta(a)&=\E_\theta\|\delta_a(X)-\theta\|^2\\
+ &=d+\bigl(a^2-2a(d-2)\bigr)
+                 \E_\theta\frac1{\|X\|^2}.
+ \end{aligned}
+\]
+The final expectation is finite and strictly positive, so the same constant $a=d-2$ minimizes risk for every $\theta$. Its risk is
+\[
+ d-(d-2)^2\E_\theta\frac1{\|X\|^2}<d,
+\]
+whereas $X$ has risk $d$. This compares total squared error across coordinates, not the risk of each coordinate separately.
+Independence and $\E(Y-\theta)=0$ eliminate the predictive cross term, giving $\E\|Y-\delta_a(X)\|^2=d+R_\theta(a)$. The optimal shrinkage constant is unchanged, and its prediction risk is strictly below the direct predictor's risk $2d$.
+\insight A suitable bias can reduce total squared risk. Gaussian integration by parts converts the difficult error cross term into the divergence of the shrinkage adjustment.

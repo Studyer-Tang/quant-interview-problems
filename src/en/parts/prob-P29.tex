@@ -1,0 +1,25 @@
+\problem{P29}{Coverage after Poisson Sampling}{Poisson splitting}
+First draw $N\sim\operatorname{Pois}(\lambda)$, where $\lambda>0$, then make $N$ independent category draws with probabilities $p_i\ge0$, $i=1,\ldots,d$, and $\sum_i p_i=1$. The total $N$ is independent of the sampling sequence. Let $X_i$ count category $i$, and let $D$ count categories observed at least once. Prove independence of the $X_i$ and find $\E D$, $\Var D$, and $\Cov(D,N)$.
+\solution For nonnegative integers $x_1,\ldots,x_d$, put $s=\sum_i x_i$. Conditioning on the total and using the multinomial law gives
+\[
+\begin{aligned}
+\Prob(X_i=x_i,\ 1\le i\le d)
+&=\frac{e^{-\lambda}\lambda^s}{s!}
+\frac{s!}{\prod_i x_i!}\prod_i p_i^{x_i}\\
+&=\prod_{i=1}^d\frac{e^{-\lambda p_i}(\lambda p_i)^{x_i}}{x_i!}.
+\end{aligned}
+\]
+Thus the counts are independent Poisson variables of means $\lambda p_i$; if $p_i=0$, the corresponding count is identically zero. Set $I_i=\ind\{X_i>0\}$ and $q_i=1-e^{-\lambda p_i}$. Since $D=\sum_i I_i$ is a sum of independent indicators,
+\[
+\boxed{\E D=\sum_i q_i,\qquad \Var D=\sum_i q_i(1-q_i).}
+\]
+Also $N=\sum_i X_i$, and cross-category covariances vanish. Using $I_iX_i=X_i$,
+\[
+\Cov(I_i,X_i)=\lambda p_i-q_i\lambda p_i
+=\lambda p_i e^{-\lambda p_i}.
+\]
+Consequently,
+\[
+\boxed{\Cov(D,N)=\sum_i\lambda p_i e^{-\lambda p_i}.}
+\]
+\insight A fixed total constrains the category counts. A Poisson total makes their joint law factor, simplifying both coverage fluctuations and dependence on sample size.

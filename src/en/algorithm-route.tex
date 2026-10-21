@@ -1,0 +1,148 @@
+\algproblem{ALG01}{Maximum Subarray Sum with One Deletion}
+Given a nonempty real array $a_0,\ldots,a_{T-1}$, choose a contiguous interval and delete at most one of its elements, retaining at least one. Find the maximum retained sum in $O(T)$ time and $O(1)$ extra space.
+\solution Let $f_i$ be the best sum of an interval ending at $i$ with no deletion, and $g_i$ the best nonempty retained sum for such an interval with at most one deletion. In $g_i$, position $i$ itself may be deleted. Initialize $f_0=g_0=a_0$. For $i\ge1$,
+\[
+f_i=\max(a_i,f_{i-1}+a_i),\qquad
+g_i=\max(a_i,g_{i-1}+a_i,f_{i-1}).
+\]
+The three choices in $g_i$ start afresh, retain $a_i$ and extend a previous interval, or delete $a_i$. If a solution deletes its first element, moving the interval's start right gives the same retained sequence, so no additional case is needed. All remaining solutions are covered by whether their last element is deleted.
+
+Return $\max_i g_i$. Preserve the old $f$ when updating; the third candidate must not use its new value. Initialization uses actual elements rather than zero, preventing an invalid empty answer on an all-negative array. Induction on the two states proves optimality. Time is $O(T)$ and extra space is $O(1)$.
+
+\algproblem{ALG02}{The Minimum Number of Jumps}
+A nonempty array $a_0,\ldots,a_{T-1}$ contains nonnegative integers. From index 0, at index $i$ you may jump right by any of $1,\ldots,a_i$ positions. Find the minimum jumps to $T-1$, or report that it is unreachable. Use linear time and constant extra space; reachability is not guaranteed.
+\solution Return 0 if $T=1$. Maintain the right boundary $R$ of the current reachable layer, the furthest next-layer position $F$ seen so far, and the number $k$ of completed expansions, initially all zero. Scan $i=0,\ldots,T-2$ and update
+\[
+F\leftarrow\max\{F,\min(T-1,i+a_i)\}.
+\]
+When $i=R$, the current layer has been fully scanned. If $F=R<T-1$, no new position is reachable, so report failure. Otherwise increment $k$ and set $R=F$. Return $k$ as soon as $R=T-1$.
+
+Each jump can reach a whole forward interval. Thus positions reachable in at most $k$ jumps form a prefix starting at 0. After scanning this prefix, the union of all one-step extensions ends exactly at $F$, the boundary for at most $k+1$ jumps. Processing these layers in order proves that the first layer covering the target has minimum depth. Every index is scanned once, giving $O(T)$ time and $O(1)$ extra space.
+
+\algproblem{ALG03}{One Trade with a Holding-Period Constraint}
+Prices $p_0,\ldots,p_{T-1}$ are nonnegative, and integers $1\le h\le L$ are given. Make at most one purchase and sale, with holding constraint $h\le j-i\le L$ and sale fee $c\ge0$. Choosing no trade is allowed. Find the maximum net profit and an optimal date pair in $O(T)$ time.
+\solution For sale day $j$, eligible purchase days are
+\[
+\max(0,j-L)\le i\le j-h.
+\]
+An empty range gives no feasible trade that day. Maintain an increasing price deque. On day $j$, insert $j-h$ if nonnegative, removing strictly larger tail prices, and then expire front indices smaller than $j-L$. Keeping equal prices permits the earlier purchase date.
+
+The front minimizes eligible purchase price, so evaluate $p_j-p_i-c$. Initialize the answer to zero and record dates only on a strict improvement. Return no trade if the final value remains zero. If $T\le h$, no date pair is possible.
+
+For a fixed sale day, the sale price and fee are fixed, making the cheapest eligible purchase optimal. A later, cheaper price dominates an older, dearer one and expires no earlier. Delayed insertion enforces the minimum holding period, and front expiration enforces the maximum. Each index enters and leaves at most once: time $O(T)$ and space $O(\min(T,L))$.
+
+\algproblem{ALG04}{Daily Trading with Bounded Inventory}
+Given nonnegative prices for $T$ days and integer inventory capacity $K\ge0$, each day buy one unit, sell one unit, or do nothing. Short selling is forbidden; each purchased or sold unit incurs fee $c\ge0$. Start with zero cash and inventory, allow negative cash, and finish with zero inventory. Maximize final cash using an $O(T(K+1))$ dynamic program.
+\solution Let $V_t(q)$ be the maximum cash after the first $t$ days with $q$ units, $0\le q\le K$. Set $V_0(0)=0$ and all other initial states to $-\infty$. On the day with price $p_t$,
+\[
+V_{t+1}(q)=\max\left\{
+\begin{array}{l}
+V_t(q),\\
+V_t(q-1)-p_t-c\quad(q\ge1),\\
+V_t(q+1)+p_t-c\quad(q<K).
+\end{array}\right\}
+\]
+These are no action, purchase, and sale. Every right-hand side must use the previous day's array. Updating repeatedly in place can incorrectly allow multiple units to be traded on one day.
+
+Every legal strategy belongs to exactly one last-action case. Removing that action gives the corresponding prior state, and appending it to any finite prior state is feasible. Induction proves both the upper bound and attainability. Return $V_T(0)\ge0$, since no action is always feasible. Time is $O(T(K+1))$ and rolling-array space is $O(K+1)$; stored choices recover a schedule. If $K=0$ or $T=0$, return zero. Allowing negative cash is a material assumption; a cash constraint would require further feasibility checks.
+
+\algproblem{ALG05}{Counting Paths through at Most One Obstacle}
+An $R\times C$ binary grid marks obstacles by 1. Move only right or down from the upper-left to the lower-right cell, visiting at most one obstacle, with endpoints counted by the same rule. Find the number of paths modulo an integer $M\ge2$ in $O(RC)$ time and $O(C)$ space.
+\solution Let $A_{i,j}$ and $B_{i,j}$ count paths reaching $(i,j)$ after visiting zero and exactly one obstacle. Sum the corresponding counts from above and from the left, obtaining $a,b$. At a zero cell, set $(A,B)=(a,b)$; at an obstacle, set $(A,B)=(0,a)$. Reduce every addition modulo $M$.
+
+Initialize the start separately as $(1,0)$ if it is zero and $(0,1)$ otherwise. Other out-of-grid predecessors contribute zero. Return $A_{R-1,C-1}+B_{R-1,C-1}\pmod M$.
+
+Every path's penultimate cell is either above or left, disjoint cases. Its obstacle count then changes exactly according to the current cell. Thus the recurrence neither misses nor double-counts a path. Scan each row left to right with two length-$C$ arrays: the old current column stores the upper predecessor, and the updated previous column stores the left predecessor. Read both before overwriting. For $R,C\ge1$, the same initialization covers a one-cell grid.
+
+\algproblem{ALG06}{A Shortest Common Supersequence}
+Given strings $a,b$, possibly empty, construct a shortest string $s$ containing each as a subsequence. A character of $s$ may serve one character from each input simultaneously. Find the minimum length, recover a solution, and prove correctness.
+\solution Let $D_{i,j}$ be the shortest common supersequence length for prefixes of lengths $i,j$. Initialize $D_{i,0}=i$ and $D_{0,j}=j$. Index characters from 1. If the last characters agree, share one final character:
+\[
+D_{i,j}=D_{i-1,j-1}+1\quad(a_i=b_j).
+\]
+If they differ, the final character removes the last character of only one input, giving
+\[
+D_{i,j}=1+\min(D_{i-1,j},D_{i,j-1}).
+\]
+When the last characters agree, their two matches in any supersequence can both be moved to the later matched position, so sharing that final position is harmless. For different last characters, the two alternatives exhaust an optimum. Induction on prefix lengths proves the recurrence.
+
+Backtrack from $(|a|,|b|)$. On equal characters record that character and move diagonally; otherwise follow a minimum predecessor and record the removed last character. At a boundary, record the remaining prefix, then reverse the record. Time and storage are $O((|a|+1)(|b|+1))$.
+
+If $L$ is the longest common subsequence length, the answer is also $|a|+|b|-L$. Shared matched positions form a common subsequence, so at most $L$ positions can be shared. Conversely, align a longest common subsequence and insert the intervening characters of both strings to attain this bound.
+
+\algproblem{ALG07}{Counting and Sampling Interleaving Assignments}
+Given strings $a,b,t$ with $|t|=|a|+|b|$, assign every position of $t$ to one input while preserving the order within each input. Distinct source assignments count separately even when their characters coincide. Count legal assignments and, when the count is positive, sample one uniformly.
+\solution Let $C_{i,j}$ count completions after using the first $i$ characters of $a$ and $j$ of $b$. Put $m=|a|$, $n=|b|$, and $C_{m,n}=1$. With characters indexed from 1, compute backwards:
+\[
+C_{i,j}=\ind_{\{i<m,\ a_{i+1}=t_{i+j+1}\}}C_{i+1,j}
+       +\ind_{\{j<n,\ b_{j+1}=t_{i+j+1}\}}C_{i,j+1}.
+\]
+Out-of-range branches contribute zero. The two branches have different sources, so their counts add even if the characters agree. The total is $C_{0,0}$; a length mismatch gives zero immediately.
+
+At a state with positive count, select the next source with probability equal to that branch's count divided by $C_{i,j}$, then move to its successor. For any complete assignment, multiplying these probabilities telescopes to $1/C_{0,0}$, proving uniformity. The boundary also covers the unique empty assignment.
+
+There are $O((m+1)(n+1))$ states and recovery takes $m+n$ steps. Counts are exact integers; the state-operation bound does not assume constant bit cost for arbitrarily large integer additions. Counts reduced modulo an integer cannot supply exact sampling weights.
+
+\algproblem{ALG08}{Weighted Interval Selection with a Cardinality Limit}
+There are $n$ tasks. Task $i$ occupies a half-open interval $[s_i,e_i)$ with $s_i<e_i$ and has possibly negative reward $w_i$. Given an integer $K\ge0$, choose at most $K$ pairwise nonoverlapping tasks; one may start exactly when another ends. Find the maximum reward in $O(n\log n+nK)$ time.
+\solution Sort by end time and let $p(i)$ be the largest predecessor index with $e_j\le s_i$, or 0 if none exists. Since $s_i<e_i$, every such predecessor appears before $i$. Binary search on sorted end times finds all predecessors in $O(n\log n)$.
+
+Let $F(i,k)$ be the best reward from the first $i$ tasks using at most $k$. Initialize $F(0,k)=F(i,0)=0$ and use
+\[
+F(i,k)=\max\{F(i-1,k),\ w_i+F(p(i),k-1)\}.
+\]
+Excluding $i$ gives the first case. If $i$ is included, all other chosen tasks must end before it starts, giving the second. Conversely, an optimal compatible predecessor set can be joined to $i$, proving attainability as well as the bound.
+
+Replace $K$ by $\min(K,n)$ and return $F(n,K)$. Negative-reward tasks can be skipped, so zero is always attainable. A full $O(n(K+1))$ table supports backtracking. If only the value is needed, process $k$ by layers with two arrays of length $n+1$.
+
+\algproblem{ALG09}{Scheduling Tasks with Individual Cooldowns}
+Day $i$ offers a task available only that day, with real reward $r_i$. After performing it, rest for the next $L_i\ge0$ complete days, where $L_i$ is an integer; no other task may be performed during rest. Tasks may be skipped, for $i=0,\ldots,T-1$. Maximize total reward and recover the selected dates in $O(T)$ time.
+\solution Let $V_i$ be the best reward starting on day $i$, with $V_T=0$. After choosing today's task, the next eligible day is
+\[
+q_i=\min(T,i+L_i+1).
+\]
+Compute backwards:
+\[
+V_i=\max\{V_{i+1},r_i+V_{q_i}\},\qquad i=T-1,\ldots,0.
+\]
+The alternatives skip today or perform the task and resume after its rest period. They cover every legal schedule, and joining either action to an optimal successor schedule is feasible. Backward induction proves optimality.
+
+Store the chosen branch. Starting at 0, advance one day after a skip; after a chosen task, output $i$ and jump to $q_i$. Indices strictly increase, so recovery visits at most $T$ states. Time and space are $O(T)$. Skipping ensures that nonpositive rewards need not reduce the answer; empty input gives zero. Variable successor gaps prevent a fixed-size recent-state buffer in general.
+
+\algproblem{ALG10}{Repairing Parentheses with the Fewest Insertions}
+Given a string containing only opening and closing parentheses, insert characters without deleting or changing any original character. Minimize the insertions needed to make the entire string valid, and output a repair attaining the minimum. Use linear time.
+\solution Scan left to right with the number $b$ of unmatched opening parentheses. Output an opening parenthesis unchanged and increment $b$. On a closing parenthesis, if $b>0$, output it and decrement $b$; otherwise insert an opening parenthesis immediately before it and count one insertion. At the end append $b$ closing parentheses.
+
+Every output prefix has nonnegative balance and the final balance is zero, so the repair is valid and retains all original characters in order.
+
+For optimality, let $m\le0$ be the minimum original prefix balance (including the empty prefix) and $s$ the final original balance. Every repair needs at least $L=-m$ inserted openings, or the most deficient prefix remains invalid. If $\ell,r$ openings and closings are inserted, final balance requires $r=s+\ell$. The total is therefore $s+2\ell\ge s+2L$. The algorithm inserts exactly $L$ openings, leaving balance $s+L$, and appends that many closings. It attains the lower bound in $O(T)$ time and constant space apart from its output.
+
+\algproblem{ALG11}{Water Retention on a Two-Dimensional Terrain}
+A rectangular grid has nonnegative ground height $h_v$ and unit area at each cell. Neighbors share an edge. Water can drain freely outside, and every boundary cell connects to the exterior. After sustained rain reaches equilibrium, find the total retained water. Give an algorithm and explain why row and column maxima alone are insufficient.
+\solution Define the escape level of cell $v$ by
+\[
+\ell_v=\min_{\gamma:\,v\text{ to boundary}}\ \max_{u\in\gamma}h_u.
+\]
+Paths include their endpoints, so $\ell_v\ge h_v$. The largest height on a path is its drainage threshold; taking the lowest threshold among all escape paths gives the stable water level. Total water is $\sum_v(\ell_v-h_v)$.
+
+Solve this minimax path problem with a min-heap. Initialize every boundary cell at distance $h_v$ and interior cells at $+\infty$. Extract the unsettled cell $v$ with smallest distance and relax each neighbor $u$ by
+\[
+d_u\leftarrow\min\{d_u,\max(d_v,h_u)\}.
+\]
+Ignore obsolete heap entries. Extending a path never reduces its maximum height, so the usual shortest-path greedy argument applies. More explicitly, a lower escape path would contain a first unsettled cell adjacent to a settled one; relaxation from that settled cell would already have supplied a no-larger candidate, contradicting the minimum heap extraction.
+
+There are only a constant number of edges per cell, giving $O(RC\log(RC+1))$ time and $O(RC)$ space. With one row or one column, every cell is on the boundary and retention is zero. Drainage paths may turn, so barriers measured only along straight rows or columns can overestimate retention.
+
+\algproblem{ALG12}{Largest and Total All-One Squares}
+For a binary matrix, find both the largest area of an axis-aligned all-one square and the total number of such squares. Different locations or side lengths count separately. Use $O(RC)$ time and $O(C)$ extra space.
+\solution Let $d_{i,j}$ be the largest side length of an all-one square with lower-right corner $(i,j)$. A zero cell gives $d_{i,j}=0$; a one cell gives
+\[
+d_{i,j}=1+\min(d_{i-1,j},d_{i,j-1},d_{i-1,j-1}),
+\]
+with out-of-grid values zero. A side-$k$ square requires side-$(k-1)$ squares at all three neighboring corners, proving necessity. Conversely, those three smaller squares together with the current cell cover the entire side-$k$ square, proving sufficiency.
+
+The largest area is $(\max d_{i,j})^2$. At a fixed lower-right corner, feasible side lengths are exactly $1,\ldots,d_{i,j}$, so the total count is
+\[
+\sum_{i,j}d_{i,j}.
+\]
+Every square has one lower-right corner, avoiding double counting. Scan rows with a length-$C$ array and one saved old upper-left value: the old current column is the upper neighbor and the updated previous column is the left neighbor. Both answers are zero for an all-zero or empty matrix.

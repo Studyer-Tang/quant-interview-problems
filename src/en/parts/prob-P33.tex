@@ -1,0 +1,27 @@
+\problem{P33}{Majority Voting with a Common Failure}{A mixture model}
+A binary truth $T$ has prior $\Prob(T=1)=\pi\in(0,1)$. With probability $c\in[0,1]$, a common failure makes all three sensors report the opposite truth. Otherwise, the sensors independently flip the truth with probability $\varepsilon\in(0,1/2)$. The failure mechanism is independent of $T$. Find the majority error rate, the posterior after a majority report of $1$, and the improvement over one sensor. Also compute the covariance of two sensors' error indicators.
+\solution Without a common failure, the majority is wrong when exactly two or three sensors err. This has probability
+\[
+3\varepsilon^2(1-\varepsilon)+\varepsilon^3
+=3\varepsilon^2-2\varepsilon^3.
+\]
+Thus the majority and single-sensor error rates are
+\[
+e=c+(1-c)(3\varepsilon^2-2\varepsilon^3),\quad
+e_1=c+(1-c)\varepsilon.
+\]
+Their difference is
+\[
+e_1-e=(1-c)\varepsilon(1-\varepsilon)(1-2\varepsilon)>0
+\]
+when $c<1$. The common-failure component cannot be removed by voting. If $M$ is the majority report, symmetry of the error mechanism gives
+\[
+\boxed{\Prob(T=1\mid M=1)=
+\frac{\pi(1-e)}{\pi(1-e)+(1-\pi)e}.}
+\]
+For error indicators $E_i,E_j$, the probability of two errors is $c+(1-c)\varepsilon^2$. Therefore
+\[
+\boxed{\Cov(E_i,E_j)=c+(1-c)\varepsilon^2-e_1^2
+=c(1-c)(1-\varepsilon)^2.}
+\]
+\insight Condition first on the common failure and apply a binomial calculation only within the no-failure case. Treating the sensors as independent misses a source of error that averaging cannot remove.

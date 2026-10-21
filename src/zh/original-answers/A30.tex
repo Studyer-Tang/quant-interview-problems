@@ -1,0 +1,15 @@
+\answer{OA30}
+结论为
+\[
+ \boxed{\lambda_i\le\mu_i\le\lambda_{i+1}},
+ \qquad i=1,\ldots,n-1.
+\]
+令 $H=\{x\in\R^n:x_k=0\}$。把 $B$ 的向量在第 $k$ 个坐标补零后，$B$ 的 Rayleigh 商就是 $A$ 的 Rayleigh 商在 $H$ 上的限制。记 $R_A(x)=x^\top Ax/\|x\|^2$，由极小极大原理，
+\[
+ \lambda_i=\min_{\dim S=i}\ \max_{0\ne x\in S}R_A(x),
+\]
+而 $\mu_i$ 的同一极小值只允许取 $S\subset H$。可选子空间变少，故 $\mu_i\ge\lambda_i$。
+
+再令 $E$ 为 $A$ 前 $i+1$ 个特征向量张成的空间。由于 $H$ 的余维为一，$\dim(E\cap H)\ge i$。从交空间取一个 $i$ 维子空间 $S$，其上所有 Rayleigh 商均不超过 $\lambda_{i+1}$。把它代入 $\mu_i$ 的极小极大公式，即得 $\mu_i\le\lambda_{i+1}$。
+
+特征值可以重复，因此不等号不能统一改为严格不等号。例如 $A$ 为单位矩阵时，两侧均取等。

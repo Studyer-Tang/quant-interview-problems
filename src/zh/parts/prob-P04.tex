@@ -1,0 +1,24 @@
+\problem{P04}{给定乘积后的条件分布}{变量变换与独立性}
+$U,V$ 独立服从 $\operatorname{Unif}(0,1)$，令 $P=UV$、$Q=\log U/\log P$。证明 $P,Q$ 独立，并求给定 $P=p\in(0,1)$ 时 $U$ 的条件密度及条件均值。比较该均值与 $\sqrt p$。
+\solution 令 $X=-\log U$、$Y=-\log V$，则二者是独立的参数为 $1$ 的指数变量。对 $S=X+Y$、$Q=X/S$，逆变换为 $X=QS$、$Y=(1-Q)S$，雅可比为 $s$。联合密度为
+\[
+f_{S,Q}(s,q)=s e^{-s},\quad s>0,\quad0<q<1.
+\]
+它分解为 $S$ 的伽马密度与 $Q$ 的均匀密度，故 $Q$ 与 $S$ 独立，进而与 $P=e^{-S}$ 独立。还得到 $f_P(p)=-\log p$。
+
+给定 $P=p$，有 $U=p^Q$，其中 $Q$ 仍均匀。因 $q\mapsto p^q$ 递减，对 $p<u<1$，
+\[
+\Prob(U\le u\mid P=p)=1-\frac{\log u}{\log p}
+=\frac{\log(u/p)}{\log(1/p)}.
+\]
+因此
+\[
+\boxed{f_{U\mid P=p}(u)=\frac1{u\log(1/p)},\quad p<u<1,}
+\]
+且
+\[
+\boxed{\E(U\mid P=p)=\int_0^1p^q\dd q
+=\frac{1-p}{\log(1/p)}>\sqrt p.}
+\]
+最后的不等式来自严格凸函数 $q\mapsto p^q$ 的詹森不等式，因为 $\E Q=1/2$ 且 $Q$ 非退化。
+\pitfall 给定连续变量的精确取值需要条件密度，不能把零概率事件直接代入离散贝叶斯公式。乘积固定也不意味着两个因子各等于其几何平均。

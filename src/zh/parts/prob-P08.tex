@@ -1,0 +1,20 @@
+\problem{P08}{两个高斯量的相对差}{旋转与极坐标}
+$X,Y$ 为独立标准正态变量，令
+\[
+R=\frac{X-Y}{X+Y},\qquad H=X^2+Y^2.
+\]
+分母为零的事件概率为零。求 $R$ 的密度，证明 $R,H$ 独立，并对 $c\ge0$ 求 $\Prob(|R|\le c)$。$R$ 的均值是否等于零？
+\solution 令 $D=(X-Y)/\sqrt2$、$S=(X+Y)/\sqrt2$。正交变换保留联合标准正态密度，所以 $D,S$ 仍独立标准正态，且 $H=D^2+S^2$。写
+\[
+S=\rho\cos\theta,\qquad D=\rho\sin\theta.
+\]
+极坐标联合密度为 $(2\pi)^{-1}\rho e^{-\rho^2/2}$，可分解为半径密度与均匀角度密度。因此角度与半径独立，$R=\tan\theta$ 与 $H=\rho^2$ 独立。
+
+将角度按模 $\pi$ 化到 $(-\pi/2,\pi/2)$，其密度为 $1/\pi$。用 $\theta=\arctan r$ 变换得
+\[
+\boxed{f_R(r)=\frac1{\pi(1+r^2)},\quad r\in\mathbb R,}
+\qquad
+\boxed{\Prob(|R|\le c)=\frac2\pi\arctan c.}
+\]
+尽管密度关于零对称，$\int_0^\infty r/[\pi(1+r^2)]\dd r=\infty$，正负部分的期望均发散。因此 $\E R$ 不存在，不能写成零。
+\insight 旋转把相对差化为两个独立高斯量的比值；极坐标再把方向与大小分开。分布对称与均值存在是两个不同条件。

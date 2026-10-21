@@ -1,0 +1,6 @@
+\exercise{OA33}{Maximum Drawdown}
+Let $p_1,\ldots,p_n$ be positive prices, with $n\ge1$. Define the maximum drawdown as the largest relative decline from an earlier to a later price:
+\[
+ D=\max\left(0,\max_{1\le i<j\le n}\frac{p_i-p_j}{p_i}\right),
+\]
+with $D=0$ when $n=1$. Give an $O(n)$ algorithm, prove it correct, and state its space complexity. If $D>0$, explain how to return an interval attaining it.

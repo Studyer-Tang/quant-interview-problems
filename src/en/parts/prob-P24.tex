@@ -1,0 +1,40 @@
+\problem{P24}{Total Remaining Distance}{A distributional recursion}
+Starting at $R_0=x\in[0,1)$, choose $R_j$ uniformly from $(R_{j-1},1)$ using fresh independent randomness. Define
+\[
+Q=\sum_{j\ge1}(1-R_j).
+\]
+Prove that $Q$ is almost surely finite, find its mean and variance, and obtain the Laplace transform $L(t)=\E e^{-tD}$ of $D=Q/(1-x)$ for $t\ge0$.
+\solution For independent uniform variables $U_j$, the remaining distances have the representation
+\[
+1-R_j=(1-x)\prod_{i=1}^jU_i.
+\]
+Nonnegativity permits summation under expectation:
+\[
+\E Q=(1-x)\sum_{j\ge1}2^{-j}=1-x.
+\]
+Finite expectation of a nonnegative variable implies almost sure finiteness.
+
+The normalized sum satisfies $D=U(1+D')$, where $D'$ has the law of $D$ and is independent of $U$. Its second moment is finite: the $L^2$ norm of every partial sum is bounded by $\sum_{j\ge1}3^{-j/2}<\infty$, and monotone convergence then applies. Thus
+\[
+\E D=1,\qquad
+\E D^2=\frac13(1+2\E D+\E D^2)=\frac32.
+\]
+Consequently,
+\[
+\boxed{\E Q=1-x,\qquad \Var Q=\frac{(1-x)^2}{2}.}
+\]
+For $t>0$, the distributional recursion yields
+\[
+L(t)=\int_0^1e^{-tu}L(tu)\dd u,
+\qquad tL(t)=\int_0^te^{-s}L(s)\dd s.
+\]
+The right side is differentiable and $L(t)>0$, so
+\[
+\frac{L'(t)}{L(t)}=\frac{e^{-t}-1}{t}.
+\]
+Integration with $L(0)=1$ gives
+\[
+\boxed{L(t)=\exp\!\left\{\int_0^t\frac{e^{-s}-1}{s}\dd s\right\}.}
+\]
+The integrand extends continuously to $-1$ at zero, so the expression also covers $t=0$.
+\insight Although individual gaps shrink multiplicatively, their total satisfies a simple recursive sum. Establish finiteness of moments before manipulating the moment equations.

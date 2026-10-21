@@ -1,0 +1,159 @@
+\section{随机过程}
+
+\answer{RS1}
+非终止前缀为 $0,H,HT,HTH$，相应剩余均值记为 $e_0,e_1,e_2,e_3$。HTH 后遇 H，末尾最长有效前缀是 H，而不是空串。首步方程为
+\[
+ e_0=2+e_1,\quad e_1=2+e_2,\quad
+ e_2=1+\tfrac12e_3+\tfrac12e_0,\quad
+ e_3=1+\tfrac12e_1.
+\]
+从前两式 $e_1=e_0-2,e_2=e_0-4$，最后一式为 $e_3=e_0/2$。代入第三式得 $e_0-4=1+3e_0/4$，故 $\boxed{e_0=20}$。每个四次区块等于 HTHT 的概率为 $1/16$，保证均值有限。
+
+\answer{RS2}
+平稳几何比值满足 $\tfrac12r^2-r+\tfrac14=0$，选 $(0,1)$ 中的根 $r=1-1/\sqrt2$，所以
+\[
+ \boxed{\Prob_\pi(X\ge2)=\left(1-\frac1{\sqrt2}\right)^2},\qquad
+ \boxed{\E_0\tau_0^+=\frac1{1-r}=\sqrt2}.
+\]
+一次清空或空队列服务均算正时间返回，因此该均值可以小于2。
+
+\answer{RS3}
+两步后切换当且仅当恰有一步切换，故 $2\alpha(1-\alpha)=3/8$，得到
+\[
+ \boxed{\alpha=1/4\quad\text{或}\quad\alpha=3/4}.
+\]
+两个参数对应的两步转移矩阵完全相同。对相同初始分布，所有偶数时刻联合分布因此相同，不能据此辨识。增加一步转移的信息即可区分；两个模型分别偏向保持与交替。
+
+\answer{RS4}
+给未处理 A、B 分别赋权3、2，处理一个任务使权重的条件期望减少1，故总任务数的均值有限。其均值满足 $a=1+b,b=1+a/3$，所以 $a=3,b=2$。若二阶矩为 $u,v$，独立的两个 B 子树给出
+\[
+ u=1+2b+v+b^2=9+v,\qquad
+ v=1+\tfrac23a+\tfrac13u=3+\tfrac13u.
+\]
+这些等式也可先用于截断到有限代的任务树：均值不超过3、2，二阶矩递推被18、9控制。单调收敛证明二阶矩有限，然后解得
+\[
+ \boxed{\E T=3,\quad\E T^2=18,\quad\Var T=9}.
+\]
+
+\answer{RH1}
+由 R11，$\rho=1/2$ 对应 $r=2-\sqrt3$，从而
+\[
+ \boxed{\E T=2+2\sqrt3}.
+\]
+第 $t$ 步是否仍需执行由此前决定，与当步是否重置独立，故重置总次数 $K$ 满足 $\E K=(1/2)\E T=\boxed{1+\sqrt3}$。路径上总费用为 $T+2K$，所以
+\[
+ \boxed{\E C=4+4\sqrt3}.
+\]
+
+\answer{RH2}
+回撤差距在0处有自环，不能使用两端吸收区间的时间公式。R16 中 $d=3,D=12$，故
+\[
+ \boxed{\E\tau=12,\qquad\Var\tau=92},\qquad
+ \boxed{\Prob(M_\tau\ge4)=\left(\frac34\right)^4=\frac{81}{256}}.
+\]
+最高点每提高一格，都须先赢下一次边界距离为1和3的竞争。
+
+\answer{RH3}
+R13 的分母为 $D=6(1/4)+1/2=2$，从而
+\[
+ \boxed{h_3^+=\frac{3/4+1/2}{2}=\frac58},\qquad
+ \boxed{h_3^-=\frac{3/4}{2}=\frac38}.
+\]
+若初始方向等概率但未观察，按两种条件分布平均，成功概率为 $\boxed{1/2}$。这个平均不使位置过程自动成为无记忆游走。
+
+\answer{RH4}
+前0、1、2、3次互异的概率依次为 $1,1,2/3,2/9$，故
+\[
+ \E N=1+1+\frac23+\frac29=\frac{26}{9}.
+\]
+每次平均费用为 $7/3$。由 R18 的过去可测继续事件分解，
+\[
+ \boxed{\E C=\frac73\frac{26}{9}=\frac{182}{27}}.
+\]
+首次重复以前恰有 $N-1$ 个不同类型，最后一抽不增加类型数，所以其均值为 $\boxed{17/9}$。
+
+\answer{RC1}
+支付在上、下两状态分别为0、$1/2$。精确复制解
+\[
+ 2\Delta+B=0,\qquad\tfrac12\Delta+B=\tfrac12,
+\]
+得到 $\boxed{\Delta=-1/3,B=2/3,V=1/3}$。若 $\Delta\ge0$，覆盖下状态要求 $\tfrac12\Delta+B\ge1/2$，于是初始成本 $\Delta+B\ge1/2+\Delta/2\ge1/2$。现金持有 $1/2$ 即可覆盖两状态，因此 $\boxed{V^{\rm super}=1/2}$。
+
+\answer{RC2}
+首次 H 后，下一次 H 的预测概率为 $2/3$，继续的期望增益为 $1/3$；首次 T 后，该增益为 $-1/3$，应停止。因此先抛，H 后再抛、T 后停，初始价值为
+\[
+ \boxed{V=\tfrac12(1+\tfrac13)+\tfrac12(-1)=\frac16}.
+\]
+直接停止价值0，不如观察一次；第二步的选择已比较全部可行动作。
+
+\answer{RC3}
+替换后的净支付为 $7/8-X$，因此在 $X<7/16$ 时替换，等号任取。令 $a=7/16$，积分得到
+\[
+ \boxed{V=\int_0^a(7/8-x)\dd x+\int_a^1x\dd x
+ =\frac12+\frac{49}{256}=\frac{177}{256}}.
+\]
+不能使用独立重抽时的固定继续价值；这里替换价值依赖已观察的 $X$。
+
+\answer{RC4}
+全部通过的排序指标为 $c/(1-p)=(2,8,4/3)$，故顺序为 $(3,1,2)$，成本
+\[
+ \boxed{1+\tfrac14\cdot1+\tfrac14\cdot\tfrac12\cdot2=\frac32}.
+\]
+至少一项通过的指标为 $c/p=(2,8/3,4)$，故顺序 $(1,2,3)$，成本
+\[
+ \boxed{1+\tfrac12\cdot2+\tfrac12\cdot\tfrac14\cdot1=\frac{17}{8}}.
+\]
+每个后续成本都乘此前测试尚未确定结论的概率。
+
+\answer{RG1}
+$1,W_1,W_1^2-1$ 在平方可积空间中相互正交，后两者的方差为1和2。R25 给出 $\E I=1$、$\Cov(I,W_1)=1/2$、$\Var I=2e-5$。正态指数矩求导还给出
+\[
+ \E[e^{W_t-t/2}(W_1^2-1)]=t^2,\qquad
+ \Cov(I,W_1^2-1)=\int_0^1t^2\dd t=\frac13.
+\]
+因此最佳预测及剩余误差为
+\[
+ \boxed{\widehat I=1+\frac12W_1+\frac16(W_1^2-1)}.
+\]
+\[
+ \boxed{\E(I-\widehat I)^2=2e-5-\frac14-\frac1{18}=2e-\frac{191}{36}}.
+\]
+二次项使误差进一步减少 $1/18$，但有限阶多项式仍不等于完整条件均值。
+
+\answer{RG2}
+将 $T=2,b=0,a=1$ 代入 R27。时刻1的均值为 $6/8=3/4$，方差为 $1-1/2-3/8=1/8$，所以
+\[
+ \boxed{W_1\mid(W_2=0,A=1)\sim N(3/4,1/8)}.
+\]
+两侧点的条件协方差为
+\[
+ \boxed{\frac12-\frac{(1/2)(3/2)}2
+ -\frac{3(1/2)(3/2)(3/2)(1/2)}8=-\frac{11}{128}}.
+\]
+面积约束使两处的偏离相互补偿。
+
+\answer{RG3}
+由条件反射公式，$T=2,b=0$ 时最大值 $M$ 的尾概率为 $\Prob(M\ge a)=e^{-a^2}$，$a\ge0$。因此
+\[
+ \boxed{\Prob(M\ge1\mid W_2=0)=e^{-1}},\qquad
+ \boxed{\E(M\mid W_2=0)=\int_0^\infty e^{-a^2}\dd a=\frac{\sqrt\pi}{2}}.
+\]
+
+\answer{RG4}
+R28 中 $k=\sqrt{2\lambda}=1$，故
+\[
+ \boxed{u(1)=\frac{\sinh1}{\sinh2}=\frac1{2\cosh1}},\qquad
+ \boxed{\E(\tau\mid\text{成功})=2\coth2-\coth1=\tanh1}.
+\]
+最后一步用 $\sinh2=2\sinh1\cosh1$ 和 $\cosh2=\cosh^21+\sinh^21$。没有失效时钟时，成功概率为 $1/2$，成功条件时间均值为 $(4-1)/3=1$。失效同时降低成功率，并让成功样本偏向更快的路径。
+
+\par\Needspace{8\baselineskip}
+\subsection*{小节练习}
+\input{original-answers/R01}
+\input{original-answers/R07}
+\input{original-answers/R11}
+\input{original-answers/R16}
+\input{original-answers/R20}
+\input{original-answers/R22}
+\input{original-answers/R25}
+\input{original-answers/R26}

@@ -1,0 +1,24 @@
+\problem{P35}{Relative Position in the Remaining Interval}{Conditional scaling}
+Let $U_{(1)}<\cdots<U_{(n)}$ be the order statistics of $n$ independent uniforms on $(0,1)$. For $1\le i<j\le n$, define
+\[
+W=\frac{U_{(j)}-U_{(i)}}{1-U_{(i)}}.
+\]
+Prove that $W$ and $U_{(i)}$ are independent. Find the distribution, mean, and variance of $W$, and evaluate $\Prob(U_{(j)}>(1+U_{(i)})/2)$.
+\solution Conditional on $U_{(i)}=u$, the unordered observations above $u$ have the law of $n-i$ independent uniforms on $(u,1)$. This follows by factoring the constant joint order-statistic density into the ordered regions below and above $u$. Rescaling by $(v-u)/(1-u)$ gives $m=n-i$ standard uniforms.
+
+The variable $W$ is their $r$th order statistic, where $r=j-i$. Placing $r-1$ observations below $w$, one near $w$, and the rest above gives
+\[
+f_W(w)=\frac{m!}{(r-1)!(m-r)!}
+ w^{r-1}(1-w)^{m-r},\quad0<w<1.
+\]
+This conditional density does not depend on $u$, proving independence. It is the $\operatorname{Beta}(r,m-r+1)$ density. Beta integrals give its first two moments and hence
+\[
+\boxed{\E W=\frac r{m+1},\qquad
+\Var W=\frac{r(m-r+1)}{(m+1)^2(m+2)}.}
+\]
+The event $W>1/2$ means that at most $r-1$ of the $m$ scaled observations lie in the left half. Therefore
+\[
+\boxed{\Prob\!\left(U_{(j)}>\frac{1+U_{(i)}}2\right)
+=2^{-m}\sum_{k=0}^{r-1}\binom mk.}
+\]
+\insight Absolute positions are dependent, while a conditionally scaled relative position can be independent. Removing the conditional scale reveals more than a covariance calculation alone.

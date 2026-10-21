@@ -1,0 +1,27 @@
+\section{Algorithms and Programming}
+
+\answer{AG4-1}
+Group A has $n_A=3$, $\mu_A=4$, and $M_A=9+0+9=18$. Thus B has two observations, sum $5\cdot4-3\cdot4=8$, and mean 4. Equal group means give no between-group contribution, so $M_B=26-18=8$. The combined population and sample variances are $26/5$ and $26/4=13/2$.
+
+Write B's observations as $4-u,4+u$. Their centered sum of squares is $2u^2=8$, so $|u|=2$. The unordered pair is uniquely $\{2,6\}$, but its original order is unrecoverable. Moment summaries do not generally identify the original observations; this uniqueness relies on B having exactly two values.
+
+\answer{AG4-2}
+Interval $[0,3]$ contains $(4,2,3,5)$, with range 3 and length 4. Interval $[3,6]$ also has range 3 and length 4, so the earliest-start rule chooses $[0,3]$.
+
+The three length-5 windows have ranges 6, 6, and 5. All fail. Every longer interval contains a length-5 interval and cannot have a smaller range, so no longer feasible answer exists. The two-deque scan gives the same result, while this exclusion argument independently certifies optimality.
+
+\answer{AG4-3}
+With limit 2, the best candidates by end are: $1-80/120=1/3$ at end 1; $1-100/120=1/6$ at end 2; $1-70/100=3/10$ at end 3, where only prices 80 and 100 are eligible; and $1-90/100=1/10$ at end 4. The optimum is $1/3$ on $[0,1]$.
+
+Without the limit, the drop from 120 to 70 gives $5/12$ on $[0,3]$, the global maximum. Its duration is 3 and it is infeasible for the first problem. Keeping an expired peak would incorrectly substitute the unconstrained answer.
+
+\answer{AG4-4}
+The fall from 80 to 60 is exactly $1/4$, on $[2,4]$ with duration 2. Consecutive drops are $6/100$, $14/94$, $1/80$, and $19/79$, each strictly less than $1/4$. No duration-1 interval works, so duration 2 is optimal.
+
+For a fixed start $i$, once its first qualifying end $j$ has been processed, every later end gives a longer interval. A start already dominated by a later, no-lower price can also be removed safely. These deletion rules depend on the shortest-duration objective; they cannot be transferred without proof to maximizing the drawdown ratio.
+
+\par\Needspace{8\baselineskip}
+\subsection*{Section Exercises}
+\input{original-answers/A31}
+\input{original-answers/A32}
+\input{original-answers/A33}

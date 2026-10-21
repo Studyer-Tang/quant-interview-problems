@@ -1,0 +1,31 @@
+\problem{P06}{Stopping at an Unobserved Threshold}{Mixtures and posterior inference}
+Let $A,U_1,U_2,\ldots$ be independent uniforms on $(0,1)$, with the threshold $A$ unobserved. Stop when the sum of increments first exceeds $A$, and let $N$ be the number of increments. Find the distribution, mean, and variance of $N$. If only $N=n$ is observed, find the posterior density and mean of $A$.
+\solution Conditional on $A=a\le1$, the event that the first $k$ increments sum to at most $a$ is a simplex of volume $a^k/k!$. Hence
+\[
+\Prob(N>k)=\int_0^1\frac{a^k}{k!}\dd a=\frac1{(k+1)!},\quad k\ge0.
+\]
+Subtracting successive tails gives
+\[
+\boxed{\Prob(N=n)=\frac n{(n+1)!},\quad n\ge1.}
+\]
+The integer tail identities yield
+\[
+\E N=\sum_{k\ge0}\frac1{(k+1)!}=e-1,
+\quad \E N^2=\sum_{k\ge0}\frac{2k+1}{(k+1)!}=e+1.
+\]
+Thus $\boxed{\Var N=3e-e^2}$.
+
+The likelihood of observing $N=n$ at threshold $a$ is
+\[
+\Prob(N=n\mid A=a)=\frac{a^{n-1}}{(n-1)!}-\frac{a^n}{n!}.
+\]
+Multiplying by the uniform prior density and normalizing gives
+\[
+\boxed{f_{A\mid N=n}(a)=(n+1)a^{n-1}-\frac{n+1}{n}a^n,
+\quad0<a<1.}
+\]
+Integrating $a$ against this density gives
+\[
+\boxed{\E(A\mid N=n)=1-\frac{n+1}{n(n+2)}.}
+\]
+For example, stopping after one increment gives posterior mean $1/3$. A longer observed waiting time provides evidence for a larger threshold.

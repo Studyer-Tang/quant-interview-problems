@@ -1,0 +1,20 @@
+\answer{OP35}
+Conditional on $H=h$, the remaining $n-1$ observations, before sorting, behave as independent uniform draws on $(0,h)$. Thus, for $0\le t\le h$,
+\[
+\Prob(L>t\mid H=h)=\left(1-\frac th\right)^{n-1}.
+\]
+Integrating the conditional survival function yields
+\[
+\E[L\mid H=h]=\int_0^h\left(1-\frac th\right)^{n-1}\dd t
+=\frac hn.
+\]
+It follows that $\E L=\E H/n$ and
+\[
+\E[LH]=\E\!\left[H\E(L\mid H)\right]=\frac1n\E H^2,
+\qquad \Cov(L,H)=\frac1n\Var(H).
+\]
+Replacing every observation by $1-X_i$ preserves the joint distribution and changes the minimum to $1-H$. Hence $L\overset d=1-H$, so $\Var(L)=\Var(H)>0$. Consequently,
+\[
+\boxed{\Corr(L,H)=\frac1n.}
+\]
+Conditioning on $H=h$ uses the version determined by the continuous densities, not a ratio of probabilities for a null event.

@@ -1,0 +1,24 @@
+\problem{P04}{Conditioning on a Product}{Transformation and independence}
+Let $U,V$ be independent uniforms on $(0,1)$, and define $P=UV$ and $Q=\log U/\log P$. Prove that $P,Q$ are independent. Find the conditional density and mean of $U$ given $P=p\in(0,1)$, and compare that mean with $\sqrt p$.
+\solution Put $X=-\log U$ and $Y=-\log V$. These are independent rate-one exponentials. With $S=X+Y$ and $Q=X/S$, the inverse transformation is $X=QS$, $Y=(1-Q)S$, with Jacobian $s$. Hence
+\[
+f_{S,Q}(s,q)=s e^{-s},\quad s>0,\quad0<q<1.
+\]
+This factors into the gamma density of $S$ and the uniform density of $Q$. Thus $Q$ is independent of $S$, and therefore of $P=e^{-S}$. The transformation also gives $f_P(p)=-\log p$.
+
+Given $P=p$, we have $U=p^Q$ with $Q$ still uniform. Since $p^q$ decreases with $q$, for $p<u<1$,
+\[
+\Prob(U\le u\mid P=p)=1-\frac{\log u}{\log p}
+=\frac{\log(u/p)}{\log(1/p)}.
+\]
+Consequently,
+\[
+\boxed{f_{U\mid P=p}(u)=\frac1{u\log(1/p)},\quad p<u<1,}
+\]
+and
+\[
+\boxed{\E(U\mid P=p)=\int_0^1p^q\dd q
+=\frac{1-p}{\log(1/p)}>\sqrt p.}
+\]
+The strict inequality follows from Jensen's inequality for the strictly convex function $q\mapsto p^q$, since $\E Q=1/2$ and $Q$ is nondegenerate.
+\pitfall Conditioning on an exact continuous value requires a conditional density, rather than division by a zero event probability. Fixing a product does not force either factor to equal its geometric mean.

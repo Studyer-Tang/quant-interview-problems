@@ -1,0 +1,32 @@
+\section{Statistics and Linear Algebra}
+
+\answer{AG1-1}
+Since $\Cov(W,Z)=\Var(T)$, the latent variance is $3$. Then $\Var(U)=5-3=2$ and $\Var(V)=4-3=1$, both nonnegative. The instrumental-variable ratio gives $\beta=6/3=2$, whereas the ordinary slope is $6/5$. Independent centered normal variables with variances $3,2,1$, together with independent centered response noise, realize the specified moments.
+The model necessarily imposes $\Cov(W,Y)=\Cov(Z,Y)=\beta\Var(T)$. Values $6$ and $5$ therefore contradict it; changing measurement-noise variances cannot repair the contradiction. This is a testable model restriction, not a reason to choose one ratio arbitrarily.
+
+\answer{AG1-2}
+A25 bounds both probabilities by $1/(1+2^2)=1/5$. The non-strict event attains it with probability $1/5$ at $2$ and $4/5$ at $-1/2$. The mean is $2/5-2/5=0$, and the second moment is $4/5+1/5=1$.
+The strict event cannot attain the bound: equality would also force equality for the non-strict event, hence the distribution just found, whose strict-tail probability is zero. For $h>0$, let $b=2+h$ and put probability $1/(1+b^2)$ at $b$ and $b^2/(1+b^2)$ at $-1/b$. Its mean is zero and variance one. Its strict-tail probability tends to $1/5$ as $h\downarrow0$.
+
+\answer{AG1-3}
+Ignoring a constant, the objective is $\sum_j(b_j-z_j)^2/2+\sum_jb_j/2$. With budget multiplier $\nu\ge0$, coordinatewise minimization under nonnegativity gives
+\[
+ b_j=(z_j-1/2-\nu)_+.
+\]
+At $\nu=0$ this is $(5/2,1/2,0)$, whose sum is $3$, violating the budget. The budget must bind. Taking $\nu=1/2$ gives $(2,0,0)$ with sum $2$. The first coordinate has zero adjusted gradient; the second has zero right derivative at zero; the third has positive right derivative. All optimality conditions hold. The quadratic part is strictly convex, so the solution is unique even though the second coordinate is exactly at the threshold. The common multiplier couples the coordinates.
+
+\answer{AG1-4}
+Take $c=(1,1)^\top,d=0$. In A06, $e=1$ and $q=1+1/4=5/4$, so
+\[
+ \widehat\beta_c=(2,-1)^\top-\frac45(1,1/4)^\top
+ =(6/5,-6/5)^\top,
+ \qquad\Delta\mathrm{RSS}=4/5.
+\]
+For a direct check, put $\beta=(t,-t)$. The extra sum of squares is $(t-2)^2+4(1-t)^2$, whose derivative $10t-12$ vanishes uniquely at $t=6/5$. Substitution gives $16/25+4/25=4/5$. Equal-sized corrections to the two coefficients would therefore not be optimal.
+
+\par\Needspace{8\baselineskip}
+\subsection*{Section Exercises}
+\input{original-answers/A02}
+\input{original-answers/A03}
+\input{original-answers/A05}
+\input{original-answers/A30}

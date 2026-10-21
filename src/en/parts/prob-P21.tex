@@ -1,0 +1,25 @@
+\problem{P21}{A Renewal Process with Two Step Sizes}{Recurrences and overshoots}
+Independent increments $X_i$ equal $1$ or $2$ with probabilities $1-q$ and $q$, where $0\le q\le1$. For integer $m\ge1$, let $T_m=\min\{n:\sum_{i=1}^nX_i\ge m\}$ and $O_m=\sum_{i=1}^{T_m}X_i-m$. Find $\E T_m$ and the law of $O_m$.
+\solution Write $e_m=\E T_m$, with $e_0=e_{-1}=0$. Conditioning on the first step gives
+\[
+e_m=1+(1-q)e_{m-1}+qe_{m-2},\quad m\ge1.
+\]
+For $d_m=e_m-e_{m-1}$, we have $d_1=1$ and $d_m=1-qd_{m-1}$. Summing the resulting geometric progression yields
+\[
+d_m=\frac{1-(-q)^m}{1+q},\qquad
+\boxed{e_m=\frac m{1+q}+\frac{q[1-(-q)^m]}{(1+q)^2}.}
+\]
+Each step is at least one, so $T_m\le m$. The event $\{T_m\ge i\}$ depends only on the first $i-1$ increments. Consequently,
+\[
+\E\sum_{i=1}^{T_m}X_i
+=\sum_{i=1}^m\E[X_i\ind\{T_m\ge i\}]
+=(1+q)e_m.
+\]
+Since the overshoot is either zero or one,
+\[
+\boxed{\Prob(O_m=1)=\E O_m
+=\frac{q[1-(-q)^m]}{1+q},\quad
+\Prob(O_m=0)=1-\Prob(O_m=1).}
+\]
+At $q=0$, exactly $m$ steps are needed. At $q=1$, the count is $\lceil m/2\rceil$ and the overshoot depends on the parity of $m$, consistently with the formulas.
+\insight The alternating term $(-q)^m$ records the lattice structure. An approximation based only on the mean step size would miss it.

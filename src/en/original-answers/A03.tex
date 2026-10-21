@@ -1,0 +1,17 @@
+\answer{OA03}
+Write $A=\{X+Y>1\}$. The original joint density is $1$ on the unit square, and $\Prob(A)=1/2$, so the conditional density is $2$ on the upper triangle. Given $X=x$ and $A$, the variable $Y$ is uniform on $(1-x,1)$. Hence
+\[
+ \E[Y\mid X=x,A]=1-\frac x2,
+ \qquad 0<x<1.
+\]
+The conditional mean is already affine. The residual $u=Y-(1-X/2)$ satisfies $\E[u\mid X,A]=0$, so it is orthogonal to both the constant and $X$. The regression therefore has intercept $1$ and slope
+\[
+ \boxed{-\frac12}.
+\]
+For a moment check, the conditional density $f_{X\mid A}(x)=2x$ gives
+\[
+ \E[X\mid A]=\frac23,\quad
+ \E[X^2\mid A]=\frac12,\quad
+ \Var(X\mid A)=\frac1{18}.
+\]
+The conditional-mean formula implies $\Cov(X,Y\mid A)=-\Var(X\mid A)/2=-1/36$. Dividing by the conditional variance again gives $-1/2$. Independence holds before selection and cannot be carried over to the conditional population.

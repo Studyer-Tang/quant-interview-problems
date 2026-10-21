@@ -1,0 +1,89 @@
+\problem{CX01}{Comparisons in Randomized Quicksort}{}
+Randomized quicksort sorts $n$ distinct keys. In each nonempty subproblem, it independently chooses a uniform pivot, compares it once with every other key in that subproblem, then recurses on the two sides. Let $C_n$ count all comparisons. Find $\E C_n$ exactly and explain why expected $O(n\log n)$ work does not mean that every run has this order of cost.
+\solution Number the keys by increasing rank, $1,\ldots,n$. Let $I_{ij}$ indicate whether ranks $i<j$ are ever compared. Every comparison involves a pivot, which is then removed from future subproblems. A pair can therefore be compared at most once, and
+\[
+C_n=\sum_{1\le i<j\le n}I_{ij}.
+\]
+Consider the first pivot selected from ranks $\{i,i+1,\ldots,j\}$. Pivots outside this interval cannot separate $i$ from $j$. If the first pivot inside is an interior rank, it separates the two permanently. If it is either endpoint, the endpoints are compared then. Hence
+\[
+\Prob(I_{ij}=1)=\frac2{j-i+1}.
+\]
+Uniformity of the first pivot can be seen through an equivalent implementation: give all keys independent continuous random priorities and always choose the lowest-priority key in a subproblem. This has the same pivot law, and each rank in the interval is equally likely to have its lowest priority.
+
+Linearity of expectation does not require the indicators to be independent. Grouping by $d=j-i$ and writing $H_n=\sum_{k=1}^n1/k$ gives
+\[
+\begin{aligned}
+\E C_n
+&=2\sum_{d=1}^{n-1}\frac{n-d}{d+1}\\
+&=2(n+1)(H_n-1)-2(n-1)\\
+&=\boxed{2(n+1)H_n-4n}.
+\end{aligned}
+\]
+For $n=1$ the formula yields zero; define $C_0=0$ separately. For example, $\E C_4=29/6$.
+
+If every pivot happens to be the smallest key in its subproblem, the cost is $(n-1)+\cdots+1=n(n-1)/2$. This event has positive probability $1/n!$. The expected order thus averages over random runs and is not a worst-case bound for each run.
+\insight Ask when a particular pair of keys meets, rather than tracking the whole random recursion tree. Correlated pair indicators can still be added in expectation.
+
+\problem{CX02}{Balancing Shortage and Excess Inventory}{}
+Nonnegative demand $D$ has finite mean and distribution function $F$. A real order quantity $q\ge0$ incurs shortage cost $c_u>0$ per unit and excess cost $c_o>0$ per unit. Minimize
+\[
+L(q)=c_u\E(D-q)_++c_o\E(q-D)_+.
+\]
+Without assuming a continuous demand distribution, characterize every minimizer. For $\Prob(D=0,1,2)=(1/4,1/2,1/4)$, find all minimizers when $(c_u,c_o)=(3,1)$ and when $(c_u,c_o)=(2,1)$.
+\solution For each fixed demand, the loss is a convex, piecewise linear function of $q$, so its expectation is convex. One-sided difference quotients are bounded by $\max(c_u,c_o)$, allowing their limits inside the expectation. Thus
+\[
+\begin{aligned}
+L'_-(q)&=(c_u+c_o)F(q-)-c_u,\\
+L'_+(q)&=(c_u+c_o)F(q)-c_u.
+\end{aligned}
+\]
+At $q>0$, convexity makes nonpositive left derivative and nonnegative right derivative necessary and sufficient. Writing $\tau=c_u/(c_u+c_o)$, the full minimizer set is
+\[
+\boxed{\{q\ge0:F(q-)\le\tau\le F(q)\}}.
+\]
+At the boundary $q=0$, only the right derivative must be nonnegative. Since nonnegative demand implies $F(0-)=0\le\tau$, the same formula remains valid. Extending the loss formally to $q<0$ makes it strictly decreasing there, so the constraint loses no additional candidate.
+
+A minimizer exists: $\tau\in(0,1)$, and the finite generalized quantile $\inf\{x:F(x)\ge\tau\}$ satisfies the displayed condition. If $F$ is flat at level $\tau$, an entire interval can minimize the loss; uniqueness must not be assumed.
+
+For the discrete example and costs $(3,1)$, $\tau=3/4$. The distribution function jumps to $3/4$ at $1$ and remains there until $2$, yielding all minimizers $[1,2]$, each with expected loss $1$. For costs $(2,1)$, $\tau=2/3$ lies strictly inside the jump at $1$. The unique minimizer is then $q=1$, with minimum loss $3/4$.
+\insight Asymmetric absolute loss selects a cost-weighted quantile. The mean is generally not optimal, and atoms or gaps in the distribution determine whether the optimal action is unique.
+
+\problem{CX03}{Maximum Entropy with a Fixed Mean}{}
+A nonnegative integer-valued random variable $N$ has mean $\mu>0$. With natural logarithms, define
+\[
+H(N)=-\sum_{k=0}^\infty p_k\log p_k,\qquad 0\log0=0.
+\]
+Prove a finite entropy bound and identify the unique maximizing distribution and its entropy. You may use the log-sum inequality for finite distributions, but must handle the infinite support without assuming finite entropy in advance.
+\solution Put $r=\mu/(1+\mu)\in(0,1)$ and consider
+\[
+q_k=(1-r)r^k,\qquad k\ge0.
+\]
+This geometric distribution has mean $r/(1-r)=\mu$, and its entropy is
+\[
+H(q)=-\log(1-r)-\mu\log r
+=(1+\mu)\log(1+\mu)-\mu\log\mu.
+\]
+
+For a rigorous general bound, retain states $0,\ldots,M-1$ separately and merge $N\ge M$ into one tail state of probability $t_M$. The reference distribution assigns probability $r^M$ to this tail. The finite log-sum inequality bounds the grouped entropy by
+\[
+H_M\le-\sum_{k<M}p_k\log q_k-t_M\log(r^M).
+\]
+The right-hand side is
+\[
+-(1-t_M)\log(1-r)
+-\log r\left(\sum_{k<M}kp_k+Mt_M\right).
+\]
+As $M\to\infty$, $t_M\to0$ and the parenthesized quantity is $\E\min(N,M)\uparrow\mu$. Also
+$H_M=-\sum_{k<M}p_k\log p_k-t_M\log t_M$ tends to $H(N)$, even if the latter is initially allowed to be infinite, since $-t\log t\to0$. Consequently
+\[
+H(N)\le(1+\mu)\log(1+\mu)-\mu\log\mu<\infty.
+\]
+
+To prove uniqueness, the difference between the grouped cross-entropy bound and $H_M$ is the grouped relative entropy $D_M\ge0$. Its limit is $H(q)-H(N)$. If $p\ne q$, select $j$ with $p_j\ne q_j$. For every $M>j$, merge all groups other than state $j$. The log-sum inequality gives
+\[
+D_M\ge
+p_j\log\frac{p_j}{q_j}
++(1-p_j)\log\frac{1-p_j}{1-q_j}>0.
+\]
+This positive lower bound does not depend on $M$, excluding equality. Thus the geometric distribution uniquely maximizes entropy.
+\insight On an infinite state space, first aggregate the tail and then pass to the limit. This avoids presupposing finite entropy when manipulating relative entropy.

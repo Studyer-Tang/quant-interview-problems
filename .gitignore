@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+.AppleDouble
+
+# TeX build output
+*.aux
+*.log
+*.toc
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.bbl
+*.blg
+*.nav
+*.snm
+src/**/main.pdf
+
+# Local editing files
+*.swp
+*.swo
+*~

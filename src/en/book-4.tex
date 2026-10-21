@@ -1,0 +1,390 @@
+\chapter{Mathematical Reasoning}
+
+\section{Mathematical Reasoning}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/4-1}
+
+
+\problem{A14}{Queens on a Torus}{Congruence invariants; construction}
+Identify opposite edges of an $n\times n$ chessboard, indexing rows and columns modulo $n$. Place $n$ queens with one in each row and column, and require both diagonal labels $i+j$ and $i-j$ of their occupied cells to be distinct. Determine all positive integers $n$ for which this is possible and give a construction.
+\solution Let the chosen columns form a permutation $\pi(i)$, $i=0,\ldots,n-1$. If $i+\pi(i)$ also forms a permutation, summing modulo $n$ gives
+\[
+ \frac{n(n-1)}2\equiv n(n-1)\equiv0\pmod n,
+\]
+so $n$ must be odd. Put $S=\sum_{i=0}^{n-1}i^2$. Since both diagonal label lists are permutations,
+\[
+ 2S\equiv\sum_i\bigl((i+\pi(i))^2+(i-\pi(i))^2\bigr)
+ =4S\pmod n.
+\]
+Consequently $n\mid2S=n(n-1)(2n-1)/3$. If $3\mid n$, the product $(n-1)(2n-1)$ is not divisible by $3$, contradicting this divisibility. Hence $\gcd(n,6)=1$ is necessary.
+Conversely, under that condition take $\pi(i)=2i\pmod n$. The column and two diagonal labels are $2i,3i,-i$, respectively. All three multipliers are invertible modulo $n$, so all three lists are permutations. This also handles $n=1$.
+\insight First moments rule out even sizes; second moments rule out multiples of three. The two diagonal constraints require more than one invariant.
+
+\problem{A17}{A Seven-Person Sharing Design}{Incidence counting; difference construction}
+Seven people each hold three types of item. Each pair of people shares exactly one type, and each type is held by at least one and at most three people. Prove that there are exactly seven types and that each is held by three people. Construct an arrangement satisfying every condition.
+\solution Let $n_j$ count types held by exactly $j$ people, for $j=1,2,3$. Counting person--item incidences gives
+\[
+ n_1+2n_2+3n_3=21.
+\]
+Counting the $\binom72=21$ pairwise sharing relations by item gives $n_2+3n_3=21$. Subtraction yields $n_1+n_2=0$, hence $n_1=n_2=0$ and $n_3=7$.
+Label the people $0,\ldots,6$. For each $i$, introduce an item shared by
+\[
+ \{i,i+1,i+3\}\pmod7.
+\]
+Each person occurs in three translated sets and therefore holds three types. The six directed differences within $\{0,1,3\}$ are exactly the six nonzero residues modulo $7$. Thus each ordered pair of distinct people occurs in exactly one translate, proving the pairwise sharing condition.
+\insight Count both person--item incidences and pairwise sharing incidences. Together they can force the size of every item group; uniqueness of differences verifies the construction.
+
+\problem{A19}{Recovering Edge Bits}{Parity equations; connected components}
+Each edge of a finite undirected simple graph carries a bit. The parity of all incident edge bits is known at every vertex, as are some edge values. Let $H$ contain the unknown edges and all $v$ vertices; let it have $q$ edges and $c$ connected components, including isolated vertices. Give necessary and sufficient consistency conditions, count the solutions, characterize unique recovery, and construct all solutions.
+\solution XOR the known incident bits out of each vertex check, leaving residual requirements $b_x$. Within any component of $H$, each unknown edge is counted twice. Thus the XOR of the $b_x$ in each component must be zero.
+For sufficiency, choose a spanning tree in each nontrivial component. Assign arbitrary values to all non-tree edges and remove their contributions from the vertex requirements. On a tree, process leaves: the unique remaining edge at a leaf must equal its residual check. Fix it, delete the leaf, and update its neighbor. The final root check holds automatically by the zero component parity. At an isolated vertex, the condition is simply $b_x=0$.
+The spanning forest has $v-c$ edges. There are therefore $q-v+c$ freely assignable non-tree bits, with all tree bits uniquely determined afterward. The number of solutions is
+\[
+ \boxed{2^{q-v+c}}.
+\]
+For consistent data, recovery is unique exactly when $q=v-c$, that is, when the unknown-edge graph is a forest. If it contains a cycle, flipping every bit on that cycle preserves all checks and directly proves nonuniqueness.
+\insight Uniqueness depends on the unknown subgraph, not on whether the original graph has cycles. Observed edges may have already broken every remaining cycle.
+
+\problem{A20}{Balancing Three Accounts}{Modular invariants; shortest operation sequence}
+Three accounts start with integer balances $a_1,a_2,a_3$. Each step subtracts $2$ from one account and adds $1$ to each of the others. Negative intermediate balances are allowed. When can the balances be made equal? Find the minimum number of steps and construct a sequence attaining it.
+\solution The total is invariant, so the common final value must be $t=(a_1+a_2+a_3)/3$. Each step changes any pairwise difference by $0$ or $\pm3$. Consequently the three initial balances must be congruent modulo $3$; this also makes $t$ an integer.
+Suppose there are $N$ steps and account $i$ is chosen for subtraction $n_i$ times. Then $\sum_i n_i=N$, and its final balance is
+\[
+ a_i+N-3n_i=t.
+\]
+Thus $n_i=(a_i+N-t)/3\ge0$, implying $N\ge t-\min_i a_i$. Let $m=\min_i a_i$ and choose
+\[
+ N=t-m,\qquad n_i=\frac{a_i-m}{3}.
+\]
+Under the congruence condition these are nonnegative integers summing to $N$. Choose account $i$ for subtraction exactly $n_i$ times, in any order, to reach the common balance $t$. This proves sufficiency and optimality. Initially equal balances require zero steps, as the formula states.
+\insight Invariants reveal reachability obstacles; counting each operation type then supplies both a construction and a shortest-length proof. Allowing negative intermediate balances makes arbitrary ordering valid.
+
+\problem{A22}{Powers of Two in a Binomial Coefficient}{Factorial valuations; binary digits}
+For a positive integer $n$, find the exact exponent of $2$ dividing $\binom{2n}{n}$. Determine when it is even but not divisible by $4$, and interpret the result in binary notation.
+\solution Each multiple of $2$ contributes one factor of $2$ to a factorial, each multiple of $4$ contributes another, and so on. Hence
+\[
+ v_2(n!)=\sum_{j\ge1}\left\lfloor\frac n{2^j}\right\rfloor.
+\]
+Write $n=\sum_{k\ge0}b_k2^k$, with $b_k\in\{0,1\}$. Interchanging finite sums gives
+\[
+ v_2(n!)=\sum_k b_k(2^k-1)=n-s_2(n),
+ \qquad s_2(n)=\sum_k b_k.
+\]
+Consequently,
+\[
+ v_2\binom{2n}{n}
+ =2n-s_2(2n)-2(n-s_2(n))=s_2(n),
+\]
+since multiplication by two appends a zero and leaves the binary digit sum unchanged. A positive integer has at least one nonzero binary digit, so the central binomial coefficient is always even. It is not divisible by $4$ exactly when $s_2(n)=1$, equivalently when $n$ is a nonnegative integral power of $2$.
+For example, $n=13=(1101)_2$ gives exact exponent $3$, without expanding the large binomial coefficient.
+\insight Factorial divisibility can reduce to digit counting. An exact valuation provides more information than parity alone.
+
+\problem{A15}{Minimum Travel Time across an Interface}{Geometric optimization; refraction}
+The line $x=0$ divides the plane into regions with speeds $v_1,v_2>0$ on the left and right. Travel from $A=(-a,0)$ to $B=(b,h)$, where $a,b,h>0$, using two straight segments that cross the interface once at $C=(0,y)$. Derive the equation for the optimal crossing, prove uniqueness, and find the equal-speed solution and the limit as $v_2\to\infty$.
+\solution Total time is
+\[
+ T(y)=\frac{\sqrt{a^2+y^2}}{v_1}
+      +\frac{\sqrt{b^2+(h-y)^2}}{v_2},\qquad y\in\R.
+\]
+It tends to infinity as $|y|\to\infty$, and
+\[
+ T''(y)=\frac{a^2}{v_1(a^2+y^2)^{3/2}}
+ +\frac{b^2}{v_2(b^2+(h-y)^2)^{3/2}}>0.
+\]
+Thus the minimizer is unique. Since $T'(0)<0$ and $T'(h)>0$, it lies in $(0,h)$ and solves
+\[
+ \boxed{\frac{y_*}{v_1\sqrt{a^2+y_*^2}}
+ =\frac{h-y_*}{v_2\sqrt{b^2+(h-y_*)^2}}}.
+\]
+If $\theta_1,\theta_2$ are the angles of the two segments to the interface normal, this is $\sin\theta_1/v_1=\sin\theta_2/v_2$.
+When $v_1=v_2$, both sides are positive. Squaring and simplifying gives $by_*=a(h-y_*)$, hence $y_*=ah/(a+b)$: the path is the straight segment $AB$. With the other parameters fixed and $v_2\to\infty$, the right-hand side is at most $1/v_2\to0$. Since $0<y_*<h$, this forces $y_*\to0$, minimizing distance spent in the slower region.
+\insight Strict convexity proves that the stationary point is the unique global optimum before any equation is solved. A complicated radical expression for a general speed ratio is unnecessary.
+
+\problem{A16}{Choosing a Cut in a Folded Rope}{Unfolded coordinates; minimax design}
+A rope of length $L>0$ is folded in half $n\ge1$ times, each time folding the current right half onto the left. The final segment has length $h=L/2^n$. Cut through every layer at distance $th$ from its left end, where $0<t<1$. Choose $t$ to minimize the longest unfolded piece. Treat $n=1$ and $n\ge2$ separately, and decide whether all pieces can have equal length.
+\solution Put $N=2^n$. The $N$ original intervals of length $h$ cover the folded segment in alternating orientations. The unfolded cut locations are
+\[
+ th,\ (2-t)h,\ (2+t)h,\ (4-t)h,\ldots,(N-t)h.
+\]
+Both endpoint pieces have length $th$, and interior gaps alternate between $2(1-t)h$ and $2th$.
+For $n=1$, there is only one interior gap. The longest piece has length $h\max\{t,2(1-t)\}$, uniquely minimized by equating the two terms: $t=2/3$. All three pieces then have length $2h/3=L/3$.
+For $n\ge2$, both interior gap types occur. The longest length is therefore
+\[
+ 2h\max\{t,1-t\}\ge h.
+\]
+The unique optimum is $t=1/2$, with longest length $h=L/2^n$. The two endpoint pieces have length $h/2$, while the other $N-1$ pieces have length $h$. For every $t>0$, an endpoint length $th$ differs from an interior length $2th$, so equal lengths for all pieces are impossible.
+\insight List every type of unfolded gap, not just the number of cuts. At small fold counts, one interior gap type is absent and changes the optimum.
+
+\problem{A18}{Manhattan Distance between Random Points}{Geometric probability; convolution}
+Choose two independent uniform points $(X_1,Y_1)$ and $(X_2,Y_2)$ in the unit square. Let $D=|X_1-X_2|+|Y_1-Y_2|$. Find $\Prob(D\le t)$ for $0\le t\le1$, as well as $\Prob(D>1)$ and $\E D$.
+\solution For $U=|X_1-X_2|$, the two corner triangles of the unit square give $\Prob(U>u)=(1-u)^2$. Thus $f_U(u)=2(1-u)$ for $0<u<1$. The variable $V=|Y_1-Y_2|$ is independent of $U$ and has the same law.
+For $0\le t\le1$, the integration region is $u,v\ge0,u+v\le t$, so
+\[
+ \begin{aligned}
+ \Prob(D\le t)
+ &=4\int_0^t(1-u)\int_0^{t-u}(1-v)\,\dd v\,\dd u\\
+ &=2t^2-\frac43t^3+\frac16t^4.
+ \end{aligned}
+\]
+At $t=1$ this gives $\Prob(D>1)=1-5/6=1/6$. Also,
+\[
+ \E U=2\int_0^1u(1-u)\,\dd u=\frac13,
+ \qquad\E D=\frac23.
+\]
+The distribution is continuous, so the boundary $D=1$ has zero probability. For $t>1$, the region is truncated by $u,v\le1$ and the displayed polynomial no longer applies.
+\insight Find each coordinate difference first and then convolve. The expected distance follows directly from linearity, without requiring the full distribution.
+
+\problem{A21}{Leading Digits Three Terms Apart}{Equidistribution; joint frequencies}
+Choose $n$ uniformly from $1,\ldots,N$. As $N\to\infty$, find the probability limit that both $2^n$ and $2^{n+3}$ have leading decimal digit $1$. Also find the limiting conditional probability for the second event given the first. Are the events asymptotically independent?
+\solution Put $\alpha=\log_{10}2$. If it were rational, an equality $2^q=10^p$ would contradict unique prime factorization, so $\alpha$ is irrational. The sequence $\{n\alpha\}$ is equidistributed in $[0,1)$: for each nonzero integer $h$, the corresponding exponential sum is a bounded geometric sum, whose average tends to zero. Weyl's criterion applies.
+Leading digit $1$ means that the fractional part lies in $I=[0,\alpha)$. A gap of three terms is a circle rotation by $3\alpha=\log_{10}8$. For $x\in I$, the point $x+3\alpha$ cannot return to $I$ without crossing $1$. After crossing, the required overlap is
+\[
+ 1-3\alpha\le x<\alpha.
+\]
+The additional upper condition $x<1-2\alpha$ is automatic because $3\alpha<1$. The joint limit is therefore
+\[
+ 4\alpha-1=\log_{10}(8/5),
+\]
+and the conditional limit is $(4\alpha-1)/\alpha$, approximately $0.6781$. The marginal limit is $\alpha\approx0.3010$. The joint limit, approximately $0.2041$, differs from $\alpha^2\approx0.0906$, so there is no asymptotic independence.
+\insight Equidistribution makes a single phase uniform; it does not make phases at a fixed lag independent. Joint frequencies require intersecting rotated intervals.
+
+\problem{A23}{A Differential Blow-Up Bound}{Reciprocal transformation; sharpness}
+Let $a>0$ and let $f:[0,T)\to(0,\infty)$ be differentiable, with a right derivative at zero, satisfying $f(0)=a$ and $f'(x)\ge f(x)^2$. Prove that $T\le1/a$ and exhibit a function on the longest possible interval. Also obtain a lower bound for $f(x)$ when $x<\min\{T,1/a\}$.
+\solution Set $g=1/f$. Positivity makes this well defined, and
+\[
+ g'(x)=-\frac{f'(x)}{f(x)^2}\le-1.
+\]
+The mean value theorem gives $g(x)-g(0)\le-x$, hence
+\[
+ 0<\frac1{f(x)}\le\frac1a-x.
+\]
+If $T>1/a$, choosing $x=1/a$ is a contradiction. Thus $T\le1/a$. Where the right-hand side is positive, taking reciprocals gives
+\[
+ f(x)\ge\frac{a}{1-ax}.
+\]
+The function $f(x)=a/(1-ax)$ is positive on $[0,1/a)$ and satisfies $f'=f^2$, so the interval-length bound is sharp. It diverges at the endpoint and admits no differentiable extension there with a finite positive value.
+A general function satisfying the inequality may blow up earlier, or simply be specified on a shorter interval. The assumptions do not force explosion exactly at $1/a$ or force the function to have the displayed equality form.
+\insight Taking a reciprocal turns a quadratic growth lower bound into a linear decrease and directly controls the possible existence time.
+
+\problem{A24}{A Quadratic Perturbation of Additivity}{Cauchy's equation; local boundedness}
+Find all functions $f:\R\to\R$ satisfying
+\[
+ f(x+y)=f(x)+f(y)+2xy\quad(x,y\in\R),
+ \qquad f(1)=0,
+\]
+and bounded on $[0,1]$. Explain where boundedness is needed.
+\solution Put $g(x)=f(x)-x^2$. Then $g(x+y)=g(x)+g(y)$ and $g(1)=-1$. Additivity gives $g(0)=0$, $g(-x)=-g(x)$, and the integer-multiple identities imply $g(q)=-q$ for every rational $q$.
+Boundedness of $f$ on $[0,1]$ implies the same for $g$. Oddness extends this to $|g(x)|\le M$ for $|x|\le1$, with some $M>0$. Given $\varepsilon>0$, choose an integer $k>M/\varepsilon$. If $|h|<1/k$, then
+\[
+ |g(h)|=\frac{|g(kh)|}{k}\le\frac Mk<\varepsilon.
+\]
+Thus $g$ is continuous at zero, and additivity makes it continuous everywhere. For rationals $q_j\to x$, we obtain $g(x)=\lim_jg(q_j)=-x$. The unique answer is
+\[
+ \boxed{f(x)=x^2-x}.
+\]
+Direct substitution checks the equation, normalization, and boundedness. Boundedness extends a rational identity to the reals; without any regularity condition, additive functions can be discontinuous, so a calculation on rational arguments is insufficient.
+\insight Subtract the quadratic term that produces the cross term, then solve the remaining additive equation. Local regularity is needed only for the passage from rational to real arguments.
+
+\problem{A26}{Local Regularity of an Oscillation}{Difference quotients; amplitude and frequency}
+For $\alpha,\beta>0$, define $f(0)=0$ and, for $x\ne0$,
+\[
+ f(x)=|x|^\alpha\sin(|x|^{-\beta}).
+\]
+Determine continuity and differentiability at zero, and determine when the derivative is continuous there. Prove necessity using explicit sequences.
+\solution Since $|f(x)|\le|x|^\alpha$, continuity at zero holds for all the stated parameters. The absolute difference quotient is at most $|x|^{\alpha-1}$, so $\alpha>1$ gives $f'(0)=0$.
+Conversely, choose positive sequences satisfying $x_k^{-\beta}=2\pi k+\pi/2$ and $y_k^{-\beta}=2\pi k+3\pi/2$. Their difference quotients are $x_k^{\alpha-1}$ and $-y_k^{\alpha-1}$. They have distinct limits for $\alpha=1$ and diverge with opposite signs for $\alpha<1$. Thus differentiability holds exactly when $\alpha>1$.
+For $x>0$,
+\[
+ f'(x)=\alpha x^{\alpha-1}\sin(x^{-\beta})
+ -\beta x^{\alpha-\beta-1}\cos(x^{-\beta}).
+\]
+On the negative half-line use the oddness of the derivative of this even function. If $\alpha>\beta+1$, both terms tend to zero, so the derivative is continuous. If $1<\alpha\le\beta+1$, take $x_k^{-\beta}=2\pi k$. Then $f'(x_k)=-\beta x_k^{\alpha-\beta-1}$, which is constantly $-\beta$ in the equality case and diverges in the strict case. Neither converges to $f'(0)=0$. Therefore the derivative is continuous at zero exactly when $\alpha>\beta+1$.
+\insight Differentiability is controlled by amplitude divided by distance. Continuity of the derivative also depends on oscillation frequency, producing a different threshold.
+
+\problem{A27}{One-Sided Derivatives and Convexity}{Secant comparisons; countable exceptional sets}
+Let $f:\R\to\R$ be continuous, with a finite right derivative $g(x)=f'_+(x)$ at every point. Suppose $g$ is nondecreasing. Prove that $f$ is convex, that finite left derivatives exist everywhere, and that the set where $f$ is not differentiable is at most countable. Do not assume continuity of $g$.
+\solution First prove a comparison lemma: if a continuous $h$ has nonnegative right derivative on $[a,b)$, then $h(b)\ge h(a)$. Otherwise choose a sufficiently small $\varepsilon>0$ so that $q(x)=h(x)+\varepsilon x$ still satisfies $q(b)<q(a)$. Its maximum on $[a,b]$ occurs at some $t<b$, where its right difference quotients are nonpositive. This contradicts $q'_+(t)>0$.
+Apply the lemma to $f(x)-g(a)x$ and $g(b)x-f(x)$ to obtain
+\[
+ g(a)\le\frac{f(b)-f(a)}{b-a}\le g(b),\qquad a<b.
+\]
+For $a<b<c$, the left secant slope is therefore no greater than the right one. Rearranging this inequality gives convexity.
+Fix $x$. Monotonicity gives a finite left limit $g(x-)$, bounded by values at nearby points. For $a<x$, the comparison lemma also permits upper bound $g(x-)$ because $g(t)\le g(x-)$ for $t<x$. Hence
+\[
+ g(a)\le\frac{f(x)-f(a)}{x-a}\le g(x-).
+\]
+Letting $a\uparrow x$ yields $f'_-(x)=g(x-)$. Nondifferentiability thus occurs exactly when $g(x-)<g(x)$. Select a rational number in each nonempty interval $(g(x-),g(x))$. These intervals are disjoint for distinct points, so this choice injects the exceptional set into the rationals. It is at most countable.
+\insight A monotone one-sided derivative controls secant slopes and yields convexity. Corners correspond to positive jumps of the derivative; continuity of that derivative is unnecessary.
+
+\problem{A28}{Randomizing a Discrete Distribution}{Atomic laws; quantile coupling}
+Enumerate the rationals without repetition as $r_1,r_2,\ldots$. Let $\Prob(X=r_j)=w_j>0$, with $\sum_jw_j=1$, and let $F$ be the distribution function. Independently take $V\sim\operatorname{Unif}(0,1)$ and define
+\[
+ U=F(X-)+V\bigl(F(X)-F(X-)\bigr).
+\]
+Prove that $U$ is uniform on $(0,1)$ and that the generalized inverse $Q(u)=\inf\{x:F(x)\ge u\}$ recovers $Q(U)=X$ almost surely. Why does $F(X)$ alone fail to be uniform?
+\solution Conditional on $X=r_j$, the variable $U$ is uniform on
+\[
+ I_j=(F(r_j-),F(r_j)),
+\]
+whose length is $w_j$. These intervals are disjoint and their lengths sum to one, so their union covers $(0,1)$ except for a set of Lebesgue measure zero. For every Borel set $B\subset(0,1)$,
+\[
+ \Prob(U\in B)=\sum_jw_j\frac{|B\cap I_j|}{w_j}
+ =|B|,
+\]
+where $|\cdot|$ denotes Lebesgue length. Thus $U$ is uniform.
+If $u\in I_j$, then every $x<r_j$ satisfies $F(x)\le F(r_j-)<u$, whereas $F(r_j)>u$. Hence $Q(u)=r_j$, and the conditional probability-one interval events imply $Q(U)=X$ almost surely.
+In contrast, $F(X)$ takes values in the countable set $\{F(r_j):j\ge1\}$ and cannot have a continuous uniform law. The auxiliary variable spreads each atomic probability uniformly across its jump interval.
+\insight The probability integral transform needs randomization at atoms. The inverse quantile transform can then recover the original atom from the same uniform variable.
+
+\par\Needspace{8\baselineskip}
+\subsection*{Section Exercises}
+\input{original-practice/A17}
+\input{original-practice/A22}
+\input{original-practice/A28}
+
+\section{Games}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/4-2}
+
+
+\input{parts/prob-P01}
+
+\problem{A07}{Searching Two Locations}{Zero-sum games; coverage}
+A hides a target in one of three locations while B simultaneously chooses two distinct locations to search. If location $i$ is found, A pays B $w_i$, where $(w_1,w_2,w_3)=(2,3,4)$; otherwise the payment is zero. Both players may randomize. Find all optimal strategies and the value.
+\solution If A uses $p=(6,4,3)/13$, each location contributes $w_ip_i=12/13$ to expected payment. Every two-location search therefore earns $24/13$, giving A an upper guarantee.
+Let B omit locations $1,2,3$ with probabilities $(1,5,7)/13$, respectively. Their search probabilities are $(12,8,6)/13$, and multiplication by their respective payments gives $24/13$ in each case. Thus B guarantees that amount against every hiding location. The matching guarantees establish
+\[
+ \boxed{V=24/13}.
+\]
+To prove uniqueness, note that all three search actions in B's displayed strategy have positive probability. Against any other optimal hiding distribution, their expected payoffs must all equal $V$: their weighted average is $V$, and none can exceed it. Equality of the three pair sums forces all $w_ip_i$ to be equal, which uniquely determines the displayed $p$ after normalization.
+Similarly, A assigns positive probability to every location. Any optimal search strategy must therefore pay $V$ against each one, making its inclusion probabilities $V/w_i$ and its omission probabilities unique. Both optimal strategies are thus unique.
+\insight Here a search action is a subset. Equalize subset payoffs, then obtain an independent optimality certificate from the opponent's coverage probabilities.
+
+\problem{A08}{Adding a Spot-Check Option}{Mixed strategies; changing support}
+An inspector chooses full inspection $I$ or no inspection $N$, while the other player simultaneously chooses violation $C$ or compliance $H$. The inspector's payoff matrix, with rows $I,N$ and columns $C,H$, is
+\[
+ \begin{pmatrix}1&-1\\-2&0\end{pmatrix}.
+\]
+The other player's payoff is its negative. Find the mixed equilibrium. Then add an inspector action $S$ whose expected payoff is $-1/4$ against either column. Find all optimal strategies and the new value.
+\solution If violation has probability $p$, the inspector's original actions earn $2p-1$ and $-2p$. Equality gives $p=1/4$ and value $-1/2$. If full inspection has probability $q$, the payoffs against violation and compliance are $3q-2$ and $-q$. Equality gives $q=1/2$, again with value $-1/2$. These checks cover all pure actions and establish the unique original mixed equilibrium.
+With $S$ available, the inspector guarantees $-1/4$ by choosing it. The opponent holds every inspection payoff to at most $-1/4$ exactly when
+\[
+ 2p-1\le-1/4,\qquad -2p\le-1/4,
+\]
+that is, $p\in[1/8,3/8]$. The new value is therefore $-1/4$, and this interval gives all optimal violation probabilities.
+The inspector's unique optimal strategy is pure $S$: against $p=1/4$, each old action earns only $-1/2$, so any positive weight on them lowers the payoff strictly below $-1/4$. The new action leaves the old indifference intersection unchanged but changes optimal support.
+\insight Indifference equations are valid only for a proposed support. A new action requires checking the entire payoff table again.
+
+\problem{A09}{A Fixed Subtraction Game}{Recursive classification; periodic strategy}
+A pile contains $n\ge0$ stones. Players alternate removing $1$, $3$, or $4$ stones, never more than remain. Taking the last stone wins; a player with no legal move loses. Classify all losing positions and give a legal winning first move from every winning position.
+\solution Write P for losing and N for winning. For $n=0,\ldots,6$, the labels are
+\[
+ \mathrm{P,N,P,N,N,N,N}.
+\]
+For example, $n=2$ can only leave winning position $1$; positions $3,4$ can be emptied; positions $5,6$ can leave $2$ by removing $3,4$.
+We claim that all losing positions have $n\bmod7\in\{0,2\}$. From residue $0$, removing $1,3,4$ gives residues $6,4,3$; from residue $2$, it gives $1,6,5$. None is a losing residue. Conversely, from residues $1,3,4,5,6$, remove respectively
+\[
+ 1,\ 1,\ 4,\ 3,\ 4
+\]
+stones to reach residue $0$ or $2$. These moves are already legal at the smallest representatives $1,3,4,5,6$, hence at all larger ones. Strong induction on the remaining pile proves both the classification and the strategy.
+\insight A finite table suggests periodicity but does not prove it. Check both that losing positions cannot reach one another and that every other position can legally reach one.
+
+\problem{A10}{Congestion with Unequal Servers}{Pure equilibria; social cost}
+There are $n\ge2$ users choosing simultaneously between a slow and a fast server. If $k$ choose the slow server, each pays cost $k$; the other $n-k$ users each pay $(n-k)/2$. Users minimize their own costs and are indifferent at ties. Find every pure Nash equilibrium occupancy. For $n=8$, compare equilibrium and minimum total cost.
+\solution When both servers are occupied, a slow-server user does not move exactly when
+\[
+ k\le\frac{n-k+1}{2}.
+\]
+A fast-server user does not move exactly when $(n-k)/2\le k+1$. Together these give
+\[
+ \boxed{n-2\le3k\le n+1}.
+\]
+The case $k=n$ is not an equilibrium because moving to the empty fast server lowers cost. For $k=0$, only fast-server users need checking: no move is profitable exactly when $n/2\le1$, or $n=2$, which also satisfies the displayed condition. Thus that condition, with integer $0\le k\le n$, describes every equilibrium. Any assignment of users with such occupancy works.
+For $n=8$, equilibria have $k=2$ or $3$. Total cost is
+\[
+ C(k)=k^2+\frac{(8-k)^2}{2}
+ =\frac32\left(k-\frac83\right)^2+\frac{64}{3}.
+\]
+The integer optimum is $k=3$, with cost $43/2$; the other equilibrium, $k=2$, costs $22$. Individual stability therefore does not imply minimum social cost. The worst equilibrium-to-optimum ratio is $44/43$.
+\insight A unilateral switch adds one user to the destination. Equilibrium and total-cost minimization use different objectives and must be analyzed separately.
+
+\problem{A11}{Location with Uneven Demand}{Simultaneous games; medians}
+Two providers simultaneously choose locations in $[0,1]$ and may coincide. Customer location $T$ has density $2t$. Customers choose the nearer provider; ties split demand equally. Each provider maximizes its demand share, with no prices. Find all pure Nash equilibria and the mean customer travel distance at equilibrium.
+\solution The customer distribution function is $F(t)=t^2$. Suppose locations differ, with $a<b$. The left provider receives $F((a+b)/2)$. Moving to any $a'\in(a,b)$ shifts the boundary strictly right. Every nonempty interval has positive demand, so this strictly improves its share. Distinct locations cannot be an equilibrium.
+If both providers locate at $x$, each gets $1/2$. A unilateral move to $z<x$ gives $F((z+x)/2)$, while a move to $z>x$ gives $1-F((z+x)/2)$. If $F(x)>1/2$, a sufficiently close move to the left earns more than half; if $F(x)<1/2$, a close move to the right improves the share. Thus the only candidate is the median
+\[
+ m=1/\sqrt2.
+\]
+At this point every left deviation earns less than $F(m)=1/2$, and every right deviation less than $1-F(m)=1/2$. Staying earns half. Hence both at $m$ is the unique pure equilibrium.
+Travel distance is then $|T-m|$, so
+\[
+ \begin{aligned}
+ \E|T-m|&=\int_0^m2t(m-t)\,\dd t
+       +\int_m^12t(t-m)\,\dd t\\
+ &=\frac23-m+\frac23m^3=\frac{2-\sqrt2}{3}.
+ \end{aligned}
+\]
+\insight First rule out separated locations, then test deviations from coincidence. Competition selects a demand median, not the mean customer location.
+
+\problem{A12}{A Reserve in a Sealed-Bid Auction}{Private values; seller design}
+Two risk-neutral bidders have independent private values uniform on $[0,1]$. The seller first sets a reserve $r\in[0,1]$. Bidders then submit simultaneous sealed bids or abstain. The highest qualifying bid, at least $r$, wins and pays its own bid; everyone else pays zero. Ties are broken randomly. Construct a symmetric equilibrium, calculate expected seller revenue, and choose the best reserve.
+\solution For $0<r<1$, consider abstention for $v<r$ and, for $v\ge r$,
+\[
+ b(v)=\frac{v^2+r^2}{2v}.
+\]
+We have $b(r)=r$, and $b$ is strictly increasing for $v>r$. If a bidder with value $v$ imitates type $t\in[r,1]$, he wins exactly when the opponent's value is below $t$, up to zero-probability ties. His expected payoff is
+\[
+ (v-b(t))t=vt-\frac{t^2+r^2}{2}.
+\]
+This is strictly concave in $t$, with derivative $v-t$. For $v\ge r$, the best choice is $t=v$, giving nonnegative payoff $(v^2-r^2)/2$. For $v<r$, the best point in the interval is $t=r$, giving $r(v-r)<0$, so abstention is preferable. Bids below the reserve are equivalent to abstention; bids above $b(1)$ cannot raise the winning probability and only raise payment. All deviations are covered.
+The maximum value has density $2v$, so seller revenue is
+\[
+ R(r)=\int_r^12v\,b(v)\,\dd v
+ =\frac13+r^2-\frac43r^3.
+\]
+At $r=0$, use $b(v)=v/2$ with $b(0)=0$. At $r=1$, the item is almost surely unsold. The revenue formula remains valid at both endpoints. Since $R'(r)=2r(1-2r)$, the unique revenue-maximizing reserve is $r=1/2$, yielding $5/12$.
+\insight Checking deviations by imitation of another type both derives payoffs and verifies equilibrium. Revenue must include the possibility that no bidder meets the reserve.
+
+\problem{A13}{A Mirror Strategy for a Row}{Symmetric pairing; invariant positions}
+A row of $n\ge1$ numbered positions contains one token per position. Players alternate removing one token, or two tokens whose original positions are adjacent and still occupied. Gaps do not make originally nonadjacent positions adjacent. The player taking the last token wins. Give a first-player winning strategy for every $n$ and prove that every response is legal.
+\solution For odd $n$, remove the middle token first; for even $n$, remove the two adjacent middle tokens. The remaining position is symmetric under reflection about the original midpoint, with a central gap.
+After every opposing move, remove its reflected image. The opponent's legal move cannot cross the central gap, so it is disjoint from its image. The position was symmetric before that move, ensuring that the reflected tokens remain present. Reflection preserves original adjacency, so the response is legal. It restores symmetry.
+Each pair of moves reduces the number of tokens, so play terminates. Whenever the opponent has a legal move, the first player has a legal response. The opponent therefore cannot take the final token, and the first player wins. For $n=1,2$, the opening move already takes everything.
+\insight A pairing argument must ensure that a move and its reflected response do not overlap. Creating a central gap supplies that missing guarantee.
+
+\input{classics-reasoning}
+
+\par\Needspace{8\baselineskip}
+\subsection*{Section Exercises}
+\input{original-practice/A09}
+\input{original-practice/A13}
+
+\section{Exercises}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/4-3}
+
+
+\exercise{AG2-1}{Parity Recovery on a Cycle}
+A graph has vertices $1,2,3,4$, cycle edges $12,23,34,41$, and diagonal $13$. The diagonal bit is known to be $1$; vertex parity checks are $(1,0,1,0)$. List all unknown cycle-edge solutions. If those four bits were independent and fair, what is the probability of satisfying the checks? Does observing $12=0$ make recovery unique?
+
+\exercise{AG2-2}{Affine Queen Arrangements}
+On a $5\times5$ toroidal board, choose column $j=ai+b\pmod5$ in row $i$, with $a,b\in\{0,1,2,3,4\}$. Find all pairs satisfying every condition in A14. Then decide whether any arrangement, affine or otherwise, is possible for a $9\times9$ board.
+
+\exercise{AG2-3}{Spreading an Atom Uniformly}
+In A28, an atom $x_0$ satisfies $F(x_0-)=3/8$ and $\Prob(X=x_0)=1/4$. Find the law of $U\mid X=x_0$ and $\Prob(X=x_0,U>1/2)$. Prove that no deterministic function $h$ can make $h(X)$ continuously uniform.
+
+\pagebreak
+\exercise{AG2-4}{Deleting One Member}
+Delete one person from the seven-person design in A17, retaining every item with its remaining holders. Count items held by two and by three people. Check that each remaining person still holds three types and each pair still shares exactly one. Independently verify the counts through incidence equations.
+
+\exercise{AG3-1}{All Optimal Cyclic Searches}
+Four hiding locations form the cycle $1,2,3,4$. A chooses one location; B simultaneously searches one adjacent pair from $12,23,34,41$. B receives $1$ upon finding the target and zero otherwise, with opposite payoffs for A. Find the value and every optimal mixed strategy.
+
+\exercise{AG3-2}{Losing by Taking the Last Stone}
+Keep A09's subtraction set $\{1,3,4\}$, but make taking the last stone an immediate loss. For positive pile sizes, classify losing residues and prove the classification. Compare winning first moves from $20$ stones under this rule and under A09's rule.
+
+\exercise{AG3-3}{A Fee That Selects an Occupancy}
+In A10 take $n=8$ and charge each fast-server user an additional fee $\delta\ge0$. There is no fee at the slow server. The fee affects individual decisions but is excluded as a transfer when measuring total service cost. Find all fees for which every pure equilibrium has exactly three slow-server users, and explain both boundary cases.
+
+\exercise{AG3-4}{Cooperative and Competitive Locations}
+Customers are uniform on $[0,1]$. Two providers cooperate to choose $0\le a\le b\le1$, minimizing average distance to the nearer provider. Find the unique ordered optimum and minimum distance. Compare with a simultaneous game in which each maximizes its own demand share and coincident providers split demand.

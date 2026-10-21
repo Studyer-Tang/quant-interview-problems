@@ -1,0 +1,10 @@
+\answer{OA13}
+The first player chooses $6$. Every later legal number must avoid the prime factors $2$ and $3$, leaving only
+\[
+ 5,7,11,13,17,19,23,29
+\]
+as possible prime factors. The product of any two distinct primes in this list is at least $5\cdot7=35>30$. Thus every later legal number uses exactly one prime from the list; for example, $25$ uses only the prime $5$. Once a number has been selected, its prime factor cannot be used again.
+
+Each move therefore consumes exactly one of the eight available primes. Conversely, if a prime $p$ has not yet been used, the number $p$ itself remains a legal choice. The game cannot end while such a prime remains. There are consequently exactly eight further moves after the initial $6$, regardless of the players' later choices.
+
+There are nine moves in total, so the first player makes the last move and wins. Both parts of the argument matter: every move consumes one prime, and every unused prime guarantees another legal move.

@@ -1,0 +1,26 @@
+\problem{P37}{The kth Nearest Distance to a Fixed Point}{Counting in a neighborhood}
+Draw $n\ge1$ independent uniform points on the unit interval. Fix a location $a\in[0,1]$ that is not one of the random observations. Order the sample distances from $a$ and let $D_{(k)}$ be the $k$th smallest, where $1\le k\le n$. Find its distribution for general $a$, and its density, mean, and variance when $a=0$ and $a=1/2$.
+\solution For $r\ge0$, the neighborhood of radius $r$ has length
+\[
+\ell_a(r)=\min(1,a+r)-\max(0,a-r).
+\]
+This equals one once $r$ exceeds all possible distances. Each sample independently falls inside with probability $\ell_a(r)$, so the neighborhood count is binomial. The $k$th distance exceeds $r$ exactly when at most $k-1$ samples lie inside. Thus
+\[
+\boxed{\Prob(D_{(k)}>r)=\sum_{j=0}^{k-1}\binom nj
+\ell_a(r)^j[1-\ell_a(r)]^{n-j},\quad r\ge0.}
+\]
+At $a=0$, each individual distance is uniform on $(0,1)$. Consequently,
+\[
+f_{D_{(k)}}(r)=\frac{n!}{(k-1)!(n-k)!}r^{k-1}(1-r)^{n-k},\quad0<r<1.
+\]
+This is the $\operatorname{Beta}(k,n-k+1)$ density, whose beta integrals yield
+\[
+\boxed{\E D_{(k)}=\frac{k}{n+1},\qquad
+\Var D_{(k)}=\frac{k(n-k+1)}{(n+1)^2(n+2)}.}
+\]
+At $a=1/2$, each distance has distribution function $2r$ on $[0,1/2]$, so $2D_{(k)}$ has the same beta law. Its density is
+\[
+f_{D_{(k)}}(r)=\frac{2n!}{(k-1)!(n-k)!}(2r)^{k-1}(1-2r)^{n-k},\quad0<r<1/2.
+\]
+The mean is half the endpoint value and the variance one quarter of it.
+\insight Replace an ordered-distance event by a count in a fixed neighborhood. This handles arbitrary locations and ranks; boundary effects arise from neighborhood growth, without pairing sample points with one another.

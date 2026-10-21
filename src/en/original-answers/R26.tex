@@ -1,0 +1,22 @@
+\answer{OR26}
+Define
+\[
+ \tau=\inf\{t\ge0:B_t^{(1)}=-1\}.
+\]
+The reflection principle gives $\Prob(\tau\le t)=2\Phi(-1/\sqrt t)$, where $\Phi$ is the standard normal distribution function. Hence $\tau<\infty$ almost surely, with density
+\[
+ f_\tau(t)=\frac1{\sqrt{2\pi t^3}}e^{-1/(2t)},\qquad t>0.
+\]
+The time $\tau$ depends only on the first coordinate and is independent of the entire second-coordinate process. Conditional on $\tau=t$, therefore, $B_\tau^{(2)}\sim N(0,t)$. Set $Z=B_\tau^{(2)}$. Mixing the normal densities yields
+\[
+ f_Z(z)=\int_0^\infty\frac1{2\pi t^2}
+            e^{-(1+z^2)/(2t)}dt
+       =\frac1{\pi(1+z^2)}.
+\]
+The integrand is nonnegative, so Tonelli's theorem justifies the mixture calculation; substitution $u=1/t$ evaluates the last integral. Thus $Z$ has the standard Cauchy distribution, and
+\[
+ \boxed{\Prob(1+Z>0)
+   =\int_{-1}^\infty\frac{dz}{\pi(1+z^2)}
+   =\frac34}.
+\]
+The independence is between the stopping time and the entire second-coordinate process. Evaluation at this random time produces the mixture above, not a normal distribution with fixed variance.

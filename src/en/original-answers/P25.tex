@@ -1,0 +1,12 @@
+\answer{OP25}
+The four endpoints of any two chords are distinct almost surely. Conditional on their cyclic order, the three unordered pairings into two chords are equally likely. Only the pairing that joins alternating endpoints produces an interior crossing. Hence each pair of chords intersects with probability $1/3$.
+
+Let $I_{ij}$ indicate an interior crossing of chords $i$ and $j$. Coincident endpoints, coincident chords, and triple intersections have probability zero under continuous sampling. For example, after fixing an intersection of two chords and one endpoint of a third chord, at most one position for its other endpoint makes it pass through that intersection. Thus the number of distinct crossings is almost surely
+\[
+K=\sum_{1\le i<j\le n}I_{ij}.
+\]
+Linearity of expectation, without any independence assumption on the indicators, gives
+\[
+\boxed{\E K=\binom n2\frac13=\frac{n(n-1)}6.}
+\]
+The sampling rule is essential: a random chord here is defined by two independent uniform endpoints.

@@ -1,0 +1,4 @@
+For positive prices, fix the endpoint $j$ first. The drawdown $1-p_j/p_i$ increases with the starting price $p_i$, so maximum drawdown reduces to finding the highest price among eligible starting points. A duration limit determines the candidate window. The positivity assumption is essential to this comparison. Finding the shortest interval that reaches a threshold is a different optimization problem: later starting points with higher prices dominate earlier, lower ones.
+
+Before discarding a candidate, justify why it cannot improve a future answer: it has expired, is dominated, or has already attained its shortest feasible interval. Arrange insertion and queries so that only indices $i<j$ are eligible. Rules for equal prices and equal objective values determine which tied interval is returned.
+\par\smallskip

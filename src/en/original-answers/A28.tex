@@ -1,0 +1,19 @@
+\answer{OA28}
+The total weight is $\sum_{n=0}^\infty2^{-n}=2$. Thus the series converges at every $x$, with a tail bound that is uniform in $x$.
+
+First let $x$ be irrational. Given $\varepsilon>0$, choose $N$ such that $\sum_{n>N}2^{-n}<\varepsilon$. None of the finitely many points $r_0,\ldots,r_N$ equals $x$. Hence some $\delta>0$ ensures that, whenever $|y-x|<\delta$, each of these rational points is on the same side of $y$ as it is of $x$. The first $N+1$ terms remain unchanged, so
+\[
+ |f(y)-f(x)|\le\sum_{n>N}2^{-n}<\varepsilon.
+\]
+The function is continuous at every irrational point.
+
+Now take $x=r_k$ and separate its term:
+\[
+ f(y)=2^{-k}\mathbf1_{\{y>r_k\}}+g(y).
+\]
+The same finite-prefix and tail argument shows that $g$ is continuous at $r_k$, because its prefix contains no point equal to $r_k$. The strict inequality in the definition gives $f(r_k)=g(r_k)$. Therefore
+\[
+ \boxed{\lim_{y\uparrow r_k}f(y)=f(r_k),\qquad
+ \lim_{y\downarrow r_k}f(y)=f(r_k)+2^{-k}.}
+\]
+Each rational point has an upward jump of size $2^{-k}$ and is left-continuous but not continuous. The continuity points are exactly the irrationals. Dense jump locations cause no contradiction: their tail weights can be made uniformly small.

@@ -1,0 +1,19 @@
+\problem{P16}{Collecting Both Repeated Patterns}{Pattern coverage}
+Toss a fair coin independently until the record has contained both HH and TT. Patterns may overlap, and the record is never cleared. Find the mean and variance of the total number $T$ of tosses.
+\solution First wait for the first equal adjacent pair. After the initial toss, indicators of matching the preceding toss are independent fair Bernoulli variables: the first toss and the switch indicators uniquely determine the entire coin string, and every string is equally likely. Thus this stage has length $D=1+G$, with $G$ geometric of parameter $1/2$ on the positive integers. Therefore $\E D=3$ and $\Var D=2$.
+
+After HH first appears, wait for TT; after TT first appears, the symmetric task remains. Let $U$ be this second-stage length. States 0 and 1 mean respectively no trailing target symbol and one trailing target symbol. Their means obey
+\[
+ a_0=1+\tfrac12a_0+\tfrac12a_1,\qquad
+ a_1=1+\tfrac12a_0,
+\]
+so $a_0=6,a_1=4$. Two consecutive target symbols give a geometric tail, ensuring all moments are finite. Second moments satisfy
+\[
+ b_0=1+a_0+a_1+\tfrac12b_0+\tfrac12b_1,
+ \quad b_1=1+a_0+\tfrac12b_0.
+\]
+Substitution gives $b_0=58$, hence $\Var U=58-36=22$. Future tosses are independent of the first-stage history. By H--T symmetry, the conditional second-stage law depends neither on the first pattern nor on $D$, proving independence of $D,U$. Consequently,
+\[
+ \boxed{\E T=9},\qquad \boxed{\Var T=24}.
+\]
+\insight Collecting both patterns is a coverage condition. Their two waiting times from an empty record cannot simply be added; the first completion determines the suffix at the start of the second stage.

@@ -1,0 +1,139 @@
+\chapter{Probability}
+
+\section{Basic and Conditional Probability}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/1-1}
+
+
+\input{parts/prob-P02}
+\input{parts/prob-P03}
+\input{parts/prob-P30}
+\input{parts/prob-P31}
+\input{parts/prob-P33}
+\input{parts/prob-P12}
+\input{parts/prob-P13}
+
+\par\Needspace{8\baselineskip}
+\subsection*{Section Exercises}
+\input{original-practice/P02}
+\input{original-practice/P30}
+
+\section{Counting and Expectation}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/1-2}
+
+
+\input{parts/prob-P05}
+\input{parts/prob-P17}
+\input{parts/prob-P18}
+\input{parts/prob-P19}
+\input{parts/prob-P25}
+\input{parts/prob-P26}
+\input{parts/prob-P27}
+\input{parts/prob-P28}
+\input{parts/prob-P29}
+\input{parts/prob-P32}
+\input{parts/prob-P14}
+
+\par\Needspace{8\baselineskip}
+\subsection*{Section Exercises}
+\input{original-practice/P18}
+\input{original-practice/P25}
+\input{original-practice/P26}
+
+\section{Waiting Times}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/1-3}
+
+
+\input{parts/prob-P06}
+\input{parts/prob-P20}
+\input{parts/prob-P21}
+\input{parts/prob-P22}
+\input{parts/prob-P23}
+\input{parts/prob-P24}
+
+\par\Needspace{8\baselineskip}
+\subsection*{Section Exercises}
+\input{original-practice/P22}
+\input{original-practice/P24}
+
+\section{Distributions and Geometry}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/1-4}
+
+
+\input{parts/prob-P04}
+\input{parts/prob-P08}
+\input{parts/prob-P10}
+\input{parts/prob-P11}
+\input{parts/prob-P35}
+\input{parts/prob-P36}
+\input{parts/prob-P37}
+\input{parts/prob-P38}
+
+\input{classics-probability}
+
+\par\Needspace{8\baselineskip}
+\subsection*{Section Exercises}
+\input{original-practice/P35}
+\input{original-practice/P36}
+\input{original-practice/P37}
+
+\section{Exercises}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/1-5}
+
+
+\begingroup
+\setlength{\parskip}{0pt}
+
+\exercise{PG1-1}{Observing Only Whether a Head Appeared}
+Choose a coin with head probability $p_1$ with probability $\pi$, otherwise one with probability $p_2$, where $0<\pi,p_1,p_2<1$. Toss the chosen coin independently $n\ge1$ times. The only recorded information is that at least one head occurred; neither the count nor the order is available. Find the posterior type probability and the predictive probability of a head next. Explain why the record is not generally equivalent to observing one head.
+
+\exercise{PG1-2}{Competing Clocks before a Deadline}
+Independent clocks $A,B$ ring after exponential waiting times with rates $\alpha,\beta>0$. Let $T$ be the first ringing time. Given that $A$ rings first and $T<t$, for fixed $t>0$, find the conditional density and mean of $T$, including the limit as $t\to\infty$.
+
+\exercise{PG1-3}{Posterior Odds with Missing Reports}
+A binary truth has prior $\Prob(T=1)=\pi\in(0,1)$. Conditional on the truth, reports are independent: each is correct with probability $a$, flipped with probability $b$, and missing with probability $1-a-b$, where $a,b>0$ and $a+b<1$. Observe $h$ ones, $z$ zeros, and $e$ missing reports. Find the posterior odds and explain whether missingness is informative. Does that conclusion persist if the missing probability depends on the truth?
+
+\exercise{PG1-4}{Selecting a Sum near Zero}
+Let $X,Z$ be independent standard normals. Retain only observations with $|X+Z|<a$, where $a>0$. Find the retained population correlation and its limits as $a\downarrow0$ and $a\to\infty$.
+
+\exercise{PG2-1}{The First Repeat with Unequal Probabilities}
+Independent draws have three possible types, with probabilities $1/2,1/4,1/4$. Let $T$ be the first draw whose type has already appeared. Find $\E T$ and $\Prob(T=4)$.
+
+\exercise{PG2-2}{Red Runs on a Circle}
+Place $m\ge1$ red and $n\ge1$ black cards uniformly in $N=m+n$ labeled circular positions. Find the expected number of red runs and the probability that all red cards form one circular run.
+
+\exercise{PG2-3}{Variance of Triple Collisions}
+Independently place $m\ge3$ objects into $d$ buckets with probabilities $p_i\ge0$, $\sum_i p_i=1$. Let $C$ count unordered triples whose three objects all enter one bucket. With $s_r=\sum_i p_i^r$, find the mean and variance of $C$.
+
+\exercise{PG2-4}{Weighted Difference across Targets}
+Uniformly permute $K\ge1$ target cards and $m\ge0$ ordinary cards. Ordinary card $i$ has fixed real weight $w_i$. Let $D$ be the total ordinary-card weight before the first target minus the total weight after the last target. Find $\E D$ and $\Var D$, allowing negative weights.
+
+\exercise{PG3-1}{Sampling Costs Tied to Increments}
+Let $U_i$ be independent uniforms on $(0,1)$ and stop when their cumulative sum first exceeds one, at time $N$. The cost of draw $j$ is its observed squared increment $U_j^2$. Find $\E C$ for $C=\sum_{j=1}^NU_j^2$, explaining why the required independence does not mean that $N$ is independent of the increments.
+
+\exercise{PG3-2}{Multiplicative Stopping with Fixed Shrinkage}
+Let $U_i$ be independent uniforms on $(0,1)$, $R_n=2^{-n}\prod_{i=1}^nU_i$, and $R_0=1$. Stop at the first $R_n<x$, where $0<x<1$, and call this time $N$. Give a deterministic upper bound, the tail probabilities, and a finite-sum expression for its mean. Find the full distribution for $x=1/4$.
+
+\exercise{PG3-3}{Renewal Counts in an Interval}
+Let $U_i$ be independent uniforms on $(0,1)$ and $S_k=\sum_{i=1}^kU_i$. For $0<a<b\le1$, let $K$ count positive partial sums in $(a,b]$. Find its full distribution and mean.
+
+\exercise{PG3-4}{Optimal Prediction of the Remaining Total}
+In Problem \ref{prob:P24}, observe $R_1,\ldots,R_n$, where $n\ge0$, and put $Q_n=\sum_{j=1}^n(1-R_j)$. Predict the full total $Q$ under squared loss. Find the optimal predictor, its conditional error variance, and its unconditional mean squared error. Explain why the partial sum alone is not optimal.
+
+\exercise{PG4-1}{The Relative Share of Two Uniforms}
+Let $U,V$ be independent uniforms on $(0,1)$, and define $W=U/(U+V)$. Find its density, mean, and variance, and determine whether it is uniformly distributed.
+
+\exercise{PG4-2}{The Midpoint of the Sample Extremes}
+Take $n\ge2$ independent uniforms on $(0,1)$, with minimum $L$ and maximum $H$. Find the density, mean, and variance of their midpoint $C=(L+H)/2$.
+
+\exercise{PG4-3}{The Spacing Containing a Random Point}
+Cut the unit interval at $n-1$ independent uniform points, producing $n\ge2$ spacings. Independently choose a uniform point on the interval, and let $L$ be the length of the spacing containing it. Find the density of $L$, $\E L$, and $\E(1/L)$, and compare with choosing one of the $n$ spacings with equal probabilities.
+
+\exercise{PG4-4}{Sign Changes in Three Directions}
+Let $X,Y$ be independent standard normals and $0<\theta<\pi/2$. Let $A,B,C\in\{-1,1\}$ be the signs of the projections of $(X,Y)$ onto directions $0,\theta,2\theta$. Define $D_1=\ind\{A\ne B\}$ and $D_2=\ind\{B\ne C\}$. Find their joint distribution, covariance, and the probability that all three signs agree.
+\par
+\endgroup

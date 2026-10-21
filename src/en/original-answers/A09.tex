@@ -1,0 +1,18 @@
+\answer{OA09}
+For a positive integer $r$, let $\ell(r)$ be the largest power of two dividing $r$, equivalently the value of its least significant nonzero binary digit. Consider a general position $(r,m)$ with $r$ stones remaining and a current limit of $m$. We prove
+\[
+ (r,m)\text{ is losing}\quad\Longleftrightarrow\quad m<\ell(r).
+\]
+Use induction on the number of stones. If $m\ge\ell(r)$, take $\ell(r)$ stones. This either wins immediately or leaves $r-\ell(r)$, whose least significant nonzero bit is strictly larger than $\ell(r)$. The next limit is $\ell(r)$, so the opponent receives a losing position.
+
+If $m<\ell(r)$, every legal move $a$ satisfies $1\le a<\ell(r)$. Write $a=2^s q$ with $q$ odd. Because $r$ is divisible by a higher power of two, $r-a$ has exactly $s$ factors of two. Thus
+\[
+ \ell(r-a)=\ell(a)\le a.
+\]
+The opponent's limit is $a$, so the resulting position is winning. Every legal move therefore gives a winning position to the opponent, completing the induction.
+
+Initially the position is $(n,n-1)$. It is losing exactly when $\ell(n)=n$, which means that $n$ is a power of two. Hence
+\[
+ \boxed{\text{First player wins}\iff n\notin\{2^k:k\ge1\}.}
+\]
+In a winning initial position, take $\ell(n)$ stones. On each subsequent turn, take the least significant nonzero bit of the remaining count. The position criterion ensures that this move is legal and eventually takes the last stone.

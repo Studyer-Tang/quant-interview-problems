@@ -1,0 +1,21 @@
+\problem{P34}{相关传感器的信息合并}{高斯条件分布；充分统计量}
+$X\sim N(\mu,s^2)$，$s^2>0$。两个传感器给出 $Z_1=X+\varepsilon_1$、$Z_2=X+\varepsilon_2$。噪声与 $X$ 独立，联合正态、均值为零、方差均为 $\tau^2>0$，相关系数为 $-1<\rho<1$。求 $X$ 的后验分布，证明两读数的差不提供额外信息，并分析 $\rho$ 接近两个端点时的情形。
+\solution 令 $M=(Z_1+Z_2)/2$、$D=Z_1-Z_2$。则 $M=X+\bar\varepsilon$，其中
+\[
+ v:=\Var(\bar\varepsilon)=\frac{\tau^2(1+\rho)}2,
+ \quad \Var(D)=2\tau^2(1-\rho).
+\]
+噪声方差相同，故 $\Cov(\bar\varepsilon,D)=0$；又有 $\Cov(X,D)=0$。联合正态性使 $D$ 与 $(X,M)$ 独立，而 $(M,D)$ 与 $(Z_1,Z_2)$ 一一对应。因此条件分布仅依赖平均读数 $M$。
+先验密度乘以 $M$ 的似然，指数中关于 $x$ 的部分为
+\[
+ -\frac12\left\{\frac{(x-\mu)^2}{s^2}
+                  +\frac{(M-x)^2}{v}\right\}.
+\]
+配方得
+\[
+ X\mid Z_1,Z_2\sim N(m_*,V_*),\qquad
+ V_*=(s^{-2}+v^{-1})^{-1},\quad
+ m_*=V_*\left(\frac\mu{s^2}+\frac Mv\right).
+\]
+$\rho\uparrow1$ 时 $v\to\tau^2$，两读数趋于重复同一个噪声观测，信息量退化为单个传感器。$\rho\downarrow-1$ 时 $v\to0$，平均噪声相消，后验方差趋于零；在端点模型中 $M=X$ 几乎处处成立。对于固定 $s^2,\tau^2$，$V_*$ 随 $\rho$ 严格增加。
+\insight 先把多重观测分解成含信号的方向与纯噪声方向，再做条件推断。相关性会决定两个读数究竟互补还是重复。

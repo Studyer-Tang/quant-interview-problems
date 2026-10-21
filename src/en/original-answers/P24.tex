@@ -1,0 +1,27 @@
+\answer{OP24}
+Start more generally from $R_0=x\in[0,1)$. The process can be represented as
+\[
+1-R_k=(1-x)\prod_{j=1}^kU_j,
+\qquad U_j\overset{\mathrm{iid}}\sim\operatorname{Unif}(0,1).
+\]
+The finite products $Q_n=\prod_{k=1}^nR_k$ decrease and lie in $[0,1]$, so they converge to a limit $Q$. Set $g(x)=\E[Q\mid R_0=x]$ and define $g(1)=1$. Bounded convergence makes the requested limit equal to $g(0)$.
+
+The right boundary condition needs justification. The inequality $0\le1-\prod a_k\le\sum(1-a_k)$ gives
+\[
+0\le1-g(x)\le\sum_{k=1}^{\infty}\E(1-R_k)
+=(1-x)\sum_{k=1}^{\infty}2^{-k}=1-x.
+\]
+Hence $g(x)\to1$ as $x\uparrow1$; the solution identically zero on $[0,1)$ is excluded.
+
+Conditioning on the first draw, with bounded convergence for the subsequent infinite product, gives
+\[
+(1-x)g(x)=\int_x^1t g(t)\dd t.
+\]
+The integral of a bounded function first shows that $g$ is continuous on $[0,1)$, after which differentiation is valid. We obtain
+\[
+-g(x)+(1-x)g'(x)=-xg(x),\qquad g'(x)=g(x).
+\]
+Thus $g(x)=Ce^x$. The established condition $g(1-)=1$ implies $C=e^{-1}$, and therefore
+\[
+\boxed{\lim_{n\to\infty}\E\prod_{k=1}^nR_k=e^{-1}.}
+\]

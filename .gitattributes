@@ -1,0 +1,12 @@
+* text=auto
+*.tex text eol=lf
+*.md text eol=lf
+*.pdf binary
+*.otf binary
+*.ttf binary
+*.png binary
+*.jpg binary
+
+# Preserve the original text of third-party font licenses.
+src/**/fonts/*.txt -text -whitespace
+LICENSE -whitespace

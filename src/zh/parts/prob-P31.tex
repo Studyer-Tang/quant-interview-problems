@@ -1,0 +1,18 @@
+\problem{P31}{允许同时发生的竞争事件}{联合分布分解}
+每轮中，信号 $A$ 以概率 $\alpha$ 出现，信号 $B$ 以概率 $\beta$ 出现，$0<\alpha,\beta<1$；同轮的两信号独立，各轮也独立。在首次至少出现一个信号时停止，轮数记为 $T$，停止原因 $J$ 分为“仅 $A$”“仅 $B$”“同时出现”。求 $(T,J)$ 的联合分布，判断 $T$ 与 $J$ 是否独立，并求 $T$ 的均值与方差。
+\solution 记 $q=(1-\alpha)(1-\beta)$、$s=1-q=\alpha+\beta-\alpha\beta$。三种停止原因的单轮概率分别为
+\[
+w_A=\alpha(1-\beta),\quad w_B=(1-\alpha)\beta,
+\quad w_{AB}=\alpha\beta,
+\]
+其和为 $s$。停止于第 $n$ 轮要求此前均无信号，故
+\[
+\Prob(T=n,J=j)=q^{n-1}w_j
+=(s q^{n-1})\frac{w_j}{s},\quad n\ge1.
+\]
+右侧分别是 $T$ 与 $J$ 的边际概率，因此二者独立。特别地，已知停止时两个信号同时出现，并不改变等待时间的分布。对几何级数求导可得
+\[
+\boxed{\E T=\frac1s,\qquad \Var T=\frac q{s^2},
+\qquad \Prob(J=j)=\frac{w_j}{s}.}
+\]
+\pitfall 同时出现的概率为 $\alpha\beta$，不能把总停止概率写成 $\alpha+\beta$。独立性也不是因为“时间与原因不同”，而是来自联合概率的乘积分解。

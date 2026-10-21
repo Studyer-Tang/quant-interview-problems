@@ -1,0 +1,12 @@
+\answer{OP30}
+记 $F$ 为选中双正面硬币，$H$ 为两次均为正面。先验概率和似然分别为
+\[
+\Prob(F)=\Prob(F^c)=\frac12,\qquad
+\Prob(H\mid F)=1,\quad \Prob(H\mid F^c)=\frac14.
+\]
+由全概率公式，$\Prob(H)=\frac12+\frac12\cdot\frac14=\frac58$。因此
+\[
+\Prob(F\mid H)=\frac{\Prob(F)\Prob(H\mid F)}{\Prob(H)}
+=\frac{1/2}{5/8}=\boxed{\frac45}.
+\]
+两次观测都来自同一枚已选定的硬币，故不能每次重新混合两类硬币的概率。

@@ -1,0 +1,31 @@
+\problem{P14}{高维区域体积的阈值}{大数定律与中心极限定理}
+记单位立方体内区域的体积为
+\[
+V_n(\alpha)=\int_{[0,1]^n}
+\ind\!\left\{\sum_{i=1}^n x_i^2\le\alpha\sum_{i=1}^nx_i\right\}
+\dd x_1\cdots\dd x_n.
+\]
+对固定实数 $\alpha$，求 $n\to\infty$ 时的极限。进一步令 $\alpha_n=2/3+c/\sqrt n$，其中 $c$ 为固定实数，求 $V_n(\alpha_n)$ 的极限。
+\solution 令 $U_i$ 独立均匀分布于 $(0,1)$。体积等于相应事件的概率，而
+\[
+\E(U_i^2-\alpha U_i)=\frac13-\frac\alpha2.
+\]
+由大数定律，样本均值趋于此常数。若常数为正，满足不等式的概率趋于零；若为负则趋于一。因此阈值为 $\alpha=2/3$。
+
+阈值处令 $Y_i=U_i^2-2U_i/3$，有 $\E Y_i=0$，且
+\[
+\sigma^2=\E Y_i^2
+=\frac15-\frac13+\frac4{27}=\frac2{135}>0.
+\]
+中心极限定理给出 $\sum Y_i/\sqrt n\Rightarrow N(0,\sigma^2)$。对变化阈值，原事件等价于
+\[
+\frac1{\sqrt n}\sum_{i=1}^nY_i
+\le c\left(\frac1n\sum_{i=1}^nU_i\right).
+\]
+右侧由大数定律趋于 $c/2$；极限正态分布连续，因此
+\[
+\boxed{\lim_{n\to\infty}V_n(\alpha_n)
+=\Phi\!\left(c\sqrt{\frac{135}{8}}\right).}
+\]
+取 $c=0$，固定阈值处极限为 $1/2$。综上，固定 $\alpha$ 的极限依次为 $0$、$1/2$、$1$，分别对应 $\alpha<2/3$、$\alpha=2/3$、$\alpha>2/3$。
+\insight 大数定律定位突变阈值；在均值恰好抵消处，必须进一步看 $n^{-1/2}$ 尺度上的波动，不能仅凭极限均值为零判断事件概率。

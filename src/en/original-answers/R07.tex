@@ -1,0 +1,20 @@
+\answer{OR07}
+First suppose $0<p<1$ and write $q=1-p$. Let $X_t$ count the umbrellas at the departure location for trip $t$. The state space is $\{0,1,\ldots,n\}$. The next trip departs from the other location, so
+\[
+ P(0,n)=1,\qquad
+ P(i,n-i)=q,\quad P(i,n-i+1)=p\quad(i\ge1).
+\]
+This finite chain is irreducible. For $i<n$, a trip without an umbrella followed by a trip carrying one reaches $i+1$. For $i\ge2$, the reverse sequence reaches $i-1$; from 1, the chain can also reach 0 through $n$. All these paths have positive probability.
+
+Consider
+\[
+ \pi_0=\frac q{n+q},\qquad
+ \pi_i=\frac1{n+q}\quad(1\le i\le n).
+\]
+The inflow to 0 is $q\pi_n=\pi_0$. For $1\le j<n$, the inflow is $q\pi_{n-j}+p\pi_{n-j+1}=\pi_j$; the inflow to $n$ is $\pi_0+p\pi_1=\pi_n$. The probabilities sum to 1, so this is the unique stationary distribution.
+
+Getting wet requires state 0 and rain on the current trip. The long-run reward theorem for a finite irreducible chain therefore gives the almost-sure limiting frequency
+\[
+ \boxed{p\pi_0=\frac{p(1-p)}{n+1-p}}.
+\]
+The limit does not depend on $k$. If $p=0$, no trip is wet. If $p=1$, only the first trip can be wet: every subsequent departure location has an umbrella. The limiting frequency is again 0, as the same formula predicts.

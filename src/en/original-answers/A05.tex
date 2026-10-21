@@ -1,0 +1,18 @@
+\answer{OA05}
+Let $c=X^\top y/n$. Expanding the objective difference gives
+\[
+ L(\beta)-L(0)
+ =\frac{\|X\beta\|^2}{2n}-c^\top\beta
+   +\lambda\|\beta\|_1.
+\]
+If $\|c\|_\infty\le\lambda$, the inequality $c^\top\beta\le\|c\|_\infty\|\beta\|_1$ makes this difference nonnegative, so zero is optimal.
+Conversely, suppose $|c_j|>\lambda$ for some coordinate. Take $\beta=t\operatorname{sign}(c_j)e_j$ with $t>0$. Then
+\[
+ L(\beta)-L(0)
+ =\frac{t^2\|X_j\|^2}{2n}-t(|c_j|-\lambda).
+\]
+For sufficiently small $t$, the negative linear term dominates the quadratic term. Thus the objective decreases, proving that the required condition is
+\[
+ \boxed{\lambda\ge\frac{\|X^\top y\|_\infty}{n}}.
+\]
+Under this condition, zero is also unique when $\lambda>0$. A second minimizer with $X\beta\ne0$ would, by strict convexity in the fitted value, have a midpoint with zero that improves the objective. A nonzero vector with $X\beta=0$ strictly increases the penalty. When $\lambda=0$, the condition becomes $X^\top y=0$, and the full minimizer set is $\ker X$; zero is then unique exactly when $X$ has full column rank.

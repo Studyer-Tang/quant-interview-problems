@@ -1,0 +1,18 @@
+\problem{P26}{The Span of Target Cards}{Positions and gaps}
+Uniformly permute $N$ distinct cards, of which $K$ are targets, with $2\le K\le N$. Let $A,B$ be the first and last target positions, and put $R=B-A$. Find the distribution and mean of $R$.
+\solution The target positions form a uniform $K$-element subset of $\{1,\ldots,N\}$. For span $r$, the left endpoint has $N-r$ choices. Both endpoints are targets, and the remaining $K-2$ targets occupy $K-2$ of the $r-1$ internal positions. Thus
+\[
+\boxed{\Prob(R=r)=\frac{(N-r)\binom{r-1}{K-2}}{\binom NK},
+\quad K-1\le r\le N-1.}
+\]
+For the mean, let $G_0,\ldots,G_K$ count ordinary cards in the $K+1$ gaps before, between, and after targets. Every nonnegative integer vector with sum $N-K$ corresponds to one target-position set. The gaps are therefore exchangeable, and
+\[
+\E G_i=\frac{N-K}{K+1}.
+\]
+Since $A=G_0+1$ and $B=N-G_K$,
+\[
+\boxed{\E R=N-1-2\frac{N-K}{K+1}
+=\frac{(K-1)(N+1)}{K+1}.}
+\]
+For $K=N$, the span is deterministically $N-1$, consistently with both formulas.
+\insight Count extreme positions for the distribution, but use exchangeable boundary gaps for the mean. The simplest method may differ with the quantity being requested.

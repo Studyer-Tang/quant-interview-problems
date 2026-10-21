@@ -1,0 +1,46 @@
+\answer{OR20}
+令 $V(a,b)$ 表示剩余 $a$ 张红牌、$b$ 张黑牌时，今后可获得的最大期望增量。立即停止的增量是0，边界为
+\[
+ V(a,0)=a,\qquad V(0,b)=0.
+\]
+当 $a,b>0$，继续抽一张的期望价值为
+\[
+ C(a,b)=\frac{a[1+V(a-1,b)]+b[-1+V(a,b-1)]}{a+b},
+\]
+因此贝尔曼方程为
+\[
+ \boxed{V(a,b)=\max\{0,C(a,b)\}}.
+\]
+按 $a+b$ 从小到大计算即可得到全部状态的值。归纳证明最优性：在后继状态已经采用最优规则时，继续的价值恰为 $C(a,b)$；与停止的0比较就是当前能达到的最大值。牌数每次减少，故不存在无限期限或停时可积性问题。
+
+从26红26黑出发，当前累计得分为 $s=b-a$，剩余牌数为 $N=a+b$。以下给出一条最优规则：$N=0$ 时结束；$N>0$ 且 $s\le0$ 时继续。对于正得分，按下表继续，其余情况停止：
+\[
+ \begin{array}{c|ccccc}
+ s&1&2&3&4&5\\\hline
+ \text{继续条件}&N\ge5&N\ge10&N\ge19&N\ge30&N\ge43
+ \end{array}
+\]
+$s\ge6$ 时停止。表中只考虑实际可达的状态，因此 $N$ 与 $s$ 同奇偶。$s=1,N=3$ 时 $C=0$，停止或继续均最优，表中选择停止。
+
+用上述递推进行精确分数计算，得到
+\[
+ \boxed{V(26,26)=\frac{41984711742427}{15997372030584}
+       \approx2.624475549}.
+\]
+\par\smallskip\noindent\begin{minipage}{\linewidth}
+递推也给出各状态的决策比较。以下程序计算初始精确值，避免引入舍入误差：
+\begin{verbatim}
+from fractions import Fraction as F
+V = {}
+for a in range(27):
+    for b in range(27):
+        if a == 0: V[a,b] = F(0)
+        elif b == 0: V[a,b] = F(a)
+        else:
+            c = (a*(1+V[a-1,b])
+                 + b*(-1+V[a,b-1]))/(a+b)
+            V[a,b] = max(F(0), c)
+print(V[26,26])
+\end{verbatim}
+\end{minipage}\par\smallskip
+该问题的优势来自不放回抽样所提供的剩余牌信息；不能将每一步都当作胜率固定为 $1/2$ 的独立赌博。

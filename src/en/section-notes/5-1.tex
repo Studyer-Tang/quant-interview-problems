@@ -1,0 +1,4 @@
+For a data stream, first identify the summary that must be retained. Sample size, mean, and centered sum of squares suffice to update variance; merging groups also requires a correction for their different means. For interval extrema, a monotone deque retains candidates that have neither expired nor been dominated by a later element. If extending a window can only make its constraint harder to satisfy, moving its left endpoint forward can locate the longest feasible interval.
+
+Correctness follows from the summary or deque invariant. Linear total time follows because each element enters and leaves at most once. Random simulation also requires a proof of the accepted distribution and termination; retries must use fresh independent trials.
+\par\smallskip

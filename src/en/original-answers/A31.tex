@@ -1,0 +1,30 @@
+\answer{OA31}
+Store the window in a circular buffer of length $N$, so the oldest value can be retrieved when the window is full. Let $k=\min(t,N)$ and maintain
+\[
+ S=\sum_{\text{window}}x_i,\qquad Q=\sum_{\text{window}}x_i^2.
+\]
+Before the window fills, a new value $b$ gives $S'=S+b$, $Q'=Q+b^2$, and $k'=k+1$. Once it is full, let $a$ be the outgoing value and update
+\[
+ S'=S-a+b,\qquad Q'=Q-a^2+b^2,
+ \qquad k'=N.
+\]
+Return
+\[
+ \mu'=\frac{S'}{k'},\qquad
+ v'=\frac{Q'}{k'}-(\mu')^2.
+\]
+Correctness follows from $\sum(x_i-\mu)^2=Q-k\mu^2$. Each update uses a constant number of arithmetic operations, so it takes $O(1)$ time in the unit-cost arithmetic model. The buffer uses $O(N)$ space. For $N=1$, the variance is always zero.
+
+When values are large relative to their spread, $Q/k-\mu^2$ can suffer from floating-point cancellation. An alternative maintains the centered sum of squares $M=\sum(x_i-\mu)^2$. For a full window,
+\[
+ \begin{aligned}
+ \mu'&=\mu+\frac{b-a}{N},\\
+ M'&=M+(b-a)(b+a-\mu-\mu'),\qquad v'=M'/N.
+ \end{aligned}
+\]
+The second formula follows by expanding $M=Q-N\mu^2$ and using $N(\mu'-\mu)=b-a$. During initialization, put $\delta=b-\mu$ and use
+\[
+ \mu'=\mu+\frac{\delta}{k+1},\qquad
+ M'=M+\delta(b-\mu').
+\]
+Initialize the first value directly with $\mu=b,M=0$. Centered updates reduce repeated subtraction of two large second moments, but rounding errors can still accumulate; recomputing from the buffer may occasionally be appropriate. If a sample variance with denominator $k-1$ is wanted, return $M/(k-1)$ for $k>1$. Whether it is unbiased depends on the sampling model.

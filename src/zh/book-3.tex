@@ -1,0 +1,248 @@
+\chapter{统计与线性代数}
+
+\section{回归模型}
+\noindent\textbf{要点与方法.}\enspace
+\input{section-notes/3-1}
+
+
+\problem{A01}{测量误差与工具变量}{总体回归；识别}
+设 $T,U,V,\varepsilon$ 相互独立、均值均为零且有有限方差，$s=\Var(T)>0$、$u=\Var(U)>0$。实际观测到
+\[
+ W=T+U,\qquad Z=T+V,\qquad Y=\beta T+\varepsilon.
+\]
+求 $Y$ 对 $W$ 的总体线性回归斜率。只利用 $(W,Z,Y)$ 的协方差，能否识别 $\beta$？若对同一个 $T$ 取得 $k$ 次具有独立同分布测量误差的读数并取平均，普通回归的偏差如何变化？所有回归含截距。
+\solution 独立性使交叉协方差消失，故
+\[
+ \Var(W)=s+u,\quad \Cov(W,Y)=\beta s,
+ \quad \Cov(Z,W)=s,\quad \Cov(Z,Y)=\beta s.
+\]
+因此普通回归斜率为 $\beta s/(s+u)$，绝对值向零收缩；除 $\beta=0$ 外，它不等于潜在变量的系数。由于 $s>0$，工具变量比值
+\[
+ \boxed{\beta=\frac{\Cov(Z,Y)}{\Cov(Z,W)}}
+\]
+有定义且识别目标。这里 $Z$ 与真实解释变量相关，同时与测量误差和响应噪声不相关，两个条件缺一不可。
+若 $W_j=T+U_j$，其中各 $U_j$ 与 $(T,\varepsilon)$ 独立且彼此独立、方差为 $u$，则 $\bar W=T+\bar U$，误差方差变为 $u/k$。相应斜率为
+\[
+ \beta_k=\frac{\beta s}{s+u/k},\qquad
+ \beta_k-\beta=-\frac{\beta u}{ks+u}\longrightarrow0.
+\]
+平均测量消除了误差方差的一部分，却没有把同一个 $T$ 变成 $k$ 个独立的潜在样本。
+\insight 区分“回归系数能计算”与“结构系数能识别”；先列可观测协方差，再寻找能消去未知方差的比值。
+
+\problem{A02}{增加变量的拟合增益}{正交投影；部分决定系数}
+固定设计 $X\in\R^{n\times k}$ 满列秩且含截距，新增列 $z\notin\operatorname{col}(X)$，$n>k+1$。记仅用 $X$ 时的残差平方和为 $S_0$，使用 $(X,z)$ 时为 $S_1>0$。令 $M=I-X(X^\top X)^{-1}X^\top$、$r=Mz$。求新增系数、$S_0-S_1$，并证明新增变量的部分决定系数与通常 $t$ 统计量的关系。给出精确 $t$ 检验成立的模型假设。
+\solution 对固定新增系数 $b$，先最小化原有系数，残差平方和成为 $\|M y-br\|^2$。因 $r\ne0$，配方得到
+\[
+ \widehat b=\frac{r^\top y}{r^\top r},\qquad
+ S_0-S_1=\frac{(r^\top y)^2}{r^\top r}=:D.
+\]
+这个下降量非负，恰在 $r^\top y=0$ 时为零。它比较的是新增方向与旧残差的对齐程度，而不是 $z$ 与原始响应的相关程度。
+设 $\nu=n-k-1$，用 $\widehat\sigma^2=S_1/\nu$ 估计误差方差，则新增系数的标准误和统计量为
+\[
+ \operatorname{se}(\widehat b)=\sqrt{\frac{S_1}{\nu r^\top r}},
+ \qquad t^2=\frac{\nu D}{S_1}.
+\]
+由于 $S_0=S_1+D$，部分决定系数满足
+\[
+ \boxed{R^2_{\rm partial}:=\frac{D}{S_0}
+       =\frac{t^2}{t^2+\nu}}.
+\]
+上述代数恒等式不需要随机模型。在正确设定的模型 $y=X\alpha+bz+\varepsilon$ 中，若条件于设计有 $\varepsilon\sim N(0,\sigma^2I)$、$\sigma^2>0$，则在 $b=0$ 下 $t\sim t_\nu$：投影系数的正态分量与正交残差独立，后者的平方和除以 $\sigma^2$ 为 $\chi^2_\nu$。没有正态性时，不能据此宣称有限样本精确 $t$ 分布。
+\insight 新增一列只增加一个正交方向；拟合提升、系数检验与部分解释比例因此可以用同一个投影量表示。
+
+\problem{A03}{同号筛选后的预测}{条件分布；预测风险}
+$X,Y$ 为独立标准正态变量，只保留事件 $S=\{XY>0\}$。在条件总体中，分别求用 $X$ 预测 $Y$ 的最优含截距线性函数和最优平方损失预测函数，比较二者均方误差。
+\solution 标准正态的符号与绝对值独立，且 $\Prob(S)=1/2$。筛选后两个符号相同、正负各半，绝对值仍相互独立且均服从半正态分布。因而条件均值为零、条件方差均为一，且
+\[
+ \E[XY\mid S]=\E|X|\,\E|Y|=\frac2\pi.
+\]
+所以最优线性预测为 $\widehat Y_{\rm lin}=2X/\pi$，截距为零，其风险为 $1-4/\pi^2$。
+给定 $X=x\ne0$ 与 $S$ 后，只确定了 $Y$ 的符号，故
+\[
+ m(x)=\E[Y\mid X=x,S]
+ =\operatorname{sign}(x)\sqrt{2/\pi}.
+\]
+这是所有可测预测函数中的平方损失最优解，因为对任意 $g$，条件平方误差可分解为条件方差加 $(m(X)-g(X))^2$。半正态方差为 $1-2/\pi$，故其风险为 $1-2/\pi$，比线性预测低
+\[
+ \frac2\pi-\frac4{\pi^2}>0.
+\]
+$x=0$ 是零概率点，预测函数在该点的取值不影响风险。
+\insight 筛选可以制造相关性，也可以使条件均值变成非线性函数。先求条件分布，再区分线性最优与总体最优。
+
+\par\Needspace{8\baselineskip}
+\subsection*{小节练习}
+\input{original-practice/A02}
+\input{original-practice/A03}
+
+\section{参数估计}
+\noindent\textbf{要点与方法.}\enspace
+\input{section-notes/3-2}
+
+
+\problem{A04}{相关观测的均值估计}{广义最小二乘；最优权重}
+观测 $Y_i=\mu+\varepsilon_i$，$i=1,\ldots,n$，其中 $n\ge2$、$\E\varepsilon_i=0$，且
+\[
+ \Cov(\varepsilon_i,\varepsilon_j)=\sigma^2\rho^{|i-j|},
+ \qquad \sigma^2>0,\quad0\le\rho<1.
+\]
+在所有线性无偏估计中求方差最小者及其方差。说明其与算术平均的区别，并求 $\rho\uparrow1$ 时的极限。
+\solution 记相关矩阵为 $R$。直接相乘可验证 $R^{-1}=T/(1-\rho^2)$，其中 $T$ 为三对角矩阵：两个端点对角元为 $1$，内部对角元为 $1+\rho^2$，相邻非对角元为 $-\rho$；$n=2$ 时没有内部项。
+线性估计 $w^\top Y$ 无偏当且仅当 $\mathbf1^\top w=1$。用乘子最小化 $w^\top Rw$，得 $w=R^{-1}\mathbf1/(\mathbf1^\top R^{-1}\mathbf1)$。端点的行和是 $1/(1+\rho)$，内部行和是 $(1-\rho)/(1+\rho)$。故令 $D=2+(n-2)(1-\rho)$，有
+\[
+ \widehat\mu=\frac{Y_1+Y_n+(1-\rho)\sum_{i=2}^{n-1}Y_i}{D},
+ \qquad
+ \boxed{\Var(\widehat\mu)=\frac{\sigma^2(1+\rho)}{D}}.
+\]
+$R$ 正定保证解唯一。也可将任意其他无偏权重写成 $w+h$、$\mathbf1^\top h=0$；交叉项为零，方差额外增加 $\sigma^2h^\top Rh\ge0$。
+$\rho=0$ 时恢复算术平均。$n>2$ 且 $\rho>0$ 时，端点获得更高权重，因为内部观测与两侧均相关；$n=2$ 时仍是等权。固定 $n$ 而 $\rho\uparrow1$，权重趋于两个端点各 $1/2$，最小方差趋于 $\sigma^2$，并不会因读数较多而趋于零。
+\insight 重复次数不能替代独立信息量。最优权重由协方差矩阵的逆决定，无须假设误差正态。
+
+\problem{A05}{共线变量的惩罚估计}{Elastic Net；唯一性}
+设 $\|x\|^2=1$、$z=x^\top y$，两个解释变量都等于 $x$。对 $\lambda>0$、$\eta\ge0$，求
+\[
+ \begin{aligned}
+ \min_{b_1,b_2}\quad&\frac12\|y-x(b_1+b_2)\|^2\\
+ &+\lambda(|b_1|+|b_2|)+\frac\eta2(b_1^2+b_2^2).
+ \end{aligned}
+\]
+的全部最优解。说明为什么极小的正二次惩罚就会改变系数分配的唯一性。
+\solution 令 $s=b_1+b_2$。固定 $s$ 时，三角不等式给出 $|b_1|+|b_2|\ge|s|$，平方和满足 $b_1^2+b_2^2\ge s^2/2$。取 $b_1=b_2=s/2$ 同时达到二者下界。因此问题化为
+\[
+ \min_s\ \frac12(s-z)^2+\lambda|s|+\frac\eta4s^2,
+\]
+省略项与 $s$ 无关。分别在 $s>0,s<0$ 求导并检查零点次梯度，得
+\[
+ s^*=\frac{\operatorname{sign}(z)(|z|-\lambda)_+}{1+\eta/2}.
+\]
+若 $\eta>0$，平方和取等强制 $b_1=b_2=s^*/2$，故系数唯一。若 $\eta=0$，系数和仍唯一；当 $s^*>0$ 时，全部解为 $(t,s^*-t)$、$0\le t\le s^*$；当 $s^*<0$ 时为 $s^*\le t\le0$；当 $s^*=0$ 时，$\lambda>0$ 强制两系数都为零。
+因此 Lasso 在非零拟合下可以任意分配两个相同变量的系数；任意 $\eta>0$ 则选择对称分配，同时对总系数施加额外收缩。边界 $|z|=\lambda$ 属于零解情形。
+\insight 对共线变量先固定它们的合计作用，再优化内部的系数分配，能将二维问题分成两步一维问题。
+
+\problem{A06}{线性约束下的最小二乘}{约束投影；惩罚极限}
+设 $X$ 满列秩，$A=X^\top X$、$\widehat\beta=A^{-1}X^\top y$。给定非零向量 $c$ 与实数 $d$，求约束 $c^\top\beta=d$ 下的最小二乘解，以及相对于无约束解的残差平方和增量。再求 $\lambda\ge0$ 时软惩罚 $\|y-X\beta\|^2+\lambda(c^\top\beta-d)^2$ 的解，并分析 $\lambda\to\infty$。
+\solution 正规方程使交叉项消失，故
+\[
+ \|y-X\beta\|^2=\|y-X\widehat\beta\|^2
+ +(\beta-\widehat\beta)^\top A(\beta-\widehat\beta).
+\]
+记 $q=c^\top A^{-1}c>0$、$e=c^\top\widehat\beta-d$。乘子方程表明校正量沿 $A^{-1}c$ 方向，代入约束得
+\[
+ \boxed{\widehat\beta_c=\widehat\beta-\frac e q A^{-1}c},
+ \qquad \Delta\mathrm{RSS}=\frac{e^2}{q}.
+\]
+正定二次型保证该可行解唯一。$e=0$ 时约束没有增加代价。
+对软惩罚解 $\beta_\lambda$，一阶条件为
+\[
+ A(\beta_\lambda-\widehat\beta)
+ +\lambda c(c^\top\beta_\lambda-d)=0.
+\]
+左乘 $c^\top A^{-1}$ 可得约束误差为 $e/(1+\lambda q)$，从而
+\[
+ \beta_\lambda=\widehat\beta-
+ \frac{\lambda e}{1+\lambda q}A^{-1}c
+ \longrightarrow\widehat\beta_c.
+\]
+有限惩罚通常不精确满足约束；除 $e=0$ 外，误差仅按 $1/\lambda$ 的量级消失。
+\insight 约束投影使用的是 $A$ 定义的距离，而不是普通欧氏距离。约束误差与方向代价分别由 $e$ 和 $q$ 控制。
+
+\input{parts/prob-P34}
+
+\par\Needspace{8\baselineskip}
+\subsection*{小节练习}
+\input{original-practice/A05}
+
+\section{矩阵与二次型}
+\noindent\textbf{要点与方法.}\enspace
+\input{section-notes/3-3}
+
+
+\input{parts/prob-P07}
+
+\problem{A25}{给定方差的单侧尾界}{矩约束；取等分布}
+设 $\E X=0$、$\Var(X)=\sigma^2>0$。给定 $t>0$，求 $\Prob(X\ge t)$ 的最大可能值及所有取等分布。若改为严格事件 $X>t$，最大值是否仍能达到？
+\solution 对任意 $a\ge0$，事件 $X\ge t$ 包含于 $\{(X+a)^2\ge(t+a)^2\}$，故
+\[
+ \Prob(X\ge t)\le\frac{\E(X+a)^2}{(t+a)^2}
+ =\frac{\sigma^2+a^2}{(t+a)^2}.
+\]
+对 $a$ 求导，导数的符号由 $at-\sigma^2$ 决定，所以最小上界在 $a=\sigma^2/t$ 处取得，得到
+\[
+ \boxed{\Prob(X\ge t)\le\frac{\sigma^2}{\sigma^2+t^2}}.
+\]
+取等时，事件外的平方项必须为零、事件内必须恰等于阈值，因此只能在 $t$ 与 $-\sigma^2/t$ 两点取值。均值为零确定 $\Prob(X=t)=\sigma^2/(\sigma^2+t^2)$，另一点取剩余概率；直接核算二阶矩为 $\sigma^2$，故界可达且取等分布唯一。
+严格事件的概率仍小于或等于同一界，但若达到，必同时在非严格界取等；唯一取等分布却在 $t$ 没有计入严格尾部，矛盾。因此无最大值。将上述构造中的上点换成 $t+\varepsilon$、下点换成 $-\sigma^2/(t+\varepsilon)$，严格尾概率趋于该界，所以它是上确界。
+\insight 对 $X$ 先作平移再使用平方矩，可以保留单侧信息；平移量也是需要优化的变量。
+
+\problem{A29}{单位向量的相干度}{Gram 矩阵；迹不等式}
+设 $m>d\ge1$，$u_1,\ldots,u_m$ 为 $\R^d$ 中的单位向量。证明
+\[
+ \max_{i\ne j}|u_i^\top u_j|^2\ge\frac{m-d}{d(m-1)}.
+\]
+给出取等所需且充分的两个条件，并在 $d=2,m=3$ 时构造取等向量。
+\solution 令 $G$ 为 Gram 矩阵。它半正定、秩至多 $d$，且 $\operatorname{tr}G=m$。把特征值补零至 $d$ 个，Cauchy--Schwarz 给出
+\[
+ \operatorname{tr}(G^2)\ge\frac{m^2}{d}.
+\]
+另一方面，若 $M=\max_{i\ne j}|u_i^\top u_j|^2$，则
+\[
+ \operatorname{tr}(G^2)=m+\sum_{i\ne j}|u_i^\top u_j|^2
+ \le m+m(m-1)M.
+\]
+联立即得所求。两步同时取等，当且仅当 $G$ 恰有 $d$ 个非零特征值且都为 $m/d$，并且所有非对角内积的绝对值相同。第一条件等价于
+\[
+ \sum_{i=1}^m u_i u_i^\top=\frac md I_d.
+\]
+取二维中方向角为 $0,\pi/3,2\pi/3$ 的三个单位向量，非对角内积的绝对值都为 $1/2$，平方为 $1/4=(3-2)/(2\cdot2)$，达到界。
+\insight 平方内积总和由 Gram 矩阵的谱控制，再由平均值逼出至少一对较大的内积。这里控制绝对值，不能只研究内积的正负。
+
+\problem{A30}{秩一更新的特征值}{极小极大原理；谱扰动}
+实对称矩阵 $A$ 的特征值为 $\lambda_1\le\cdots\le\lambda_n$。令 $B=A+tuu^\top$，其中 $t\ge0$、$u\in\R^n$，记其特征值为 $\mu_1\le\cdots\le\mu_n$。证明当 $i<n$ 时
+\[
+ \lambda_i\le\mu_i\le\lambda_{i+1},
+\]
+并证明 $\mu_n\ge\lambda_n$、每个特征值增量至多 $t\|u\|^2$、所有增量之和恰为 $t\|u\|^2$。
+\solution 每个向量上的 Rayleigh 商都增加 $t(u^\top x)^2/\|x\|^2\ge0$，由极小极大公式得 $\mu_i\ge\lambda_i$。同时增加量不超过 $t\|u\|^2$，再次使用同一公式即得 $\mu_i\le\lambda_i+t\|u\|^2$。
+为证更强的交错上界，取 $A$ 前 $i+1$ 个特征向量张成的空间 $E$。当 $u\ne0$ 时，$E\cap u^\perp$ 的维数至少为 $i$；在这个交空间上更新项为零、$A$ 的 Rayleigh 商至多 $\lambda_{i+1}$。选其中一个 $i$ 维子空间代入 $B$ 的极小极大公式，得到 $\mu_i\le\lambda_{i+1}$。$u=0$ 或 $t=0$ 时结论直接成立。
+最后取迹，得到
+\[
+ \sum_{i=1}^n(\mu_i-\lambda_i)
+ =\operatorname{tr}(tuu^\top)=t\|u\|^2.
+\]
+因此更新的总谱位移有固定预算，而各个有序特征值都不会下降。$n=1$ 时交错部分为空，其余结论仍成立。
+\insight 秩一扰动在一个余维为一的子空间上完全消失；这比单纯估计扰动范数提供更细的特征值位置控制。
+
+\input{classics-statistics}
+
+\par\Needspace{8\baselineskip}
+\subsection*{小节练习}
+\input{original-practice/A30}
+
+\section{练习题}
+\noindent\textbf{要点与方法.}\enspace
+\input{section-notes/3-4}
+
+
+\pagebreak
+\exercise{AG1-1}{观测矩的相容性}
+沿用 A01 的独立零均值模型，观测矩为
+\[
+ \begin{aligned}
+ \Var(W)&=5,\quad\Var(Z)=4,\quad\Cov(W,Z)=3,\\
+ \Cov(W,Y)&=\Cov(Z,Y)=6.
+ \end{aligned}
+\]
+识别 $\beta$、$T,U,V$ 的方差，并给出 $Y$ 对 $W$ 的回归斜率。若只把 $\Cov(Z,Y)$ 改为 $5$，其余观测矩不变，模型还能成立吗？
+
+\exercise{AG1-2}{严格尾事件的最优界}
+在所有 $\E X=0$、$\Var(X)=1$ 的分布中，分别求 $\Prob(X\ge2)$ 的最大值与 $\Prob(X>2)$ 的上确界。写出前者的取等分布，以及逼近后者上确界的一列分布。
+
+\exercise{AG1-3}{预算约束的稀疏估计}
+中心化设计满足 $X^\top X/n=I_3$、$X^\top y/n=(3,1,-1)^\top$。求
+\[
+ \min_{b_j\ge0,\ \sum_jb_j\le2}
+ \frac{\|y-Xb\|^2}{2n}+\frac12\sum_{j=1}^3b_j.
+\]
+给出预算约束的乘子，并解释为什么仅对各坐标独立截断还不够。
+
+\exercise{AG1-4}{系数和约束的代价}
+一个满列秩最小二乘问题满足 $X^\top X=\operatorname{diag}(1,4)$，无约束解为 $(2,-1)^\top$。要求两个系数之和为零，求受约束解以及残差平方和的增加量。用直接单变量最小化再核对一次。

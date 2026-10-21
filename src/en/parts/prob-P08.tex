@@ -1,0 +1,20 @@
+\problem{P08}{The Relative Difference of Two Gaussians}{Rotation and polar coordinates}
+Let $X,Y$ be independent standard normals and define
+\[
+R=\frac{X-Y}{X+Y},\qquad H=X^2+Y^2.
+\]
+The denominator is nonzero almost surely. Find the density of $R$, prove that $R,H$ are independent, and evaluate $\Prob(|R|\le c)$ for $c\ge0$. Does $R$ have mean zero?
+\solution Set $D=(X-Y)/\sqrt2$ and $S=(X+Y)/\sqrt2$. Orthogonal transformation preserves the joint standard normal density, so $D,S$ remain independent standard normals, with $H=D^2+S^2$. Write
+\[
+S=\rho\cos\theta,\qquad D=\rho\sin\theta.
+\]
+The polar density is $(2\pi)^{-1}\rho e^{-\rho^2/2}$, which factors into a radial density and a uniform angular density. Angle and radius are independent, so $R=\tan\theta$ is independent of $H=\rho^2$.
+
+Reducing the angle modulo $\pi$ gives density $1/\pi$ on $(-\pi/2,\pi/2)$. The transformation $\theta=\arctan r$ yields
+\[
+\boxed{f_R(r)=\frac1{\pi(1+r^2)},\quad r\in\mathbb R,}
+\qquad
+\boxed{\Prob(|R|\le c)=\frac2\pi\arctan c.}
+\]
+Although the density is symmetric, $\int_0^\infty r/[\pi(1+r^2)]\dd r=\infty$. Both positive and negative parts have infinite expectation, so $\E R$ does not exist; it is not zero.
+\insight Rotation turns the relative difference into a ratio of independent Gaussians, and polar coordinates separate direction from magnitude. Symmetry and existence of a mean are distinct requirements.

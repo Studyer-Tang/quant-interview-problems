@@ -1,0 +1,21 @@
+\problem{P25}{Regions from Diameters and an Offset Chord}{Counting intersections}
+Draw $n\ge1$ diameters of the unit disk with independent directions uniform on $[0,\pi)$. Add a fixed chord whose supporting line is at distance $d\in(0,1)$ from the center. Find the distribution, mean, and variance of the final number $R$ of regions.
+\solution Almost surely the diameter directions are distinct. They meet at the center and create $2n$ regions. Rotate coordinates so that the chord lies on $x=d$. A diameter at angle $\theta$ intersects the chord inside the disk exactly when
+\[
+\frac d{|\cos\theta|}<1.
+\]
+The probability is therefore $p=2\arccos(d)/\pi$. Independent directions imply that the number $K$ of crossings is $\operatorname{Bin}(n,p)$. Since $d>0$, the chord misses the common center, so distinct diameters give distinct crossings. Endpoint coincidences have probability zero.
+
+The $K$ crossings split the new chord into $K+1$ pieces, each splitting one existing region. Hence
+\[
+\boxed{R=2n+K+1.}
+\]
+For $k=0,\ldots,n$, this gives
+\[
+\Prob(R=2n+k+1)=\binom nkp^k(1-p)^{n-k},
+\]
+and
+\[
+\boxed{\E R=2n+1+np,\qquad \Var R=np(1-p).}
+\]
+\pitfall The diameters are concurrent, so a general-position formula that counts every pairwise intersection separately is inapplicable. The restriction $d>0$ also matters: a chord through the center would merge all its crossings.

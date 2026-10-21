@@ -1,0 +1,30 @@
+\problem{P22}{The First Local Peak}{Random ranks and tails}
+Let $X_1,X_2,\ldots$ be independent observations from any continuous distribution. Define
+\[
+N=\min\{n\ge3:X_{n-2}<X_{n-1}>X_n\}.
+\]
+Thus stopping includes the descending observation that confirms the first local peak. Find the distribution, mean, and variance of $N$.
+\solution A sequence of $n$ distinct observations has no local peak exactly when its adjacent comparison signs never change from an increase to a decrease. It must therefore first decrease and then increase, allowing either part to be empty.
+
+Place the smallest rank at the valley. Each of the other $n-1$ ranks can be assigned to either side. The left side must be decreasing and the right side increasing, so the order is then unique. There are $2^{n-1}$ peak-free permutations. All $n!$ ranks are equally likely, giving
+\[
+\boxed{\Prob(N>n)=\frac{2^{n-1}}{n!},\quad n\ge1,}
+\]
+with $\Prob(N>0)=1$. Hence, for $n\ge3$,
+\[
+\Prob(N=n)=\frac{2^{n-2}}{(n-1)!}-\frac{2^{n-1}}{n!}.
+\]
+The tail tends to zero, so stopping occurs almost surely. Tail sums and the exponential series give
+\[
+\E N=1+\frac12\sum_{n\ge1}\frac{2^n}{n!}
+=\frac{e^2+1}{2},
+\]
+\[
+\E N^2=1+\frac12\sum_{n\ge1}(2n+1)\frac{2^n}{n!}
+=\frac{5e^2+1}{2}.
+\]
+Therefore
+\[
+\boxed{\Var N=\frac{5e^2+1}{2}-\left(\frac{e^2+1}{2}\right)^2.}
+\]
+\insight The actual observation density is irrelevant; only rank patterns matter. The stopping convention must explicitly include or exclude the final observation that confirms a peak.

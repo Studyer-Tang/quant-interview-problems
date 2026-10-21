@@ -1,0 +1,86 @@
+\problem{CR01}{Poisson Splitting and a First Arrival}{Classical example}
+Events arrive as a Poisson process of rate $\lambda>0$. Independently label each arrival A with probability $p$ and B with probability $q=1-p$, where $0<p<1$. Write $N_A(t),N_B(t)$ for the two counts. Prove that they are independent Poisson processes, and find the A count conditional on a total of $n$ arrivals. Then let $\tau$ be the first A arrival and $K=N_B(\tau)$. Find the distribution of $K$ and the conditional distribution of $\tau$ given $K=k$.
+\solution Conditioning first on the total count, the joint probability generating function at a fixed time is
+\[
+ \E[z^{N_A(t)}w^{N_B(t)}]
+ =\exp\{\lambda t(pz+qw-1)\}
+ =e^{\lambda pt(z-1)}e^{\lambda qt(w-1)}.
+\]
+It factors into generating functions for Poisson counts with rates $\lambda p$ and $\lambda q$. Original increments over disjoint intervals are independent, as are all labels. The same factorization therefore holds jointly over any finite collection of disjoint intervals, proving independence of the two processes. Given a total of $n$ arrivals, their independent labels directly give
+\[
+ \boxed{N_A(t)\mid N_A(t)+N_B(t)=n\sim\operatorname{Bin}(n,p)}.
+\]
+Put $\alpha=\lambda p,\beta=\lambda q$. The first A arrival has distribution $\operatorname{Exp}(\alpha)$ and is independent of the entire B process. Hence
+\[
+ \Prob(K=k,\tau\in\dd t)
+ =\alpha e^{-(\alpha+\beta)t}\frac{(\beta t)^k}{k!}\dd t,
+ \qquad k=0,1,\ldots.
+\]
+Using $\int_0^\infty t^ke^{-\lambda t}\dd t=k!/\lambda^{k+1}$ gives
+\[
+ \boxed{\Prob(K=k)=pq^k}.
+\]
+Dividing the joint density by this probability yields
+\[
+ \boxed{f_{\tau\mid K=k}(t)=\frac{\lambda^{k+1}}{k!}t^ke^{-\lambda t},\quad t>0},
+ \qquad \boxed{\E(\tau\mid K=k)=\frac{k+1}{\lambda}}.
+\]
+This is the sum of $k+1$ independent exponential interarrival times of rate $\lambda$: exactly $k$ B arrivals precede the first A.
+\insight Independence of counts at fixed times does not imply independence after stopping at the first arrival of one type. A joint density makes the resulting conditioning explicit.
+
+\problem{CR02}{Residual Life at a Random Time}{Classical example}
+A renewal process starts at time zero. Independent intervals have lengths 1 and 3, each with probability $1/2$. Independently choose $U_t$ uniformly in $[0,t]$. Let $L_t$ be the length of the complete renewal interval containing $U_t$, $A_t$ the time since its left endpoint and $R_t$ the time to its right endpoint. Find their joint limiting distribution as $t\to\infty$. Under that limit, compute $\E R$, $\Prob(R>2)$ and $\Cov(A,R)$.
+\solution A uniformly chosen time selects intervals in proportion to their duration. More precisely, among the first $n$ complete intervals, the fraction of total time spent in intervals of length $\ell$ converges by the strong law to
+\[
+ \frac{\ell\Prob(L=\ell)}{\E L},\qquad \E L=2.
+\]
+The unfinished interval at the right endpoint has length at most 3, so its contribution to the time fraction vanishes. The limiting selected length $L_*$ therefore satisfies
+\[
+ \boxed{\Prob(L_*=1)=\frac14,\qquad\Prob(L_*=3)=\frac34}.
+\]
+Within an interval of length $\ell$, a uniformly selected time has a uniform location. Conditional on $L_*=\ell$,
+\[
+ \boxed{A\sim U[0,\ell],\qquad R=\ell-A}.
+\]
+This mixture specifies the joint distribution. All variables are bounded, so the distributional limit also gives the required moment limits. Since $\E L^2=5$ and $\E L^3=14$,
+\[
+ \boxed{\E R=\E A=\frac{\E L^2}{2\E L}=\frac54},\qquad
+ \boxed{\Prob(R>2)=\frac{\E(L-2)^+}{\E L}=\frac14}.
+\]
+The integral of the product of age and residual life over an interval of length $\ell$ is $\int_0^\ell u(\ell-u)\dd u=\ell^3/6$. Consequently,
+\[
+ \E(AR)=\frac{\E L^3}{6\E L}=\frac76,
+ \qquad \boxed{\Cov(A,R)=\frac76-\left(\frac54\right)^2=-\frac{19}{48}}.
+\]
+\insight Sampling an interval uniformly and sampling the interval containing a uniform time are different experiments. The latter first weights by length, then selects a uniform location within that interval.
+
+\problem{CR03}{A Single-Server Busy Period}{Classical example}
+Customers arrive as a Poisson process of rate $\lambda$. Independent service times are exponential with rate $\mu$, independently of arrivals, and $0<\lambda<\mu$. One server works in first-come, first-served order. Starting with one customer, let $B$ be the first time the system is empty. Find the Laplace transform, mean and variance of $B$, and explain what changes in the mean when $\lambda=\mu$.
+\solution Regard arrivals during a customer's service as that customer's offspring. Conditional on the service time $S$, the offspring count is $\operatorname{Pois}(\lambda S)$, with mean $\rho=\lambda/\mu<1$. The expected size of generation $j$ is $\rho^j$, so the expected total population is $1/(1-\rho)$. Its finiteness implies that the total population is finite almost surely. Existence of a customer does not depend on that customer's own future service time. Tonelli's theorem gives
+\[
+ \E B=\frac1\mu\sum_{j=0}^\infty\rho^j=\frac1{\mu-\lambda}.
+\]
+Let $b(s)=\E e^{-sB}$ for $s\ge0$. Arrivals during the first service generate independent copies of the descendant service total. The busy period is the sum of all service times in the tree, regardless of processing order. Conditioning on $S$ therefore gives
+\[
+ b(s)=\E\left[e^{-sS}b(s)^{N(S)}\right]
+ =\frac{\mu}{\mu+s+\lambda[1-b(s)]}.
+\]
+Thus $\lambda b^2-(\lambda+\mu+s)b+\mu=0$. Choose the root in $(0,1)$ for $s>0$ and extend continuously to zero:
+\[
+ \boxed{b(s)=\frac{\lambda+\mu+s-\sqrt{(\lambda+\mu+s)^2-4\lambda\mu}}{2\lambda}}.
+\]
+Differentiation for $s>0$ is valid because $B^je^{-sB}$ is bounded. Differentiating the quadratic equation twice and writing $D_s=2\lambda b(s)-\lambda-\mu-s$ yields
+\[
+ D_s b'(s)=b(s),\qquad
+ D_s b''(s)=2b'(s)-2\lambda[b'(s)]^2.
+\]
+As $s\downarrow0$, $b(s)\to1$ and $D_s\to\lambda-\mu$. Monotone convergence for the nonnegative moment integrands identifies the finite derivative limits:
+\[
+ \boxed{\E B=\frac1{\mu-\lambda}},\qquad
+ \E B^2=\frac{2\mu}{(\mu-\lambda)^3},
+\]
+\[
+ \boxed{\Var B=\frac{\lambda+\mu}{(\mu-\lambda)^3}}.
+\]
+At criticality, the offspring generating function is $f(z)=\mu/[\mu+\lambda(1-z)]$. Iteration of $f$ from zero gives extinction probabilities within finitely many generations; the limit is the smallest fixed point in $[0,1]$. When $\lambda=\mu$, that fixed point is 1. The busy period still ends almost surely, but every generation has expected size 1. The nonnegative series for expected total service therefore diverges, giving $\E B=\infty$.
+\insight A busy period includes every generation of arrivals during service. Counting only the initial service and its immediate arrivals omits later generations.

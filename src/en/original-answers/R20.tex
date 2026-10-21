@@ -1,0 +1,46 @@
+\answer{OR20}
+Let $V(a,b)$ be the maximum expected additional score when $a$ red and $b$ black cards remain. Stopping immediately adds 0, and the boundary values are
+\[
+ V(a,0)=a,\qquad V(0,b)=0.
+\]
+For $a,b>0$, the value of drawing one more card is
+\[
+ C(a,b)=\frac{a[1+V(a-1,b)]+b[-1+V(a,b-1)]}{a+b}.
+\]
+The Bellman equation is therefore
+\[
+ \boxed{V(a,b)=\max\{0,C(a,b)\}}.
+\]
+Evaluate states in increasing order of $a+b$. Backward induction proves optimality: once the successors use optimal policies, continuing is worth exactly $C(a,b)$, and comparison with the stopping value 0 gives the best current decision. The deck shrinks after every draw, so there is no infinite-horizon or integrability issue.
+
+Starting with 26 cards of each color, the current cumulative score is $s=b-a$ and the number remaining is $N=a+b$. One optimal rule is as follows. Stop if $N=0$. Continue if $N>0$ and $s\le0$. For positive scores, continue precisely under the conditions in the table; otherwise stop:
+\[
+ \begin{array}{c|ccccc}
+ s&1&2&3&4&5\\\hline
+ \text{Continue if}&N\ge5&N\ge10&N\ge19&N\ge30&N\ge43
+ \end{array}
+\]
+Stop whenever $s\ge6$. Only reachable states are included, so $N$ and $s$ have the same parity. At $s=1,N=3$, continuing and stopping both have value 0; the table chooses to stop.
+
+Exact rational evaluation of the recurrence gives
+\[
+ \boxed{V(26,26)=\frac{41984711742427}{15997372030584}
+       \approx2.624475549}.
+\]
+\par\smallskip\noindent\begin{minipage}{\linewidth}
+The recurrence also determines the decision comparison at every state. The following code computes the exact initial value without rounding:
+\begin{verbatim}
+from fractions import Fraction as F
+V = {}
+for a in range(27):
+    for b in range(27):
+        if a == 0: V[a,b] = F(0)
+        elif b == 0: V[a,b] = F(a)
+        else:
+            c = (a*(1+V[a-1,b])
+                 + b*(-1+V[a,b-1]))/(a+b)
+            V[a,b] = max(F(0), c)
+print(V[26,26])
+\end{verbatim}
+\end{minipage}\par\smallskip
+The advantage comes from information about the remaining deck. The successive draws are not independent gambles with a fixed success probability of $1/2$.

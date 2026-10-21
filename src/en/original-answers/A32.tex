@@ -1,0 +1,10 @@
+\answer{OA32}
+Maintain a deque of candidate indices. Indices increase strictly from front to back, while their values decrease strictly. On arrival of $x_t$:
+\begin{enumerate}
+\item Remove all front indices smaller than $t-N+1$; these have expired.
+\item While the deque is nonempty and its back value is at most $x_t$, remove the back index.
+\item Append $t$ and return the value at the front.
+\end{enumerate}
+Removing a back index is safe. If $i<t$ and $x_i\le x_t$, then in every later window containing both values, $i$ is no better than $t$, while $t$ expires later. Thus $i$ is no longer needed as a maximum candidate. Expired indices are irrelevant to the current window. The remaining values are decreasing, so the front is the current maximum. For equal values, keeping the newer index extends its useful lifetime. If the earliest maximizing index is also required, replace ``at most'' in step 2 by ``strictly less than.''
+
+Each index is inserted once and removed at most once. Processing $T$ values therefore costs $O(T)$ operations, giving $O(1)$ amortized time per arrival and $O(N)$ space. A single very large value can nevertheless remove almost the entire deque, so the worst-case time for one update is $O(N)$, not $O(1)$. For $N=1$, the output is simply the newly arrived value.

@@ -1,0 +1,22 @@
+\problem{P02}{Antithetic Estimation under Symmetry}{Symmetry and variance}
+Suppose $S$ and $-S$ have the same distribution, and write $\tau=\Prob(S=0)$. To estimate $p=\Prob(S>0)$, compare
+\[
+A=\frac{\ind\{S_1>0\}+\ind\{S_2>0\}}2,
+\qquad B=\frac{\ind\{S>0\}+\ind\{-S>0\}}2,
+\]
+where $S_1,S_2$ are independent copies of $S$. Prove that both estimators are unbiased, find their variances, and determine when the antithetic estimator has no random error.
+\solution Symmetry gives $p=\Prob(S<0)=(1-\tau)/2$, so $\E A=\E B=p$. Independence of the two indicators in $A$ yields
+\[
+\Var A=\frac{p(1-p)}2=\frac{1-\tau^2}{8}.
+\]
+The variables $S$ and $-S$ cannot both be positive. Unless $S=0$, exactly one is positive. Consequently,
+\[
+B=\frac{1-\ind\{S=0\}}2,
+\qquad \Var B=\frac{\tau(1-\tau)}4,
+\]
+and hence
+\[
+\boxed{\Var A-\Var B=\frac{(1-\tau)^2}{8}\ge0.}
+\]
+For $0\le\tau<1$, the variance ratio is $2\tau/(1+\tau)$. In particular, $\tau=0$ implies $B\equiv1/2$: pairing removes all random error. If $\tau=1$, both estimators are identically zero, so their variance ratio is undefined.
+\insight The improvement comes from negative dependence. Two evaluations with the same marginal law need not be independent; pairing opposite signs leaves only the uncertainty of the atom at zero.

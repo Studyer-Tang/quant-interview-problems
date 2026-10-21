@@ -1,0 +1,135 @@
+\chapter{概率计算}
+
+\section{基础概率与条件概率}
+\noindent\textbf{要点与方法.}\enspace
+\input{section-notes/1-1}
+
+
+\input{parts/prob-P02}
+\input{parts/prob-P03}
+\input{parts/prob-P30}
+\input{parts/prob-P31}
+\input{parts/prob-P33}
+\input{parts/prob-P12}
+\input{parts/prob-P13}
+
+\par\Needspace{8\baselineskip}
+\subsection*{小节练习}
+\input{original-practice/P02}
+\input{original-practice/P30}
+
+\section{计数与期望}
+\noindent\textbf{要点与方法.}\enspace
+\input{section-notes/1-2}
+
+
+\input{parts/prob-P05}
+\input{parts/prob-P17}
+\input{parts/prob-P18}
+\input{parts/prob-P19}
+\input{parts/prob-P25}
+\input{parts/prob-P26}
+\input{parts/prob-P27}
+\input{parts/prob-P28}
+\input{parts/prob-P29}
+\input{parts/prob-P32}
+\input{parts/prob-P14}
+
+\par\Needspace{8\baselineskip}
+\subsection*{小节练习}
+\input{original-practice/P18}
+\input{original-practice/P25}
+\input{original-practice/P26}
+
+\section{等待时间}
+\noindent\textbf{要点与方法.}\enspace
+\input{section-notes/1-3}
+
+
+\input{parts/prob-P06}
+\input{parts/prob-P20}
+\input{parts/prob-P21}
+\input{parts/prob-P22}
+\input{parts/prob-P23}
+\input{parts/prob-P24}
+
+\par\Needspace{8\baselineskip}
+\subsection*{小节练习}
+\input{original-practice/P22}
+\input{original-practice/P24}
+
+\section{分布与几何}
+\noindent\textbf{要点与方法.}\enspace
+\input{section-notes/1-4}
+
+
+\input{parts/prob-P04}
+\input{parts/prob-P08}
+\input{parts/prob-P10}
+\input{parts/prob-P11}
+\input{parts/prob-P35}
+\input{parts/prob-P36}
+\input{parts/prob-P37}
+\input{parts/prob-P38}
+
+\input{classics-probability}
+
+\par\Needspace{8\baselineskip}
+\subsection*{小节练习}
+\input{original-practice/P35}
+\input{original-practice/P36}
+\input{original-practice/P37}
+
+\section{练习题}
+\noindent\textbf{要点与方法.}\enspace
+\input{section-notes/1-5}
+
+
+\exercise{PG1-1}{只记录是否出现正面}
+以概率 $\pi$ 选择正面概率为 $p_1$ 的硬币，否则选择正面概率为 $p_2$ 的硬币，其中 $0<\pi,p_1,p_2<1$。选定后独立抛掷同一枚硬币 $n\ge1$ 次。记录只告诉你“至少出现过一次正面”，没有正面个数或顺序。求硬币类型的后验概率和下一次正面的预测概率。说明为什么不能把这一记录当作一次正面观测。
+
+\exercise{PG1-2}{期限内的竞争时钟}
+独立时钟 $A,B$ 的响铃时间分别服从参数为 $\alpha,\beta>0$ 的指数分布。记首次响铃时间为 $T$。已知 $A$ 先响，并且 $T<t$，其中 $t>0$ 固定。求 $T$ 的条件密度和均值，并讨论 $t\to\infty$ 的极限。
+
+\exercise{PG1-3}{含缺失报告的后验}
+真值 $T\in\{0,1\}$ 的先验概率为 $\Prob(T=1)=\pi\in(0,1)$。给定真值，各报告独立：以概率 $a$ 正确、以概率 $b$ 翻转、以概率 $1-a-b$ 缺失，其中 $a,b>0$、$a+b<1$。观察到 $h$ 个 $1$、$z$ 个 $0$ 和 $e$ 个缺失。求真值的后验赔率，并说明缺失是否提供信息。若缺失概率依赖真值，后一结论是否仍成立？
+
+\exercise{PG1-4}{总和接近零的筛选}
+$X,Z$ 独立标准正态，只保留满足 $|X+Z|<a$ 的观测，其中 $a>0$。求保留样本的相关系数，并求 $a\downarrow0$ 和 $a\to\infty$ 时的极限。
+
+\exercise{PG2-1}{不等概率的第一次重复}
+独立抽样有三种可能类型，概率分别为 $1/2,1/4,1/4$。令 $T$ 为第一次抽到已出现类型的时刻。求 $\E T$ 和 $\Prob(T=4)$。
+
+\exercise{PG2-2}{圆环中的连续红段}
+把 $m\ge1$ 张红卡和 $n\ge1$ 张黑卡均匀放在 $N=m+n$ 个标号圆环位置上，首尾相连。求红色段数的期望，以及全部红卡恰组成一个连续圆环段的概率。
+
+\exercise{PG2-3}{同桶三元组的方差}
+$m\ge3$ 个对象独立进入 $d$ 个桶，入桶概率为 $p_1,\ldots,p_d$，其中 $p_i\ge0$、$\sum p_i=1$。令 $C$ 为全部落入同一桶的无序三元对象组数。记 $s_r=\sum_i p_i^r$，求 $\E C$ 与 $\Var C$。
+
+\exercise{PG2-4}{目标两侧的权重差}
+把 $K\ge1$ 张目标卡与 $m\ge0$ 张普通卡均匀随机排列，普通卡 $i$ 带固定实数权重 $w_i$。令 $D$ 为首张目标卡之前的普通卡权重和，减去末张目标卡之后的普通卡权重和。求 $\E D$ 与 $\Var D$，允许权重为负。
+
+\exercise{PG3-1}{增量相关的抽样成本}
+$U_i$ 独立服从 $\operatorname{Unif}(0,1)$，在累计和首次超过 $1$ 时停止，次数为 $N$。第 $j$ 次抽样的成本是实际观测值 $U_j^2$。求总成本 $C=\sum_{j=1}^NU_j^2$ 的期望，并说明所用独立性为何不要求 $N$ 与增量独立。
+
+\exercise{PG3-2}{含固定缩减的乘法停止}
+$U_i$ 独立服从 $\operatorname{Unif}(0,1)$，令 $R_n=2^{-n}\prod_{i=1}^nU_i$、$R_0=1$。对 $0<x<1$，在首次 $R_n<x$ 时停止，次数为 $N$。给出 $N$ 的确定性上界、尾概率和均值的有限和表达式，并求 $x=1/4$ 时的完整分布。
+
+\exercise{PG3-3}{区间内的更新次数}
+$U_i$ 独立服从 $\operatorname{Unif}(0,1)$，$S_k=\sum_{i=1}^kU_i$。对 $0<a<b\le1$，令 $K$ 为落在 $(a,b]$ 内的正累计和 $S_k$ 的个数。求 $K$ 的完整分布和期望。
+
+\pagebreak
+\exercise{PG3-4}{剩余总量的最佳预测}
+在题 \ref{prob:P24} 的模型中，已观察 $R_1,\ldots,R_n$，$n\ge0$，记 $Q_n=\sum_{j=1}^n(1-R_j)$。用这些观测预测完整总量 $Q$，求平方损失下的最优预测、条件预测误差方差，以及观察前的均方误差。说明为什么不能简单用部分和 $Q_n$ 作为最优预测。
+
+\exercise{PG4-1}{两个均匀量的相对份额}
+$U,V$ 独立服从 $\operatorname{Unif}(0,1)$。令 $W=U/(U+V)$，求 $W$ 的密度、均值和方差，并判断它是否均匀分布。
+
+\exercise{PG4-2}{样本极值的中点}
+$n\ge2$ 个独立样本均匀分布于 $(0,1)$，记最小值为 $L$、最大值为 $H$。求极值中点 $C=(L+H)/2$ 的密度、均值和方差。
+
+\exercise{PG4-3}{随机点所在段的长度}
+用 $n-1$ 个独立均匀切点将单位线段分成 $n\ge2$ 段，再独立均匀选取线段上的一个点。令 $L$ 为该点所在段的长度。求 $L$ 的密度、$\E L$ 与 $\E(1/L)$，并与从 $n$ 段中等概率选一段的平均长度比较。
+
+\exercise{PG4-4}{三个方向的符号变化}
+$X,Y$ 独立标准正态，$0<\theta<\pi/2$。分别取向量 $(X,Y)$ 在方向 $0,\theta,2\theta$ 上的投影符号，记为 $A,B,C\in\{-1,1\}$。令 $D_1=\ind\{A\ne B\}$、$D_2=\ind\{B\ne C\}$。求 $(D_1,D_2)$ 的联合分布、协方差及三个符号全相同的概率。

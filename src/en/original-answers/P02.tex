@@ -1,0 +1,11 @@
+\answer{OP02}
+Write $Z$ for B's head count in the first $2n$ tosses and $B$ for the indicator of a head on the final toss. Then $Y=Z+B$, with $B$ independent and equally likely to be $0$ or $1$. Put $D=Z-2X$. Complement every outcome in A's tosses and B's first $2n$ tosses. This preserves probability and maps
+\[
+D\longmapsto(2n-Z)-2(n-X)=-D.
+\]
+Thus $\Prob(D>0)=\Prob(D<0)$. A positive $D$ guarantees success; a negative $D$ cannot be made strictly positive by adding $B\le1$; and $D=0$ gives success exactly when $B=1$. Consequently,
+\[
+\Prob(Y>2X)=\Prob(D>0)+\frac12\Prob(D=0)
+=\boxed{\frac12}.
+\]
+The symmetry is that of the difference $Z-2X$; it does not assert that $Z$ and $2X$ have the same distribution.

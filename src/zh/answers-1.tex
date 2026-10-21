@@ -1,0 +1,262 @@
+\section{概率计算}
+
+\answer{PG1-1}
+记 $E$ 为至少出现一次正面，$C=i$ 为硬币类型。给定类型，$E$ 的补事件是连续 $n$ 次反面，因此似然为 $L_i=1-(1-p_i)^n$。全概率与贝叶斯公式给出
+\[
+\boxed{w:=\Prob(C=1\mid E)=\frac{\pi L_1}{\pi L_1+(1-\pi)L_2}.}
+\]
+给定类型后下一次抛掷与已知事件独立，所以
+\[
+\boxed{\Prob(H_{n+1}\mid E)=wp_1+(1-w)p_2.}
+\]
+当 $n>1$ 时，记录合并了许多不同序列，其似然是 $L_i$，通常不等于单次正面的似然 $p_i$。随着 $n\to\infty$，两种似然都趋于 $1$，后验趋回先验；因为两种硬币最终几乎必然都至少出现一次正面。
+
+\answer{PG1-2}
+记 $s=\alpha+\beta$，$E$ 为已知事件。$A$ 在 $u$ 附近响而 $B$ 尚未响的联合密度为 $\alpha e^{-su}$。因此
+\[
+\Prob(E)=\int_0^t\alpha e^{-su}\dd u=\frac\alpha s(1-e^{-st}).
+\]
+相除得
+\[
+\boxed{f_{T\mid E}(u)=\frac{s e^{-su}}{1-e^{-st}},\quad0<u<t.}
+\]
+分部积分计算条件均值：
+\[
+\E(T\mid E)=\frac{-t e^{-st}+(1-e^{-st})/s}{1-e^{-st}}
+=\boxed{\frac1s-\frac{t}{e^{st}-1}}.
+\]
+当 $t\to\infty$ 时，密度趋于参数为 $s$ 的指数密度，均值趋于 $1/s$。已知胜出时钟本身不改变首次响铃时间，但附加的期限条件将其截断。
+
+\answer{PG1-3}
+记 $d=1-a-b$。给定 $T=1$ 与 $T=0$，去掉两者共同的多项式系数后，似然分别为 $a^hb^zd^e$ 与 $b^ha^zd^e$。因此
+\[
+\boxed{O:=\frac{\Prob(T=1\mid\text{记录})}{\Prob(T=0\mid\text{记录})}
+=\frac\pi{1-\pi}\left(\frac ab\right)^{h-z}.}
+\]
+后验概率为 $O/(1+O)$。缺失因子 $d^e$ 抵消，所以在本模型中，同样的 $h,z$ 对应同样后验，与缺失个数无关。
+
+若两类真值下缺失概率分别为 $d_1,d_0$，每个缺失记录会贡献似然比 $d_1/d_0$，不再自动抵消；非缺失输出的概率也须使用相应真值下的实际概率重新计算。因而不能只保留原公式而忽略缺失机制。
+
+\answer{PG1-4}
+令 $S=(X+Z)/\sqrt2$、$D=(X-Z)/\sqrt2$、$b=a/\sqrt2$。$S,D$ 独立标准正态，筛选只限制 $|S|<b$，其概率为 $2\Phi(b)-1$。由对称性条件均值为零，分部积分给出
+\[
+v:=\Var(S\mid |S|<b)
+=\frac{\int_{-b}^b s^2\phi(s)\dd s}{2\Phi(b)-1}
+=1-\frac{2b\phi(b)}{2\Phi(b)-1}.
+\]
+$D$ 的方差仍为 $1$，且与截断后的 $S$ 独立。因此
+\[
+\boxed{\operatorname{Corr}(X,Z\mid |X+Z|<a)=\frac{v-1}{v+1}.}
+\]
+当 $b\downarrow0$，条件下 $|S|<b$ 直接给出 $0\le v\le b^2$，故相关趋于 $-1$；当 $b\to\infty$，截断消失，$v\to1$，相关趋于零。
+
+\answer{PG2-1}
+第一次不可能重复，且第四次必然重复，故 $T\in\{2,3,4\}$。前两次不同的概率为
+\[
+\Prob(T>2)=1-\left[(1/2)^2+2(1/4)^2\right]=\frac58.
+\]
+前三次不同要求三种类型各出现一次，共有 $3!$ 种顺序，因此
+\[
+\Prob(T>3)=6\cdot\frac12\cdot\frac14\cdot\frac14=\frac3{16}.
+\]
+由 $\Prob(T>0)=\Prob(T>1)=1$，尾和公式给出
+\[
+\boxed{\E T=1+1+\frac58+\frac3{16}=\frac{45}{16},
+\qquad \Prob(T=4)=\frac3{16}.}
+\]
+最后一个等式使用 $T\le4$；它不是某一指定类型出现的概率。
+
+\answer{PG2-2}
+每个红段恰有一个从黑色到红色的边界。对任意一条按固定方向读取的相邻关系，其起点黑、终点红的概率为 $nm/[N(N-1)]$。由 $N$ 个边界指示变量求和，
+\[
+\boxed{\E(\text{红段数})=\frac{mn}{N-1}.}
+\]
+若全部红卡连续，只需指定唯一红段的起点，就能确定整条颜色序列，共 $N$ 种。因两种颜色均存在，这些起点产生不同的标号序列。总颜色序列数为 $\binom Nm$，所以
+\[
+\boxed{\Prob(\text{只有一个红段})=\frac N{\binom Nm}.}
+\]
+$m=1$ 或 $n=1$ 时该概率等于 $1$，与直接观察一致。
+
+\answer{PG2-3}
+对每个三元子集 $A$，令 $I_A$ 表示它同桶。则 $\E I_A=s_3$，所以 $\E C=\binom m3s_3$。不同三元组的协方差按交集大小分类：不相交时独立；共享两个对象时，两个事件同时发生要求四个对象同桶，协方差为 $s_4-s_3^2$；共享一个对象时要求五个对象同桶，协方差为 $s_5-s_3^2$。
+
+共享两个对象的无序三元组对有 $6\binom m4$ 个：在四个对象中选两个为公共部分。共享一个对象的有 $15\binom m5$ 个：先选公共对象，再把其余四个分成两对，共 $5\cdot3=15$ 种。方差展开中每个无序对出现两次，故
+\[
+\boxed{\begin{aligned}
+\E C&=\binom m3s_3,\\
+\Var C&=\binom m3s_3(1-s_3)
++12\binom m4(s_4-s_3^2)\\
+&\quad+30\binom m5(s_5-s_3^2).
+\end{aligned}}
+\]
+约定当 $r>m$ 时 $\binom mr=0$，所以公式也适用于 $m=3,4$。
+
+\answer{PG2-4}
+令 $Y_i$ 在普通卡 $i$ 位于全部目标之前时为 $1$，位于全部目标之后时为 $-1$，其余为零。反转排列给出 $\E Y_i=0$。在该卡与 $K$ 张目标卡的相对次序中，首尾各有概率 $1/(K+1)$，故 $\E Y_i^2=2/(K+1)$。
+
+对 $i\ne j$，两卡同在目标之前的概率为 $2/[(K+1)(K+2)]$，同在之后也相同；指定 $i$ 在前、$j$ 在后的概率为 $1/[(K+1)(K+2)]$，反向亦同。因此
+\[
+\E(Y_iY_j)=\frac2{(K+1)(K+2)}.
+\]
+写 $D=\sum_iw_iY_i$，展开平方并用 $2\sum_{i<j}w_iw_j=(\sum_iw_i)^2-\sum_iw_i^2$，得到
+\[
+\boxed{\E D=0,\qquad
+\Var D=\frac{2[(K+1)\sum_iw_i^2+(\sum_iw_i)^2]}{(K+1)(K+2)}.}
+\]
+这是代数恒等式，不要求权重非负；$m=0$ 时两边均为零。
+
+\answer{PG3-1}
+先由单纯形体积求等待次数的尾概率：
+\[
+\Prob(N>k)=\Prob(U_1+\cdots+U_k\le1)=\frac1{k!},\quad k\ge0.
+\]
+所以 $\E N=\sum_{k\ge0}1/k!=e$。把成本写为非负项之和，交换求和与期望，
+\[
+\E C=\sum_{j\ge1}\E[U_j^2\ind\{N\ge j\}].
+\]
+事件 $\{N\ge j\}$ 等价于前 $j-1$ 个增量的和不超过 $1$，只依赖过去，因此与新的 $U_j$ 独立。每一项等于 $\E U_j^2\Prob(N\ge j)=\Prob(N\ge j)/3$。于是
+\[
+\boxed{\E C=\frac13\E N=\frac e3.}
+\]
+$N$ 确实依赖整列增量；这里使用的是“第 $j$ 次抽样是否发生”与该次尚未观察的增量独立，而不是把整个停止次数当作独立变量。
+
+\answer{PG3-2}
+记 $t=-\log x$、$b=\log2$。负对数长度为 $nb+G_n$，其中 $G_n=\sum_{i=1}^n(-\log U_i)$，其密度为 $s^{n-1}e^{-s}/(n-1)!$。由于 $G_n>0$ 几乎必然，只要 $nb\ge t$ 就已越界，因此 $N\le L:=\lceil t/b\rceil$ 几乎必然。
+
+对 $n\ge1$，若 $a_n=t-nb\le0$，则 $\Prob(N>n)=0$；若 $a_n>0$，
+\[
+\boxed{\Prob(N>n)=\Prob(G_n\le a_n)
+=1-e^{-a_n}\sum_{j=0}^{n-1}\frac{a_n^j}{j!}.}
+\]
+最后一步由伽马密度反复分部积分得到。再加上 $\Prob(N>0)=1$，可写
+\[
+\boxed{\E N=1+\sum_{n=1}^{L-1}
+\left[1-e^{-(t-nb)}\sum_{j=0}^{n-1}\frac{(t-nb)^j}{j!}\right].}
+\]
+$x=1/4$ 时 $L=2$。第一步越界等价于 $U_1/2<1/4$，概率为 $1/2$；否则第二步必越界。因此 $\Prob(N=1)=\Prob(N=2)=1/2$，$\E N=3/2$。
+
+\answer{PG3-3}
+对 $0<s<1$，所有正累计和的密度之和为 $u(s)=\sum_{k\ge1}s^{k-1}/(k-1)!=e^s$。首次进入 $(a,b]$ 的位置为 $s$ 时，前一步可从 $S_0=0$ 出发，也可从某个正累计和 $t\le a$ 出发。因 $s-t\in(0,1)$，新增量密度为 $1$，所以首次进入的密度为
+\[
+1+\int_0^a e^t\dd t=e^a,\quad a<s\le b.
+\]
+记 $d=b-a$。若恰有 $k\ge1$ 次进入，所有这些累计和依次为 $a<s_1<\cdots<s_k\le b$。内部各转移密度均为 $1$，最后一步越过 $b$ 的概率为 $1-b+s_k$。先固定 $s_k=a+v$，其前面的 $k-1$ 个位置形成体积 $v^{k-1}/(k-1)!$ 的单纯形，因此
+\[
+\begin{aligned}
+\Prob(K=k)
+&=\frac{e^a}{(k-1)!}\int_0^d v^{k-1}(1-d+v)\dd v\\
+&=\boxed{e^a\left(\frac{d^k}{k!}-\frac{d^{k+1}}{(k+1)!}\right)}.
+\end{aligned}
+\]
+对 $k\ge1$ 求和望远镜相消为 $e^ad$，故 $\boxed{\Prob(K=0)=1-e^ad}$。它非负，因为 $d\le1-a$ 且 $e^a(1-a)\le1$。最后由计数期望等于密度积分，
+\[
+\boxed{\E K=\int_a^bu(s)\dd s=e^b-e^a.}
+\]
+
+\answer{PG3-4}
+未来缩小比例与已知历史独立。按题 \ref{prob:P24} 的归一化表示，给定当前历史 $\mathcal F_n$，
+\[
+Q=Q_n+(1-R_n)D',
+\]
+其中 $D'$ 独立于 $\mathcal F_n$，且 $\E D'=1$、$\Var D'=1/2$。因此
+\[
+\boxed{\widehat Q=\E(Q\mid\mathcal F_n)=Q_n+1-R_n,}
+\quad
+\boxed{\Var(Q\mid\mathcal F_n)=\frac{(1-R_n)^2}{2}.}
+\]
+最优性由条件均值的正交性质证明：对任意基于历史且二阶可积的预测 $Z$，
+\[
+\E(Q-Z)^2=\E\Var(Q\mid\mathcal F_n)+\E(\widehat Q-Z)^2,
+\]
+交叉项因条件期望为零而消失。故取 $Z=\widehat Q$ 达到最小值。又 $1-R_n=(1-x)\prod_{i=1}^nU_i$，所以
+\[
+\boxed{\E(Q-\widehat Q)^2=\frac{(1-x)^2}{2\cdot3^n}.}
+\]
+部分和 $Q_n$ 漏掉了条件期望为 $1-R_n$ 的正尾项；补上它才能消除可预测的偏差。
+
+\answer{PG4-1}
+引入 $S=U+V$，则 $U=WS$、$V=(1-W)S$，雅可比为 $s$。单位正方形给出的取值域为
+\[
+0<w<1,\qquad 0<s<\frac1{\max(w,1-w)}.
+\]
+因此
+\[
+\boxed{f_W(w)=\int_0^{1/\max(w,1-w)}s\dd s
+=\frac1{2\max(w,1-w)^2},\quad0<w<1.}
+\]
+密度不是常数，所以不均匀。交换 $U,V$ 将 $W$ 变为 $1-W$，故 $\E W=1/2$。二阶矩分段积分：
+\[
+\begin{aligned}
+\E W^2&=\frac12\int_0^{1/2}\frac{w^2}{(1-w)^2}\dd w
++\frac12\int_{1/2}^1 1\dd w\\
+&=\left(\frac34-\log2\right)+\frac14=1-\log2.
+\end{aligned}
+\]
+所以 $\boxed{\Var W=3/4-\log2}$。份额对称只决定均值，不决定其密度恒定。
+
+\answer{PG4-2}
+在 $0<l<h<1$ 上，极值的联合密度为 $n(n-1)(h-l)^{n-2}$：选定最小与最大样本后，其余 $n-2$ 个必须落在二者之间。令 $r=h-l$、$c=(l+h)/2$，逆变换雅可比为 $1$，且 $0<r<2\min(c,1-c)$。因此
+\[
+\boxed{f_C(c)=\int_0^{2\min(c,1-c)}n(n-1)r^{n-2}\dd r
+=n[2\min(c,1-c)]^{n-1},\quad0<c<1.}
+\]
+密度关于 $1/2$ 对称，故 $\E C=1/2$。利用对称性并令 $u=2c$，
+\[
+\begin{aligned}
+\Var C&=2\int_0^{1/2}(1/2-c)^2n(2c)^{n-1}\dd c\\
+&=\frac n4\int_0^1(1-u)^2u^{n-1}\dd u
+=\boxed{\frac1{2(n+1)(n+2)}}.
+\end{aligned}
+\]
+最后的积分可展开 $(1-u)^2$，得到 $1/n-2/(n+1)+1/(n+2)$。
+
+\answer{PG4-3}
+记间距为 $D_1,\ldots,D_n$。给定全部间距，随机点落在第 $i$ 段的概率是 $D_i$，而不是 $1/n$。对非负函数 $g$，
+\[
+\E g(L)=\E\sum_iD_i g(D_i)=n\E[D_1g(D_1)].
+\]
+单个间距满足 $\Prob(D_1>l)=(1-l)^{n-1}$，密度为 $(n-1)(1-l)^{n-2}$，故
+\[
+\boxed{f_L(l)=n(n-1)l(1-l)^{n-2},\quad0<l<1.}
+\]
+这是 $\operatorname{Beta}(2,n-1)$ 密度。由贝塔积分，
+\[
+\boxed{\E L=\frac2{n+1},\qquad
+\E(1/L)=n(n-1)\int_0^1(1-l)^{n-2}\dd l=n.}
+\]
+等概率选段的平均长度为 $\E(\sum_iD_i/n)=1/n$，严格小于 $2/(n+1)$。区别来自长段被随机点选中的概率更大。
+
+\answer{PG4-4}
+向量方向在圆周上均匀。两个方向相差 $\theta$ 时，投影异号对应总角度为 $2\theta$ 的两个扇形，因此 $\Prob(D_1=1)=\Prob(D_2=1)=\theta/\pi$。
+
+设三个实际投影值为 $V_0,V_1,V_2$。三角恒等式给出
+\[
+V_1=\frac{V_0+V_2}{2\cos\theta}.
+\]
+因 $\cos\theta>0$，若外侧两个投影同号，中间投影也同号。故不可能同时发生两次符号变化，即 $\Prob(D_1=D_2=1)=0$。零投影为零概率事件。结合边际概率，
+\[
+\boxed{\begin{array}{c|cc}
+& D_2=0&D_2=1\\ \hline
+D_1=0&1-2\theta/\pi&\theta/\pi\\
+D_1=1&\theta/\pi&0
+\end{array}}
+\]
+于是
+\[
+\boxed{\Cov(D_1,D_2)=-\frac{\theta^2}{\pi^2},\qquad
+\Prob(A=B=C)=1-\frac{2\theta}{\pi}.}
+\]
+相邻比较共享中间投影，两次符号变化因此不是独立事件。
+
+\par\Needspace{8\baselineskip}
+\subsection*{小节练习}
+\input{original-answers/P02}
+\input{original-answers/P30}
+\input{original-answers/P18}
+\input{original-answers/P25}
+\input{original-answers/P26}
+\input{original-answers/P22}
+\input{original-answers/P24}
+\input{original-answers/P35}
+\input{original-answers/P36}
+\input{original-answers/P37}

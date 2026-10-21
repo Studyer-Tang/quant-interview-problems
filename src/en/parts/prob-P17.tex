@@ -1,0 +1,24 @@
+\problem{P17}{Fixed Points in a Random Assignment}{Inclusion--exclusion}
+Assign $n\ge2$ tasks uniformly at random to $n$ people, one task per person. Task $i$ originally belongs to person $i$. Let $F$ count people receiving their own task. Find the distribution, mean, and variance of $F$, and explain why $F=n-1$ is impossible.
+\solution An assignment is a uniform permutation. To have exactly $k$ fixed points, choose their positions and derange the remaining $n-k$ positions. Inclusion--exclusion gives the number of derangements of $r$ positions:
+\[
+D_r=\sum_{j=0}^r(-1)^j\binom rj(r-j)!
+=r!\sum_{j=0}^r\frac{(-1)^j}{j!},\quad D_0=1.
+\]
+Hence
+\[
+\boxed{\Prob(F=k)=\frac{\binom nkD_{n-k}}{n!}
+=\frac1{k!}\sum_{j=0}^{n-k}\frac{(-1)^j}{j!},
+\quad0\le k\le n.}
+\]
+Let $I_i$ indicate that person $i$ receives their own task. Fixing one or two prescribed positions leaves $(n-1)!$ or $(n-2)!$ permutations, respectively. Thus
+\[
+\E I_i=\frac1n,\qquad \E(I_iI_j)=\frac1{n(n-1)}\quad(i\ne j).
+\]
+It follows that $\E F=1$ and
+\[
+\E F^2=\sum_i\E I_i+2\sum_{i<j}\E(I_iI_j)=2,
+\qquad \boxed{\Var F=1.}
+\]
+If $n-1$ people receive their own tasks, the last person must do so as well. Equivalently, $D_1=0$ in the probability formula.
+\insight The full distribution calls for inclusion--exclusion. The first two moments need only one- and two-position probabilities, avoiding a sum over that distribution.

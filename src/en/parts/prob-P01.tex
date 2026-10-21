@@ -1,0 +1,22 @@
+\problem{P01}{The Value of a Quality Test}{Adverse selection; information design}
+A seller knows an item's value $X\sim\operatorname{Unif}[0,1]$; the buyer values it at $3X/2$. The buyer offers a single price $p\ge0$, accepted exactly when $X\le p$. Before bidding, the buyer may pay $c\ge0$ for a test: he chooses a threshold $t\in(0,1)$ in advance and learns only whether $X<t$ or $X\ge t$, then makes a contingent offer. Find the best threshold and offers, and decide when to purchase the test.
+\solution Without testing, an offer $0\le p\le1$ gives expected trading profit
+\[
+ \int_0^p(3x/2-p)\,\dd x=-p^2/4\le0.
+\]
+For $p>1$ the profit is $3/4-p<0$. Thus not trading attains the optimum zero.
+After a low result, $X$ is uniform on $[0,t)$. Offers $p\le t$ have nonpositive profit; offers $p\ge t$ have conditional profit $3t/4-p<0$. The buyer should not trade.
+After a high result, consider only $p\in[t,1]$: lower prices do not trade, and higher prices only increase the payment. Multiplying conditional profit by the high-result probability $1-t$ gives the unconditional contribution
+\[
+ H_t(p)=\int_t^p(3x/2-p)\,\dd x
+ =-\frac{p^2}{4}+tp-\frac{3t^2}{4}.
+\]
+This concave quadratic is maximized at $p_t=\min\{2t,1\}$. The gross benefit of testing is therefore
+\[
+ W(t)=\begin{cases}
+ t^2/4,&0<t\le1/2,\\
+ t-1/4-3t^2/4,&1/2\le t<1.
+ \end{cases}
+\]
+The first branch increases; the second has its unique maximum at $t=2/3$. The optimal test uses threshold $2/3$, no trade after a low result, and offer $1$ after a high result. Gross profit is $1/12$. Net improvement over no test is $1/12-c$: test below this cost, decline above it, and be indifferent at equality.
+\insight An offer selects which goods trade, while a test changes the information available before offering. Optimize the offer within each information branch before optimizing the test itself.

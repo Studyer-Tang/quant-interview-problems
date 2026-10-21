@@ -1,0 +1,22 @@
+\answer{OR25}
+Integration by parts for $tW_t$ gives
+\[
+ TW_T=\int_0^T W_t\,dt+\int_0^T t\,dW_t.
+\]
+Consequently,
+\[
+ X=\int_0^T(T-t)\,dW_t,\qquad
+ Y=\int_0^T t\,dW_t.
+\]
+Both integrands are deterministic and square-integrable, so both integrals have mean 0. The It\^o isometry and its cross form give
+\[
+ \Var X=\int_0^T(T-t)^2dt=\frac{T^3}{3},\qquad
+ \Var Y=\int_0^Tt^2dt=\frac{T^3}{3},
+\]
+\[
+ \Cov(X,Y)=\int_0^Tt(T-t)dt=\frac{T^3}{6}.
+\]
+The cross form also follows by applying the isometry to the sum of the two integrands and expanding the square. Since $T>0$, both variances are nonzero. Therefore
+\[
+ \boxed{\Corr(X,Y)=\frac{T^3/6}{T^3/3}=\frac12}.
+\]

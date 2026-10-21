@@ -1,0 +1,27 @@
+\answer{OA17}
+Suppose there are $N$ types in total, and type $j$ occurs in $r_j$ collections, where $1\le r_j\le4$. Counting all memberships gives
+\[
+ \sum_{j=1}^N r_j=40.
+\]
+Now add the sizes of the six pairwise intersections. Type $j$ is counted $\binom{r_j}{2}$ times, so
+\[
+ \sum_{j=1}^N\binom{r_j}{2}\le36,
+ \qquad \sum_{j=1}^N r_j^2\le112.
+\]
+By Cauchy--Schwarz,
+\[
+ 40^2\le N\sum_{j=1}^N r_j^2\le112N,
+ \qquad N\ge\frac{100}{7}.
+\]
+Since $N$ is an integer, $N\ge15$.
+
+Label fifteen types by $1$ through $15$ and take
+\[
+ \begin{aligned}
+ A&=\{1,2,3,4,5,6,7,8,9,10\},\\
+ B&=\{1,2,3,4,5,6,11,12,13,14\},\\
+ C&=\{1,2,7,8,9,10,11,12,13,14\},\\
+ D&=\{3,4,5,7,8,9,11,12,13,15\}.
+ \end{aligned}
+\]
+Each collection has ten elements, every pairwise intersection has exactly six elements, and their union contains all fifteen types. The minimum is therefore $\boxed{15}$.

@@ -1,0 +1,18 @@
+\problem{P28}{Color Changes around a Circle}{Cyclic counting}
+Place $m$ red and $n$ black cards uniformly in $N=m+n$ labeled circular positions, where $m,n\ge1$. Let $C$ count adjacent pairs of different colors, including positions $N$ and $1$. Find its full distribution and mean. For $N=2$, count the two circular adjacencies separately.
+\solution Every red run is followed by a black run. Thus $C=2k$ means that there are $k$ runs of each color, where $1\le k\le\min(m,n)$.
+
+Mark the start of one red run. There are $N$ possible marked positions. The successive red run lengths are a positive composition of $m$ into $k$ parts, and the black lengths are a positive composition of $n$ into $k$ parts. The number of marked arrangements is
+\[
+N\binom{m-1}{k-1}\binom{n-1}{k-1}.
+\]
+Each unmarked arrangement is counted exactly $k$ times. Since all $\binom Nm$ color arrangements are equally likely,
+\[
+\boxed{\Prob(C=2k)=\frac{N\binom{m-1}{k-1}\binom{n-1}{k-1}}
+{k\binom Nm}.}
+\]
+For the mean, any specified adjacency has differently colored endpoints with probability $2mn/[N(N-1)]$. Summing over all $N$ adjacencies gives
+\[
+\boxed{\E C=\frac{2mn}{N-1}.}
+\]
+\insight Marking one run converts cyclic structure into linear compositions. Divide by the actual number of possible marks on each object to undo overcounting.

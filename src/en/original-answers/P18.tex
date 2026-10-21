@@ -1,0 +1,12 @@
+\answer{OP18}
+Regard each connected component that has not yet closed as an open chain. Initially there are $n$ such chains, each with two free ends. With $k$ open chains there are $2k$ free ends. Joining the two ends of one chain closes a loop; joining ends of different chains merges them. Either operation reduces the number of open chains by one. The process therefore visits $k=n,n-1,\ldots,1$ exactly once each.
+
+Of the $\binom{2k}{2}$ possible endpoint pairs, exactly $k$ join the two ends of the same chain. Thus the conditional probability of creating a loop at that step is always
+\[
+\frac{k}{\binom{2k}{2}}=\frac1{2k-1},
+\]
+regardless of the previous chain configuration. If $I_k$ indicates a loop at that step, the final loop count is $C=\sum_{k=1}^nI_k$. Linearity of expectation gives
+\[
+\boxed{\E C=\sum_{k=1}^n\frac1{2k-1}.}
+\]
+Independence of the loop indicators is not needed for this expectation.

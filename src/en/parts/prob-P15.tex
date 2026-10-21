@@ -1,0 +1,12 @@
+\problem{P15}{Exact Mixing in a Shift Register}{Finite memory}
+A register retains $r\ge1$ binary bits, including leading zeroes. Each step discards the leftmost bit, shifts the rest left, and appends an independent bit that equals 1 with probability $p\in(0,1)$. As an integer, the state obeys $S_{n+1}=(2S_n+\xi_{n+1})\bmod 2^r$. Find its stationary law. Starting from all zeroes, find the total variation distance to stationarity after $n$ steps.
+\solution After $r$ updates, all old bits have been overwritten, so the state consists of the last $r$ independent bits. If $w(s)$ counts the 1's in state $s$, then
+\[
+ \boxed{\pi(s)=p^{w(s)}(1-p)^{r-w(s)}}.
+\]
+Every initial state has exactly this law after $r$ steps, proving stationarity and uniqueness. For $n<r$, the all-zero start leaves the first $r-n$ bits fixed at zero, while the last $n$ bits are independent fresh bits. The law is therefore $\pi$ conditioned on $A_n=$ ``the first $r-n$ bits are zero.'' For any event $A$, the total variation distance between $\pi$ and its conditional law on $A$ is $1-\pi(A)$: sum the absolute probability differences separately on $A$ and its complement. Hence
+\[
+ \boxed{d_{\rm TV}(\mathcal L(S_n),\pi)=
+ \begin{cases}1-(1-p)^{r-n},&0\le n<r,\\0,&n\ge r.\end{cases}}
+\]
+\insight The initial information is completely overwritten, yielding exact mixing in finitely many steps. The stationary law is uniform only when $p=1/2$.

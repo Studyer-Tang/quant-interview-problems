@@ -1,0 +1,20 @@
+\answer{OR22}
+Let $V$ be the optimal value before the initial free roll. At an observed face $j$, stopping pays $j$, while restarting has value $V-1$. The candidate Bellman equation is
+\[
+ V=\frac16\sum_{j=1}^6\max\{j,V-1\}.
+\]
+The value $V=4$ satisfies it, since
+\[
+ \frac{3+3+3+4+5+6}{6}=4.
+\]
+To verify an upper bound for all strategies, let $V_m$ be the value with at most $m$ rolls. We have $V_1=7/2\le4$ and
+\[
+ V_{m+1}=\frac16\sum_{j=1}^6\max\{j,V_m-1\}.
+\]
+The right side is increasing in $V_m$, so induction gives $V_m\le4$. Consider a strategy stopping at roll $N$ with $\E N<\infty$, and force it to stop by roll $m$. The resulting payoff converges to the original payoff. Faces are bounded and fees are controlled by $N$, so dominated convergence implies that its expected payoff is at most 4. If $\E N=\infty$, the final face is at most 6 and the expected net payoff is negative infinity, which cannot improve the value.
+
+Thus reroll on 1 or 2, accept 4, 5, or 6, and take either action on 3. For example, stop at the first face at least 3. The accepted face is uniform on 3, 4, 5, 6, with mean $9/2$. The number of rolls is geometric with success probability $2/3$, so expected reroll fees are $3/2-1=1/2$. Hence
+\[
+ \boxed{\text{Maximum expected payoff}=9/2-1/2=4}.
+\]
+This policy terminates almost surely and attains the upper bound, proving optimality.

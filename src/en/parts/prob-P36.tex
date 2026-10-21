@@ -1,0 +1,27 @@
+\problem{P36}{The Shortest Spacing and Exceedance Counts}{Translating a simplex}
+Cut the unit interval at $n-1$ independent uniform points, producing lengths $D_1,\ldots,D_n$, where $n\ge2$. Let $Z=\min_iD_i$ and, for $t\ge0$, let $K_t=\sum_i\ind\{D_i>t\}$. Find the distribution, mean, and variance of $Z$, and the probability generating function and mean of $K_t$.
+\solution The ordered cut points have constant joint density $(n-1)!$. The linear change to spacings shows that the spacing vector is uniform on the simplex $D_i\ge0$, $\sum_iD_i=1$.
+
+If $r$ specified spacings exceed $t$, subtract $t$ from those coordinates. The remaining simplex has total length $1-rt$ and dimension $n-1$, so the event has probability $(1-rt)_+^{n-1}$. Taking $r=n$ gives
+\[
+\boxed{\Prob(Z>z)=(1-nz)^{n-1},\quad0\le z\le1/n.}
+\]
+Outside this interval the tail follows from $Z\in[0,1/n]$. Tail integration with $u=nz$ yields
+\[
+\E Z=\frac1{n^2},\qquad
+\E Z^2=\frac2{n^3(n+1)},\qquad
+\boxed{\Var Z=\frac{n-1}{n^4(n+1)}.}
+\]
+For the count, expand
+\[
+z^{K_t}=\prod_{i=1}^n[1+(z-1)\ind\{D_i>t\}].
+\]
+Every subset of size $r$ has the same joint exceedance probability. Hence
+\[
+\boxed{\E z^{K_t}=\sum_{r=0}^n\binom nr(z-1)^r(1-rt)_+^{n-1}.}
+\]
+The term $r=0$ is interpreted as one. Differentiating at $z=1$ gives
+\[
+\boxed{\E K_t=n(1-t)_+^{n-1}.}
+\]
+\insight Simultaneous lower bounds on spacings translate and shrink one simplex. A single joint-probability calculation handles both the minimum spacing and the count above a threshold.

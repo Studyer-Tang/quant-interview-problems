@@ -1,0 +1,27 @@
+\answer{OP24}
+先从任意起点 $R_0=x\in[0,1)$ 考虑同一过程。可写为
+\[
+1-R_k=(1-x)\prod_{j=1}^kU_j,
+\qquad U_j\overset{\mathrm{iid}}\sim\operatorname{Unif}(0,1).
+\]
+有限乘积 $Q_n=\prod_{k=1}^nR_k$ 递减且在 $[0,1]$ 内，故收敛到 $Q$。令 $g(x)=\E[Q\mid R_0=x]$，并约定 $g(1)=1$。由有界收敛，题目所求为 $g(0)$。
+
+为了正确确定 $g$ 在右端点的边界，利用 $0\le1-\prod a_k\le\sum(1-a_k)$ 得
+\[
+0\le1-g(x)\le\sum_{k=1}^{\infty}\E(1-R_k)
+=(1-x)\sum_{k=1}^{\infty}2^{-k}=1-x.
+\]
+所以 $g(x)\to1$ 当 $x\uparrow1$，不能把 $g$ 在 $[0,1)$ 上恒取零。
+
+按第一次抽样条件化，并用有界收敛处理后续无限乘积，
+\[
+(1-x)g(x)=\int_x^1t g(t)\dd t.
+\]
+右边是有界函数的积分，先推出 $g$ 在 $[0,1)$ 连续，再可求导，得到
+\[
+-g(x)+(1-x)g'(x)=-xg(x),\qquad g'(x)=g(x).
+\]
+因此 $g(x)=Ce^x$。由已证明的 $g(1-)=1$ 得 $C=e^{-1}$，最终
+\[
+\boxed{\lim_{n\to\infty}\E\prod_{k=1}^nR_k=e^{-1}.}
+\]

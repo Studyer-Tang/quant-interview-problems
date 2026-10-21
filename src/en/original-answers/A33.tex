@@ -1,0 +1,11 @@
+\answer{OA33}
+Initialize the running peak $H=p_1$, its index $i_H=1$, and the answer $D=0$. For $j=2,\ldots,n$, first compute $d=1-p_j/H$. If $d>D$, set $D=d$ and save the interval $(i_H,j)$. Then, if $p_j>H$, set $H=p_j$ and $i_H=j$. If no positive decline occurs, return $D=0$ without a positive-drawdown interval.
+
+Before processing $j$, the invariant is $H=\max_{i<j}p_i$. For fixed positive $p_j$, the quantity $1-p_j/p_i$ increases with positive $p_i$. The greatest decline ending at $j$ is therefore $1-p_j/H$. The algorithm checks the best starting point for every endpoint and takes the maximum with zero, proving global optimality. Computing the decline before updating the peak keeps the start strictly earlier than the end.
+
+Each price is processed once, giving $O(n)$ time and $O(1)$ auxiliary space. Updating only when $d>D$ retains the earliest endpoint attaining the maximum. Not replacing a tied peak retains its earliest index.
+
+The denominator of a drawdown is the preceding peak. A fall from $100$ to $60$ has a drawdown of $40\%$. The expression $H/p_j-1$ instead measures the gain needed to recover from the trough to the peak; here it equals $2/3$. With cumulative peaks $H_j=\max_{i\le j}p_i$, an equivalent formula is
+\[
+ \boxed{D=\max_{1\le j\le n}\left(1-\frac{p_j}{H_j}\right)}.
+\]

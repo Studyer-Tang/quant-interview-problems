@@ -1,0 +1,27 @@
+\problem{P11}{Median Error for a Laplace Sample}{Tail integrals and estimation}
+Let $X_1,X_2,X_3$ be independent with Laplace density $e^{-|x-c|/b}/(2b)$, where $b>0$. Compare the sample median $M$ and sample mean $\overline X$ as estimators of $c$. Prove unbiasedness and compute their mean squared errors.
+\solution Reflection about $c$ preserves the joint law, so $M-c$ has a symmetric distribution. Also $|M-c|\le\sum_i|X_i-c|$ is integrable, proving $\E M=c$. Each observation has mean $c$ by symmetry and integrability, hence $\E\overline X=c$.
+
+For $t\ge0$, set $q(t)=\Prob(X_i>c+t)=e^{-t/b}/2$. The median exceeds $c+t$ precisely when at least two observations do, so
+\[
+\Prob(M>c+t)=3q(t)^2-2q(t)^3.
+\]
+By symmetry,
+\[
+\Prob(|M-c|>t)=\frac32e^{-2t/b}-\frac12e^{-3t/b}.
+\]
+The tail integral for a square gives
+\[
+\begin{aligned}
+\E(M-c)^2
+&=2\int_0^\infty t\left(\frac32e^{-2t/b}-\frac12e^{-3t/b}\right)\dd t\\
+&=\frac{3b^2}{4}-\frac{b^2}{9}
+=\boxed{\frac{23b^2}{36}}.
+\end{aligned}
+\]
+Meanwhile, $\Var X_i=b^{-1}\int_0^\infty t^2e^{-t/b}\dd t=2b^2$. Independence therefore gives
+\[
+\boxed{\E(\overline X-c)^2=\frac{2b^2}{3}=\frac{24b^2}{36}.}
+\]
+For this distribution and sample size, the median improves mean squared error by $b^2/36$.
+\insight Comparing estimators requires a specified sampling law and loss. A binomial tail for the median, followed by a tail integral, avoids a piecewise density calculation.

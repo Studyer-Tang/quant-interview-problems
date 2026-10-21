@@ -1,0 +1,107 @@
+\chapter{Algorithms and Programming}
+\section{Summaries and Interval Scans}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/5-1}
+
+\problem{A31}{Merging and Separating Summary Statistics}{}
+Two disjoint data groups are available only through summaries $(n_A,\mu_A,M_A)$ and $(n_B,\mu_B,M_B)$, with $n_A,n_B\ge1$ and $M_A=\sum_{i\in A}(x_i-\mu_A)^2$, similarly for B. Raw observations cannot be read. Recover the combined mean, centered sum of squares, and both variance conventions. Also recover B's summary from the combined summary and A's summary. Discuss cost and numerical limitations.
+\solution Put $n=n_A+n_B$ and $\delta=\mu_B-\mu_A$. Adding the two data sums gives
+\[
+\mu=\mu_A+\frac{n_B}{n}\delta.
+\]
+For group A, expand $x_i-\mu=(x_i-\mu_A)+(\mu_A-\mu)$. The cross term sums to zero because the within-group deviations sum to zero. Doing the same for B yields
+\[
+M=M_A+M_B+n_A(\mu_A-\mu)^2+n_B(\mu_B-\mu)^2
+ =M_A+M_B+\frac{n_An_B}{n}\delta^2.
+\]
+The population variance is $M/n$ and the sample variance with a degrees-of-freedom correction is $M/(n-1)$. Unbiasedness of the latter additionally requires suitable iid sampling assumptions.
+
+For separation, first find $n_B=n-n_A>0$. Then
+\[
+\mu_B=\frac{n\mu-n_A\mu_A}{n_B},\qquad
+M_B=M-M_A-\frac{n_An_B}{n}(\mu_B-\mu_A)^2.
+\]
+Each operation uses constant time and a constant-size summary. In exact arithmetic, any binary merge order gives the same result: each merge recovers the actual combined moments. Floating-point rounding can make orders differ slightly. Separation can suffer severe cancellation, especially when B is small and the subtracted quantities are large. A substantially negative recovered $M_B$ signals inconsistent summaries or numerical failure and should not simply be clipped to zero.
+\insight Combined variation includes both within-group variation and variation between group means. Averaging the two variances alone omits the latter.
+
+\problem{A32}{The Longest Interval with Bounded Range}{}
+Given real values $x_0,\ldots,x_{T-1}$ and $D\ge0$, find the longest nonempty interval satisfying
+\[
+\max_{i\le t\le j}x_t-\min_{i\le t\le j}x_t\le D.
+\]
+Break ties by the earliest start. Return an empty interval for empty input. Give an $O(T)$ algorithm and prove that advancing the left endpoint cannot discard an optimum.
+\solution Maintain a left endpoint $\ell$, a deque of indices with decreasing values for the maximum, and another with increasing values for the minimum. On adding right endpoint $r$, remove values at most $x_r$ from the maximum deque's tail and values at least $x_r$ from the minimum deque's tail, then append $r$ to both.
+
+While the two front values differ by more than $D$, advance $\ell$ and discard front indices smaller than the new $\ell$. The front values then give the true window extrema. Record $r-\ell+1$ only when it strictly exceeds the best length; increasing right endpoints thereby preserve the earliest start among ties.
+
+If $[\ell,r]$ is invalid, every interval containing it is invalid. Discarding that left endpoint therefore loses no feasible interval ending now or later. When shrinking stops, $\ell$ is the earliest still-possible feasible start for $r$, so the current window is the longest feasible interval ending there. Considering every $r$ proves global optimality.
+
+A tail index removed by a later, more extreme value is dominated: it expires no later and can never be needed as an extremum. Each index enters and leaves each deque at most once, and $\ell$ advances at most $T$ times. Time is $O(T)$ and worst-case space is $O(T)$. Every singleton is feasible when the input is nonempty.
+
+\input{parts/prob-P09}
+
+\par\Needspace{8\baselineskip}
+\subsection*{Section Exercises}
+\input{original-practice/A31}
+\input{original-practice/A32}
+
+\section{Drawdown Intervals}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/5-2}
+
+\problem{A33}{Maximum Drawdown with a Duration Limit}{}
+Given strictly positive prices $p_0,\ldots,p_{T-1}$ and an integer $L\ge1$, allow only drawdown intervals of duration between $1$ and $L$:
+\[
+D=\max\left(0,\max_{1\le j-i\le L}\left(1-\frac{p_j}{p_i}\right)\right).
+\]
+If $D>0$, return an optimum, breaking ties first by the earliest end and then by the earliest start. Otherwise return zero and no interval. Design a linear-time algorithm.
+\solution For a fixed end $j$, the drawdown increases with $p_i$ because $p_j>0$. Thus find the largest price in the eligible window
+\[
+\max(0,j-L)\le i\le j-1.
+\]
+Maintain a decreasing deque of candidates. Before evaluating $j$, insert $j-1$, removing only strictly smaller prices from the tail; keep equal prices to retain the earlier start. Then expire front indices smaller than $j-L$.
+
+With front index $i$, evaluate $1-p_j/p_i$. Scan $j=1,\ldots,T-1$ and update only on a strict improvement over the best positive drawdown. This retains the earliest end; the deque's handling of equal peaks retains the earliest start. For $T<2$, return zero and no interval.
+
+A removed tail price is dominated by a later, larger price, which is at least as good in every future eligible window and expires no earlier. The front is therefore always an eligible maximum. Optimizing separately for each end and then over all ends proves correctness. Each index enters and leaves the deque at most once, giving $O(T)$ time and $O(\min(T,L))$ space.
+\pitfall The historical maximum can be too old to be eligible. A cumulative maximum alone can return an infeasible interval.
+
+\problem{A34}{The Shortest Interval Reaching a Drawdown Threshold}{}
+For strictly positive prices and $d\in(0,1)$, find the shortest interval $(i,j)$ with $i<j$ and $p_j\le(1-d)p_i$. Report failure if none exists; break length ties by the earliest end. Give an $O(T)$ algorithm and explain why maximizing the drawdown ratio does not solve this problem.
+\solution Keep candidate starts in a deque with strictly decreasing prices. At end $j$, repeatedly inspect the front $i$. If
+\[
+p_j\le(1-d)p_i,
+\]
+update the shortest length with $j-i$ and remove $i$; otherwise stop this loop. Next remove tail indices whose prices are at most $p_j$, and append $j$. Querying before insertion enforces $i<j$.
+
+If the front fails the threshold, every later candidate has a smaller price and also fails. Removing a successful front is safe: the current end is the earliest unprocessed end, and every future end would give that same start a longer interval. Tail removal is safe for a different reason. A later start with a price at least as high meets any future threshold at least as easily and produces a shorter duration.
+
+Thus front removal records the best available duration for a start, whereas tail removal uses domination by a later, higher price. Each index enters and leaves at most once, giving $O(T)$ time and $O(T)$ space. Scan ends in order and update only on a strictly shorter length to retain the earliest end. Maximum drawdown optimizes the price ratio and may take a long time; it does not optimize duration.
+
+\par\Needspace{12\baselineskip}
+\subsection*{Section Exercises}
+\input{original-practice/A33}
+
+\section{Algorithm Problems}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/5-3}
+
+\input{algorithm-route}
+\input{classics-algorithms}
+
+\pagebreak
+\section{Exercises}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/5-4}
+
+\exercise{AG4-1}{Recovering a Merged Group}
+Two disjoint groups have a combined count of 5, mean 4, and centered sum of squares 26. Group A is $(1,4,7)$. Without reading group B, recover its count, mean, and centered sum of squares, and both combined variance conventions. Can B's two observations be recovered uniquely?
+
+\exercise{AG4-2}{Endpoints of a Longest Stable Interval}
+For $(4,2,3,5,8,7,6)$, find the longest interval whose range is at most 3. Use zero-based indices and the earliest start among ties. Give the result and a short independent argument excluding longer intervals.
+
+\exercise{AG4-3}{Which Peak Does the Duration Limit Exclude?}
+Prices are $(120,80,100,70,90)$. Find maximum drawdown with duration at most 2 and with no duration limit, giving zero-based endpoints. Explain why the historical maximum cannot be used directly for the first problem.
+
+\exercise{AG4-4}{The Shortest Time to a Quarter Drawdown}
+Prices are $(100,94,80,79,60)$ and the threshold is $d=1/4$. Find the shortest qualifying drawdown interval. Exclude shorter possibilities and explain why a successful starting index can be discarded permanently during an end scan.

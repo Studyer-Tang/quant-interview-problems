@@ -1,0 +1,78 @@
+\chapter{Mixed Exercises}
+\section{Worked Examples}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/6-1}
+
+\input{classics-mixed}
+
+\section{Exercises}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/6-2}
+
+
+\exercise{AA01}{Local Independence with a Global Parity Constraint}
+Generate $n-1$ independent fair bits, $n\ge3$, and set $B_n$ equal to their sum modulo 2. Prove that every set of $n-1$ bits is independent and fair, whereas all $n$ bits are not independent. Find the probability that they are all zero.
+
+\exercise{AA02}{The Number of Successes Modulo Three}
+Toss $n\ge0$ fair coins independently and let $S$ count heads. Find $\Prob(S\equiv r\pmod3)$ for $r=0,1,2$. You may use $\omega=e^{2\pi i/3}$, but justify the root-of-unity filter. Evaluate $n=8,r=0$.
+
+\exercise{AA19}{Return Probability under Adjacent Swaps}
+Three distinct cards start in order 123. At each step, independently swap positions 1 and 2 or positions 2 and 3 with equal probability. Find the probability of returning to 123 after $t\ge0$ steps and explain why it has no single long-time limit.
+
+\exercise{AA22}{Isolated Marks in a Circular Arrangement}
+Randomly arrange $m$ A's and $n$ B's on $N=m+n\ge3$ labeled circular positions, uniformly over type arrangements. A B is isolated if both neighbors are A. Find the expected isolated-B count, then the corresponding expectation on a line counting only nonendpoint centers. Evaluate $m=4,n=3$.
+
+\exercise{AA03}{A Projection of a Uniform Disk Point}
+Choose $(X,Y)$ uniformly by area in a disk of radius $R>0$. Find the density of $X$, $\E|X|$, and $\Var X$, and explain why $X$ is not uniform on $[-R,R]$.
+
+\exercise{AA07}{Linear Separation of Two Classes on a Circle}
+Choose $m+n$ independent uniform points on the unit circle. Label the first $m\ge2$ as A and the remaining $n\ge2$ as B. Find the probability that a line strictly separates all A points from all B points. Evaluate $m=n=3$.
+
+\exercise{AA09}{A Gaussian Ratio in the Positive Quadrant}
+Let $X,Y$ be independent standard normals. Conditional on $X>0,Y>0$, define $Z=X/Y$. Find its distribution, density, and median, and decide whether its conditional mean is finite.
+
+\exercise{AA10}{Dependence of Squared Coordinates at Fixed Energy}
+Let $X,Y,Z$ be independent standard normals and $S=X^2+Y^2+Z^2$. Find $\E[X^2Y^2\mid S]$, $\Var(X^2\mid S)$, and $\Cov(X^2,Y^2\mid S)$. Derive the fourth moments from rotation symmetry instead of citing a sphere-moment formula.
+
+\exercise{AA13}{The Closest Gap among Three Arrival Times}
+Three arrival times are independent and uniform on $[0,L]$, with $L>0$. Let $D$ be the smallest time difference between any two arrivals. Find its complete distribution function and mean; distances to the interval endpoints are not included.
+
+\exercise{AA16}{The Minimum and Range of an Exponential Sample}
+Let $X_1,\ldots,X_n$ be independent exponentials of rate $\lambda>0$, with $n\ge2$. Put $U=\min_iX_i$, $V=\max_iX_i$, and $D=V-U$. Prove that $U,D$ are independent, find the distribution of $D$, and compute $\E[V\mid U]$.
+
+\exercise{AA17}{Correlation after Squaring Gaussian Variables}
+Let $(X,Y)$ be jointly standard normal with correlation $\rho\in[-1,1]$. Find $\E[Y^2\mid X]$, $\Cov(X^2,Y^2)$, and $\Corr(X^2,Y^2)$. Can the squared variables' correlation identify the original sign?
+
+\exercise{AA20}{Reciprocal Distance to a Uniform Sphere Point}
+In three dimensions, let $X$ be uniform by area on the sphere of radius $R>0$. A fixed point $a$ is distance $r\ge0$ from the center, and $D=|X-a|$. Find $\E(1/D)$. For $r>0$, also find $\E(1/D^2)$ and analyze $r=R$.
+
+\exercise{AA06}{The First Repeated Adjacent Outcome}
+Independent trials succeed with probability $p\in(0,1)$; put $q=1-p$. Starting before any trials, stop when two successive outcomes first agree. Find the mean total trial count and the probability of stopping on two successes.
+
+\exercise{AA08}{Variance of an Adjacent Pattern Count}
+Toss a coin with head probability $p\in(0,1)$ independently $n\ge2$ times. Let $N$ count adjacent occurrences of HT at all starting positions. Find its mean and variance, and evaluate $n=10,p=1/2$.
+
+\exercise{AA12}{Temporal Correlation along a Cycle Walk}
+Consider a symmetric nearest-neighbor walk on a cycle of $n\ge3$ vertices, with $X_0$ uniform over the vertices. Put $Y_t=\cos(2\pi X_t/n)$ and $S_T=\sum_{t=0}^{T-1}Y_t$, $T\ge1$. Find $\Cov(Y_0,Y_k)$, $\Var S_T$, and $\lim_{T\to\infty}\Var S_T/T$.
+
+\exercise{AA04}{Inverting the Trailing-Zero Count}
+For a nonnegative integer $K$, find every nonnegative integer $n$ for which $n!$ has exactly $K$ trailing decimal zeros, with $0!=1$. Avoid computing factorials. Prove that a nonempty solution set consists of five consecutive integers, and solve the cases $K=24$ and $K=29$.
+
+\exercise{AA05}{The Last Nonzero Digit of a Binomial Coefficient}
+Design an algorithm for the last nonzero decimal digit of $\binom nk$, for integers $0\le k\le n$, without first constructing the full coefficient. Separate powers of 2 and 5 from the unit factors. Explain why direct division modulo 10 is invalid, and evaluate $\binom{20}{7}$.
+
+\exercise{AA11}{Visibility between Random Lattice Points}
+Choose two distinct points uniformly from $\{0,\ldots,M\}\times\{0,\ldots,N\}$, with $M,N\ge1$. They are visible to each other if their connecting segment has no other integer lattice point in its interior. Give a finite-sum formula for the probability and evaluate $M=N=2$.
+
+\pagebreak
+\exercise{AA14}{The Asymptotic Number of Integer-Sided Triangles}
+Let $T(N)$ count positive integer triples $x\le y\le z$ with $x+y+z=N$ and $x+y>z$. Prove $T(N)=N^2/48+O(N)$ and list all solutions for $N=12$. Explain why dividing the ordered count by 6 is generally not exact.
+
+\exercise{AA15}{Algebraic Powers Close to Integers}
+Let $\alpha=(3+\sqrt5)/2$. Construct an integer recurrence giving the nearest integer $L_n$ to $\alpha^n$ for every $n\ge1$. Prove uniqueness and find the exact error and parity pattern. Find the smallest $n$ for which the error is below $10^{-6}$.
+
+\exercise{AA21}{Fixing Both Digit Sum and Digit Product}
+Find the smallest positive decimal integer with digit product 72 and digit sum 14. Then change the digit sum to 18 and find the new minimum. Explain why a digit 1 cannot always be deleted in this problem.
+
+\exercise{AA18}{Transcendental Logarithms and an Irrational Ratio}
+Prove that $\log2$ is transcendental and that $\log2/\log3$ is irrational. Explain why the ratio of two transcendental numbers need not be transcendental. Here $\log$ is natural logarithm. You may use the Hermite--Lindemann theorem: if $z$ is nonzero and algebraic, then $e^z$ is transcendental.

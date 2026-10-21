@@ -1,0 +1,15 @@
+\answer{OA30}
+The relation is
+\[
+ \boxed{\lambda_i\le\mu_i\le\lambda_{i+1}},
+ \qquad i=1,\ldots,n-1.
+\]
+Let $H=\{x\in\R^n:x_k=0\}$. Inserting a zero in coordinate $k$ identifies the Rayleigh quotient of $B$ with that of $A$ restricted to $H$. Write $R_A(x)=x^\top Ax/\|x\|^2$. The min--max principle gives
+\[
+ \lambda_i=\min_{\dim S=i}\ \max_{0\ne x\in S}R_A(x).
+\]
+The formula for $\mu_i$ minimizes the same quantity only over subspaces $S\subset H$. Restricting the choices cannot decrease the minimum, so $\mu_i\ge\lambda_i$.
+
+For the other bound, let $E$ be spanned by eigenvectors of $A$ corresponding to its first $i+1$ eigenvalues. Since $H$ has codimension one, $\dim(E\cap H)\ge i$. Choose an $i$-dimensional subspace $S$ of this intersection. Every Rayleigh quotient on $S$ is at most $\lambda_{i+1}$. Using this candidate in the min--max formula for $\mu_i$ proves $\mu_i\le\lambda_{i+1}$.
+
+Repeated eigenvalues are allowed, so strict inequalities cannot hold in general. For the identity matrix, equality holds on both sides.

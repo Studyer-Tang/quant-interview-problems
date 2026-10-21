@@ -1,0 +1,22 @@
+\answer{OA02}
+Centering does not change slopes, so take all means to be zero. Write the joint regression as
+\[
+ Y=bX_1+\beta_2X_2+u,
+ \qquad \Cov(u,X_1)=\Cov(u,X_2)=0.
+\]
+Set $\gamma=\Cov(X_1,X_2)/\Var(X_1)$ and let $r=X_2-\gamma X_1$ be the residual from regressing $X_2$ on $X_1$. The first normal equation implies that the simple-regression slope of $Y$ on $X_1$ is $b+\beta_2\gamma$. Thus
+\[
+ e=\beta_2r+u.
+\]
+Since $r$ is uncorrelated with $X_1$ and $X_2=r+\gamma X_1$,
+\[
+ \Cov(r,X_2)=\Var(r)
+ =\Var(X_2)(1-\rho^2).
+\]
+Consequently,
+\[
+ \boxed{\beta_1
+ =\frac{\Cov(e,X_2)}{\Var(X_2)}
+ =(1-\rho^2)\beta_2.}
+\]
+Residualizing only the response leaves $\Var(X_2)$ in the denominator of the second slope. Regressing $e$ on $r$ instead uses $\Var(r)$ and recovers $\beta_2$. The two slopes agree when $\rho=0$. At $|\rho|=1$, the two joint-regression coefficients are generally not separately identifiable, which explains the restriction in the question.

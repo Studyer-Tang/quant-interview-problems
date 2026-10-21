@@ -1,0 +1,87 @@
+\problem{CR01}{泊松分流与首次到达}{经典例题}
+事件按速率 $\lambda>0$ 的泊松过程到达。每次到达独立标记为 A 或 B，概率分别为 $p$ 和 $q=1-p$，其中 $0<p<1$。记两类计数为 $N_A(t),N_B(t)$。证明它们是独立泊松过程，并求给定总计数为 $n$ 时 A 类计数的分布。再令 $\tau$ 为首次 A 到达时刻，$K=N_B(\tau)$；求 $K$ 的分布及给定 $K=k$ 时 $\tau$ 的分布。
+\solution 固定 $t$，先对总计数取条件期望，联合概率母函数为
+\[
+ \E[z^{N_A(t)}w^{N_B(t)}]
+ =\exp\{\lambda t(pz+qw-1)\}
+ =e^{\lambda pt(z-1)}e^{\lambda qt(w-1)}.
+\]
+它分解为速率 $\lambda p,\lambda q$ 的两个泊松计数母函数。原过程在不交时间区间上独立，标记也独立，因此相同分解对任意有限组不交区间同时成立，证明两个计数过程独立。给定总计数 $n$，其 $n$ 个独立标记直接给出
+\[
+ \boxed{N_A(t)\mid N_A(t)+N_B(t)=n\sim\operatorname{Bin}(n,p)}.
+\]
+设 $\alpha=\lambda p,\beta=\lambda q$。首次 A 到达满足 $\tau\sim\operatorname{Exp}(\alpha)$，且与整个 B 过程独立。因此
+\[
+ \Prob(K=k,\tau\in\dd t)
+ =\alpha e^{-(\alpha+\beta)t}\frac{(\beta t)^k}{k!}\dd t,
+ \qquad k=0,1,\ldots.
+\]
+利用 $\int_0^\infty t^ke^{-\lambda t}\dd t=k!/\lambda^{k+1}$，得到
+\[
+ \boxed{\Prob(K=k)=pq^k}.
+\]
+将联合密度除以此概率，得到
+\[
+ \boxed{f_{\tau\mid K=k}(t)=\frac{\lambda^{k+1}}{k!}t^ke^{-\lambda t},\quad t>0},
+ \qquad \boxed{\E(\tau\mid K=k)=\frac{k+1}{\lambda}}.
+\]
+这正是 $k+1$ 个速率 $\lambda$ 的独立指数间隔之和：首次 A 之前恰有 $k$ 个 B。
+\insight 固定时间内的独立计数，在按其中一类的首次到达截停后产生依赖；应先写联合密度，再作条件化。
+
+\problem{CR02}{随机时点的剩余寿命}{经典例题}
+更新过程从时刻0开始，相邻更新间隔独立，分别以概率 $1/2$ 取1和3。在 $[0,t]$ 上独立均匀选取观察时刻 $U_t$。令 $L_t$ 为包含该时刻的完整更新间隔长度，$A_t$ 为距上次更新的时间，$R_t$ 为距下次更新的时间。求 $t\to\infty$ 时三者的联合分布，并计算极限下的 $\E R$、$\Prob(R>2)$ 和 $\Cov(A,R)$。
+\solution 长度为 $\ell$ 的间隔被随机时点选中的机会与其持续时间成正比。严格地，在完整的前 $n$ 个间隔中，长度为 $\ell$ 的总占用时间除以总时间，依强大数定律趋于
+\[
+ \frac{\ell\Prob(L=\ell)}{\E L},\qquad \E L=2.
+\]
+区间末端未完成部分至多长3，对时间比例的影响趋于0。因此极限长度 $L_*$ 的分布为
+\[
+ \boxed{\Prob(L_*=1)=\frac14,\qquad\Prob(L_*=3)=\frac34}.
+\]
+在长度为 $\ell$ 的间隔中，均匀观察时点的位置均匀分布，故条件于 $L_*=\ell$，
+\[
+ \boxed{A\sim U[0,\ell],\qquad R=\ell-A}.
+\]
+以上混合分布确定了三者的联合分布。原变量均有界，故分布极限也给出所需矩的极限。由于 $\E L^2=5,\E L^3=14$，
+\[
+ \boxed{\E R=\E A=\frac{\E L^2}{2\E L}=\frac54},\qquad
+ \boxed{\Prob(R>2)=\frac{\E(L-2)^+}{\E L}=\frac14}.
+\]
+此外，长度为 $\ell$ 的一个间隔贡献的年龄与剩余寿命乘积积分为
+$\int_0^\ell u(\ell-u)\dd u=\ell^3/6$，所以
+\[
+ \E(AR)=\frac{\E L^3}{6\E L}=\frac76,
+ \qquad \boxed{\Cov(A,R)=\frac76-\left(\frac54\right)^2=-\frac{19}{48}}.
+\]
+\insight “随机选一个间隔”和“随机选一个时点所在的间隔”是不同抽样机制。后一机制先对长度加权，再在选中的间隔内均匀取位置。
+
+\problem{CR03}{单服务台的忙期}{经典例题}
+顾客按速率 $\lambda$ 的泊松过程到达，服务时间独立服从速率 $\mu$ 的指数分布，与到达过程独立，且 $0<\lambda<\mu$。一个服务台按先到先服务工作，队列从一名顾客开始。令 $B$ 为系统首次变空的时间。求 $B$ 的拉普拉斯变换、均值和方差，并说明临界情形 $\lambda=\mu$ 的均值为何不同。
+\solution 将每位顾客服务期间到达的顾客看作其子代。条件于服务时间 $S$，子代数为 $\operatorname{Pois}(\lambda S)$，故平均子代数为 $\rho=\lambda/\mu<1$。第 $j$ 代顾客数的均值为 $\rho^j$，总顾客数的均值为 $1/(1-\rho)$；因其有限，总顾客数几乎必然有限。每位顾客是否存在不依赖其自身尚未开始的服务时间，由 Tonelli 定理，
+\[
+ \E B=\frac1\mu\sum_{j=0}^\infty\rho^j=\frac1{\mu-\lambda}.
+\]
+令 $b(s)=\E e^{-sB}$，$s\ge0$。首位顾客服务期间的到达顾客各自引出独立、同分布的后代服务总量。忙期长度等于树上所有服务时间之和，处理顺序不影响该总量。条件于 $S$，得到
+\[
+ b(s)=\E\left[e^{-sS}b(s)^{N(S)}\right]
+ =\frac{\mu}{\mu+s+\lambda[1-b(s)]}.
+\]
+故 $\lambda b^2-(\lambda+\mu+s)b+\mu=0$。选择 $s>0$ 时落在 $(0,1)$ 内的根，并在0连续延伸，
+\[
+ \boxed{b(s)=\frac{\lambda+\mu+s-\sqrt{(\lambda+\mu+s)^2-4\lambda\mu}}{2\lambda}}.
+\]
+对 $s>0$ 求导合法，因为 $B^je^{-sB}$ 有界。对二次方程两次求导，写 $D_s=2\lambda b(s)-\lambda-\mu-s$，有
+\[
+ D_s b'(s)=b(s),\qquad
+ D_s b''(s)=2b'(s)-2\lambda[b'(s)]^2.
+\]
+当 $s\downarrow0$，$b(s)\to1,D_s\to\lambda-\mu$。由非负变量的单调收敛，导数的有限极限给出
+\[
+ \boxed{\E B=\frac1{\mu-\lambda}},\qquad
+ \E B^2=\frac{2\mu}{(\mu-\lambda)^3},
+\]
+\[
+ \boxed{\Var B=\frac{\lambda+\mu}{(\mu-\lambda)^3}}.
+\]
+临界时，后代数生成函数为 $f(z)=\mu/[\mu+\lambda(1-z)]$。有限代内灭绝的概率从0开始反复迭代 $f$，极限为 $[0,1]$ 内的最小不动点；$\lambda=\mu$ 时该不动点为1。因此忙期仍几乎必然结束，但每代顾客数均值都为1，上述非负服务时间级数发散，故 $\E B=\infty$。
+\insight 忙期包含服务期间新到达的全部后代。只将初始顾客的服务时间与一个平均到达数相乘，会漏掉后续各代。

@@ -1,0 +1,15 @@
+\problem{P19}{Selecting the Best after a Sample}{Records and stopping}
+There are $n\ge2$ candidates of distinct quality in uniformly random order. Only relative ranks among those seen are observable, and rejection is irreversible. Reject the first $r$ candidates, then select the first candidate better than everyone previously seen; if none appears, the rule fails. Here $0\le r\le n-1$, with $r=0$ meaning selection of the first candidate. Find the success probability, describe how to choose the optimal $r$, and obtain its large-sample limit.
+\solution For $r=0$, success has probability $1/n$. Suppose $r\ge1$ and the best candidate arrives at position $k>r$. The rule reaches that candidate exactly when the best of the first $k-1$ candidates lies among the rejected first $r$. That position is uniform, giving conditional probability $r/(k-1)$. Thus
+\[
+\boxed{P_r=\frac rn\sum_{j=r}^{n-1}\frac1j,\quad1\le r\le n-1.}
+\]
+Adjacent probabilities differ by
+\[
+P_{r+1}-P_r=\frac1n\left(\sum_{j=r+1}^{n-1}\frac1j-1\right),
+\quad1\le r\le n-2.
+\]
+The expression in parentheses decreases strictly with $r$. Increase $r$ until the tail harmonic sum is at most $1$; equality produces two adjacent maximizers. Also compare $r=0$: since $P_1=H_{n-1}/n\ge1/n$, it cannot strictly outperform $r=1$.
+
+If $r/n\to x\in(0,1)$, the harmonic sum tends to $-\log x$, so $P_r\to-x\log x$. This function has its unique maximum $1/e$ at $x=1/e$. Together with the discrete difference criterion, this shows that the optimal rejected fraction and the optimal success probability both converge to $1/e$.
+\insight Condition on the arrival position of the best candidate. The entire preceding history then reduces to the position of its maximum, and optimization reduces to a monotone adjacent difference.

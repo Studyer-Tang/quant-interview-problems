@@ -1,0 +1,325 @@
+\section{Mixed Exercises}
+
+\answer{AA01}
+The completed vector always has even total parity. Every vector satisfying this constraint has one possible initial $(n-1)$-bit sequence and hence probability $2^{-(n-1)}$; other vectors have probability zero.
+
+Specify any $n-1$ coordinates. The remaining coordinate is determined uniquely by even parity. The specified event therefore has probability $2^{-(n-1)}$, the product of $n-1$ fair-bit probabilities, proving independence of that subset.
+
+The all-zero probability is also $2^{-(n-1)}$, whereas independence of all $n$ fair bits would give $2^{-n}$. Thus global independence fails. The parity constraint is detectable only when all coordinates are considered together.
+
+\answer{AA02}
+For every integer $k$,
+\[
+\ind_{\{k\equiv r\ (3)\}}
+=\frac13\sum_{j=0}^2\omega^{j(k-r)}.
+\]
+If the congruence holds, all terms are 1; otherwise they are the three cube roots of unity and sum to zero. Independence gives
+\[
+\E\omega^S=\left(\frac{1+\omega}{2}\right)^n
+=2^{-n}e^{in\pi/3}.
+\]
+The two nonconstant filter terms are conjugates after the appropriate phase adjustment. Therefore
+\[
+\boxed{\Prob(S\equiv r\ (3))
+=\frac13+\frac{2^{1-n}}3
+\cos\left(\frac{n\pi}{3}-\frac{2\pi r}{3}\right).}
+\]
+The formula also covers $n=0$. For $n=8,r=0$, the cosine is $-1/2$, yielding $1/3-1/768=85/256$. Directly summing the binomial probabilities at $0,3,6$ gives $(1+56+28)/256$, confirming the value.
+
+\answer{AA19}
+Every swap changes permutation parity, so return is impossible after an odd number of steps. Group steps in pairs. Repeating the same swap has probability $1/2$ and leaves the order unchanged; using the two different swaps produces the two three-cycles, each with probability $1/4$.
+
+The two-step chain on the three even permutations has diagonal probability $1/2$ and off-diagonal probabilities $1/4$. If $u_m$ is the return probability after $m$ pairs,
+\[
+u_{m+1}=\frac12u_m+\frac14(1-u_m)
+=\frac14+\frac14u_m,\qquad u_0=1.
+\]
+Subtracting the fixed point $1/3$ yields
+\[
+\boxed{\Prob(\text{return at step }t)=
+\begin{cases}
+0,&t\text{ odd},\\
+\dfrac13+\dfrac23\,4^{-m},&t=2m.
+\end{cases}}
+\]
+Even times approach $1/3$, whereas odd times remain zero. Finiteness and symmetry alone do not remove periodicity.
+
+\answer{AA22}
+At a fixed circular center, the three relevant positions are distinct. The probability of B at the center and A at both neighbors is
+\[
+\frac nN\frac m{N-1}\frac{m-1}{N-2}.
+\]
+There are $N$ centers, so the circular expectation is
+\[
+\boxed{\frac{nm(m-1)}{(N-1)(N-2)}}.
+\]
+On a line only $N-2$ centers are eligible, each with the same pattern probability. The expectation becomes
+\[
+\boxed{\frac{nm(m-1)}{N(N-1)}}.
+\]
+Both vanish when $m<2$ or $n=0$. At $(m,n)=(4,3)$ the answers are $6/5$ and $6/7$. The center indicators may be dependent; linearity of expectation does not require independence.
+
+\answer{AA03}
+The vertical slice at coordinate $x$ has length $2\sqrt{R^2-x^2}$. Dividing by total area gives
+\[
+f_X(x)=\frac{2}{\pi R^2}\sqrt{R^2-x^2}\,\ind_{\{|x|<R\}}.
+\]
+Central slices are longer, making the projection more concentrated near zero. Symmetry yields $\E X=0$, and
+\[
+\E|X|=\frac4{\pi R^2}\int_0^R x\sqrt{R^2-x^2}\,\dd x
+=\frac{4R}{3\pi}.
+\]
+For the second moment, rotation symmetry gives $\E X^2=\E Y^2=\E(X^2+Y^2)/2$. Squared radius is uniform on $[0,R^2]$, hence $\E(X^2+Y^2)=R^2/2$ and
+\[
+\boxed{\Var X=R^2/4}.
+\]
+The slice-length weighting explains why uniform area does not give a uniform coordinate.
+
+\answer{AA07}
+Points are distinct almost surely. Separation is possible exactly when the A points form one contiguous circular block and B points form its complement. For sufficiency, choose a chord with endpoints in the two gaps between types, avoiding sample points; its line separates the blocks. For necessity, a line intersects the circle at most twice, and each side corresponds to one arc. More than two type changes around the circle are therefore impossible.
+
+After fixing a numbered circular starting position, the A positions are uniform among $\binom{m+n}{m}$ subsets. A contiguous A block can start in $m+n$ places, all distinct because both types occur. Thus
+\[
+\boxed{\Prob(\text{separable})=\frac{m+n}{\binom{m+n}{m}}}.
+\]
+For $m=n=3$ this is $6/20=3/10$. Only the circular type order matters; the actual angular gaps do not.
+
+\answer{AA09}
+The standard planar Gaussian has a uniform direction. Conditional on the positive quadrant, its angle $\Theta$ is uniform on $(0,\pi/2)$ and $Z=\cot\Theta$. For $z>0$,
+\[
+F_Z(z)=\Prob(\Theta\ge\arctan(1/z))
+=\frac2\pi\arctan z,
+\]
+and $F_Z(z)=0$ for $z\le0$. Differentiating,
+\[
+f_Z(z)=\frac2{\pi(1+z^2)}\quad(z>0).
+\]
+Since $F_Z(1)=1/2$, the median is 1. However,
+\[
+\int_0^\infty z f_Z(z)\,\dd z
+=\frac2\pi\int_0^\infty\frac z{1+z^2}\,\dd z=\infty.
+\]
+Finite moments of both numerator and denominator do not ensure a finite ratio mean: a denominator close to zero creates a heavy tail.
+
+\answer{AA10}
+Conditional on $S=s>0$, direction remains uniform. Exchange symmetry gives $\E[X^2\mid S=s]=s/3$. Set
+\[
+a=\E[X^4\mid S=s],\qquad b=\E[X^2Y^2\mid S=s].
+\]
+Sign symmetry annihilates mixed odd powers. The rotated coordinate $(X+Y)/\sqrt2$ has the same conditional distribution as $X$, so
+\[
+a=\frac{2a+6b}{4},\qquad a=3b.
+\]
+Expanding $s^2=(X^2+Y^2+Z^2)^2$ gives $s^2=3a+6b=15b$. Consequently,
+\[
+\E[X^2Y^2\mid S]=\frac{S^2}{15},\quad
+\Var(X^2\mid S)=\frac{4S^2}{45},\quad
+\Cov(X^2,Y^2\mid S)=-\frac{2S^2}{45}.
+\]
+These identities hold almost surely. With total energy fixed, an increase in one squared coordinate must be offset by the others, explaining negative conditional dependence without contradicting unconditional independence.
+
+\answer{AA13}
+Order the times as $U_1<U_2<U_3$, strict almost surely. Then $D=\min(U_2-U_1,U_3-U_2)$. For $0\le d\le L/2$, the event $D>d$ requires both internal gaps to exceed $d$. Translate
+\[
+v_1=U_1,\qquad v_2=U_2-d,\qquad v_3=U_3-2d.
+\]
+The region becomes $0<v_1<v_2<v_3<L-2d$, of volume $(L-2d)^3/6$. Multiplying by the ordered density $6/L^3$ yields
+\[
+F_D(d)=
+\begin{cases}
+0,&d<0,\\
+1-(1-2d/L)^3,&0\le d\le L/2,\\
+1,&d>L/2.
+\end{cases}
+\]
+Tail integration gives
+\[
+\E D=\int_0^{L/2}(1-2d/L)^3\,\dd d=\frac L8.
+\]
+The translation subtracts two constrained internal gaps, not four gaps including endpoints; this explains the factor 2.
+
+\answer{AA16}
+The minimum has a unique index $J$ almost surely. Fix $J=j$ and write the other residuals as $r_i=X_i-U>0$. Their joint density with the minimum and its index is
+\[
+\lambda^n\exp\!\left[-\lambda\!\left(nu+\sum_{i\ne j}r_i\right)\right]
+=\frac1n\,(n\lambda e^{-n\lambda u})
+ \prod_{i\ne j}\lambda e^{-\lambda r_i}.
+\]
+It factors into a uniform index probability, the density of $U\sim\operatorname{Exp}(n\lambda)$, and $n-1$ independent rate-$\lambda$ residual densities. The residuals are independent of $U$. Their maximum is $D$, so
+\[
+\Prob(D\le d)=
+\begin{cases}0,&d<0,\\(1-e^{-\lambda d})^{n-1},&d\ge0.\end{cases}
+\]
+Tail integration with $y=1-e^{-\lambda d}$ gives
+\[
+\E D=\frac1\lambda\int_0^1\frac{1-y^{n-1}}{1-y}\,\dd y
+=\frac1\lambda\sum_{k=1}^{n-1}\frac1k.
+\]
+Writing $H_{n-1}=\sum_{k=1}^{n-1}1/k$, we obtain $\E[V\mid U]=U+H_{n-1}/\lambda$. Independence follows from exact factorization of the exponential density, not merely from a zero covariance.
+
+\answer{AA17}
+For $|\rho|<1$, write $Y=\rho X+\sqrt{1-\rho^2}\,Z$ with an independent standard normal $Z$. Conditional on $X$, the cross term has mean zero, giving
+\[
+\E[Y^2\mid X]=\rho^2X^2+1-\rho^2.
+\]
+Using $\E X^2=1$ and $\E X^4=3$,
+\[
+\E[X^2Y^2]=\rho^2\E X^4+(1-\rho^2)\E X^2
+=1+2\rho^2.
+\]
+Thus the covariance is $2\rho^2$. Each squared variable has variance $3-1=2$, so
+\[
+\boxed{\Corr(X^2,Y^2)=\rho^2}.
+\]
+At $|\rho|=1$, $Y=\rho X$ almost surely and the identities follow directly. Squaring loses the sign, since $\rho$ and $-\rho$ give the same result. The nonlinear conditional mean is explicit, but includes a constant term that cannot be discarded.
+
+\answer{AA20}
+Assume first that $r>0$. With the polar axis pointing toward $a$, $U=\cos\Theta$ is uniform on $[-1,1]$, and
+\[
+D^2=R^2+r^2-2RrU.
+\]
+Thus $D$ has density $d/(2Rr)$ on $|R-r|<d<R+r$. Therefore
+\[
+\E\frac1D=\frac{R+r-|R-r|}{2Rr}
+=\boxed{\frac1{\max(R,r)}}.
+\]
+If $r=0$, then $D=R$ and the result remains valid. On the sphere, zero distance occurs only on a probability-zero event, and the first reciprocal moment is still integrable.
+
+For $r>0$ and $r\ne R$,
+\[
+\E\frac1{D^2}
+=\frac1{2Rr}\log\frac{R+r}{|R-r|}.
+\]
+At $r=R$, the lower endpoint is zero and the integral is proportional to $\int_0^{2R}\dd d/d$, which diverges. A geometric singularity may preserve a first moment while destroying the second.
+
+\answer{AA06}
+A fresh pair agrees with probability $p^2+q^2>0$, giving a geometric tail. Let $e_S,e_F$ be the remaining means when the last outcome was success or failure. First-step equations are
+\[
+e_S=1+qe_F,\qquad e_F=1+pe_S.
+\]
+They give $e_S=(1+q)/(1-pq)$ and $e_F=(1+p)/(1-pq)$. Including the first trial,
+\[
+\boxed{\E T=1+pe_S+qe_F=\frac{2+pq}{1-pq}}.
+\]
+Let $a_S,a_F$ be the corresponding probabilities of eventual SS absorption. From $a_S=p+qa_F$ and $a_F=pa_S$,
+\[
+\boxed{\Prob(\text{stop on SS})
+=pa_S+qa_F=\frac{p^2(1+q)}{1-pq}}.
+\]
+Interchanging $p,q$ gives the FF probability, and the two sum to 1. For fair trials the mean is 3 and either absorption type has probability $1/2$. The last outcome determines which next outcome stops the process, so one undifferentiated transient state is insufficient.
+
+\answer{AA08}
+Let $I_i$ indicate H at trial $i$ and T at trial $i+1$, for $1\le i\le n-1$, and put $a=p(1-p)$. Then $N=\sum I_i$, with each indicator having mean $a$ and variance $a(1-a)$.
+
+Starts separated by at least two use disjoint trials and are independent. Adjacent starts cannot both be HT, since their shared trial cannot be both H and T. Hence
+\[
+\Cov(I_i,I_{i+1})=-a^2.
+\]
+There are exactly $n-2$ neighboring indicator pairs, yielding
+\[
+\boxed{\E N=(n-1)a,\qquad
+\Var N=(n-1)a-(3n-5)a^2}.
+\]
+At $n=10,a=1/4$, the mean is $9/4$ and the variance is $11/16$. A binomial model ignores overlap and overstates the variance.
+
+\answer{AA12}
+The uniform law is stationary, so $\E Y_t=0$ and $\E Y_t^2=1/2$ at every time. Set $\lambda=\cos(2\pi/n)\in(-1,1)$. The cosine addition formula gives
+\[
+\E[Y_{t+1}\mid X_t]=\lambda Y_t.
+\]
+Iterating conditional expectations yields $\E[Y_k\mid X_0]=\lambda^kY_0$, hence
+\[
+\boxed{\Cov(Y_0,Y_k)=\tfrac12\lambda^k}.
+\]
+Expanding the variance using stationarity,
+\[
+\boxed{\Var S_T=\frac12\left[T+
+2\sum_{k=1}^{T-1}(T-k)\lambda^k\right]}.
+\]
+After division by $T$, absolute summability of $|\lambda|^k$ dominates $(1-k/T)\ind_{\{k<T\}}\lambda^k$, giving
+\[
+\lim_{T\to\infty}\frac{\Var S_T}{T}
+=\frac12+\frac{\lambda}{1-\lambda}
+=\frac{1+\lambda}{2(1-\lambda)}.
+\]
+For $n=6,T=4$, $\lambda=1/2$ and the finite variance is $33/8$, rather than the value 2 obtained under an incorrect independence assumption.
+
+\answer{AA04}
+Factorials contain at least as many factors of 2 as of 5, so the trailing-zero count is
+\[
+z(n)=\sum_{j\ge1}\left\lfloor\frac n{5^j}\right\rfloor.
+\]
+It is nondecreasing and $z(5K)\ge K$. Binary-search the integer range $[0,5K]$ for the first $n_*$ with $z(n_*)\ge K$. If the value exceeds $K$, a jump has skipped the target and no solution exists. If equality holds, return the corresponding constant block.
+
+For each $m\ge0$, all floors are constant on $5m,\ldots,5m+4$, whereas advancing to $5m+5$ adds at least one factor of 5. Thus every attained value belongs to exactly one block of five consecutive integers. A successful search returns $n_*,\ldots,n_*+4$. This also covers $K=0$, giving 0 through 4.
+
+Repeated division by 5 evaluates $z(n)$ in $O(\log(n+2))$ integer operations. Binary search uses $O(\log^2(K+2))$ such operations overall. Since $z(100)=20+4=24$, the first solution set is 100 through 104. But $z(120)=28$ and $z(125)=25+5+1=31$, so 29 is unattainable.
+
+\answer{AA05}
+Use
+\[
+\binom nk=\frac{(n-k+1)\cdots n}{1\cdots k},
+\]
+replacing $k$ by $\min(k,n-k)$ if useful. Strip every power of 2 and 5 from each numerator and denominator factor. Accumulate their net exponents $a,b$ as numerator minus denominator totals. All remaining factors are units modulo 10: multiply numerator units and inverses of denominator units to obtain $u\in\{1,3,7,9\}$. Their inverses are respectively $1,7,3,9$, verified by multiplication.
+
+Integrality of the binomial coefficient implies $a,b\ge0$. Put $z=\min(a,b)$. The desired digit is
+\[
+\boxed{u\,2^{a-z}5^{b-z}\pmod{10}}.
+\]
+Only the stripped unit factors are inverted. An original denominator containing 2 or 5 has no inverse modulo 10, so ordinary modular division would be invalid. Repeated stripping computes the exponents, and periodicity or binary exponentiation computes the final powers. An empty product at $k=0$ gives 1.
+
+For example, $\binom{20}{7}=77520$ has net exponents $a=4,b=1$ and unit part $u=9$. Removing one factor of 10 leaves $9\cdot2^3\equiv2\pmod{10}$. The full number is shown only as a check, not as an algorithmic requirement.
+
+\answer{AA11}
+A displacement $(a,b)$ gives $\gcd(|a|,|b|)-1$ interior lattice points. Dividing the displacement by its gcd gives the primitive integer direction, and all lattice points on the segment occur at integer multiples of this basic step. Visibility is therefore equivalent to gcd 1.
+
+Horizontally only adjacent points qualify, contributing $M(N+1)$ pairs; vertical pairs contribute $N(M+1)$. For positive absolute displacement $a,b$, each of the two slope directions has $(M+1-a)(N+1-b)$ pairs. Thus the number of visible unordered pairs is
+\[
+V=M(N+1)+N(M+1)
++2\sum_{\substack{1\le a\le M,\ 1\le b\le N\\\gcd(a,b)=1}}
+(M+1-a)(N+1-b).
+\]
+Divide by $\binom{(M+1)(N+1)}2$ for the probability. With $M=N=2$, axis directions contribute 12 pairs, and positive primitive displacements $(1,1),(1,2),(2,1)$ contribute 16 more. The probability is $28/36=7/9$.
+
+\answer{AA14}
+Without ordering restrictions there are $\binom{N-1}{2}$ positive triples. If the third coordinate violates the strict triangle condition, then $z\ge x+y$. Put $s=x+y$; for $2\le s\le\lfloor N/2\rfloor$, there are $s-1$ positive ordered pairs. The bad count for that coordinate is therefore $\binom{\lfloor N/2\rfloor}{2}$.
+
+With positive coordinates, two coordinates cannot each be at least the sum of the others, so the three bad events are disjoint. The ordered valid count is
+\[
+A(N)=\binom{N-1}{2}-3\binom{\lfloor N/2\rfloor}{2}
+=\frac{N^2}{8}+O(N).
+\]
+Distinct-sided triangles have six permutations. Equal-coordinate solutions number only $O(N)$, and their orbit sizes are 3 or 1. Consequently
+\[
+T(N)=\frac{A(N)}6+O(N)=\frac{N^2}{48}+O(N).
+\]
+For $N=12$, the largest side satisfies $4\le z<6$. The solutions are $(4,4,4)$, $(2,5,5)$, and $(3,4,5)$. Their permutation counts are 1, 3, and 6, totaling 10 ordered triples. This demonstrates why division by 6 is not an exact count.
+
+\answer{AA15}
+The conjugate $\beta=(3-\sqrt5)/2$ lies in $(0,1/2)$, and both numbers solve $z^2-3z+1=0$. Define
+\[
+L_0=2,\quad L_1=3,\quad L_n=3L_{n-1}-L_{n-2}.
+\]
+Induction or the characteristic roots give $L_n=\alpha^n+\beta^n\in\mathbb Z$. Thus $L_n-\alpha^n=\beta^n\in(0,1/2)$: it is the unique nearest integer with exact error $\beta^n$. Also $\lfloor\alpha^n\rfloor=L_n-1$.
+
+Modulo 2, the recurrence is $L_n\equiv L_{n-1}+L_{n-2}$. Starting from $(0,1)$ gives the repeating pattern $(0,1,1)$, so $L_n$ is even exactly when $3$ divides $n$.
+
+The error decreases strictly. Solving $\beta^n<10^{-6}$ gives $n>6\log10/(-\log\beta)\approx14.35$, hence the minimum is 15. Directly, $\beta^{14}\approx1.4072\times10^{-6}$ and $\beta^{15}\approx5.3749\times10^{-7}$.
+
+\answer{AA21}
+A nonzero product excludes digit 0. Digits 5 and 7 are also impossible because neither divides 72. One digit cannot have product 72. A two-digit product of 72 requires digits 8 and 9, whose sum 17 satisfies neither target.
+
+The complete sorted three-digit multisets with product 72 are
+\[
+(1,8,9),\ (2,4,9),\ (2,6,6),\ (3,3,8),\ (3,4,6).
+\]
+Enumerate the minimum digit as 1, 2, or 3 to obtain this list. Minimum digit 4 would require two digits at least 4 with product 18, impossible; minimum at least 5 already makes the product at least 125.
+
+Sum 14 leaves $(2,6,6)$ and $(3,3,8)$, whose smallest arrangements are 266 and 338. The minimum is 266. Sum 18 leaves only $(1,8,9)$, giving 189. Every integer with at least four digits exceeds these three-digit solutions. Deleting the 1 in 189 preserves the product but changes the sum from 18 to 17, violating the constraint.
+
+\answer{AA18}
+If $\log2$ were algebraic, it would be a nonzero algebraic number. The given theorem would make $e^{\log2}=2$ transcendental, contradicting that 2 is an integer. Thus $\log2$ is transcendental; the same argument applies to $\log3$ and $\log4$.
+
+If $\log2/\log3=a/b$ were rational, choose positive integers $a,b$. Cross-multiplication and exponentiation give $2^b=3^a$. Unique prime factorization rules this out: the left side has only prime factor 2, and the right only prime factor 3. The ratio is therefore irrational.
+
+A ratio of transcendental numbers can nevertheless be rational: $\log4/\log2=2$. The proof above establishes irrationality of $\log2/\log3$, not its transcendence directly from the given theorem. These conclusions require different arguments and must not be interchanged.

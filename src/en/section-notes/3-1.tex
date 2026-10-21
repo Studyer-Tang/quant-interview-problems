@@ -1,0 +1,4 @@
+For regressions with an intercept, center the variables before working with covariances or orthogonal projections. When adding a regressor, residualize both the response and the new column against the existing design. This reduces the added direction to a one-dimensional problem. Check full rank and a nonzero residual direction before dividing by a variance or a squared norm.
+
+Measurement error and selection change the relevant covariance structure. Specify the observed variables and the conditional population before comparing linear prediction with prediction by a conditional mean. An instrument must correlate with the latent signal and be uncorrelated with the relevant errors. Projection identities are algebraic; an exact finite-sample $t$ test additionally requires a correctly specified model with independent, homoscedastic normal errors.
+\par\smallskip

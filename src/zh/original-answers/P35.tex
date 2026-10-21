@@ -1,0 +1,20 @@
+\answer{OP35}
+给定最大值 $H=h$，其余 $n-1$ 个样本在排序前相当于从 $(0,h)$ 独立均匀抽样。故对 $0\le t\le h$，条件最小值满足
+\[
+\Prob(L>t\mid H=h)=\left(1-\frac th\right)^{n-1},
+\]
+从而
+\[
+\E[L\mid H=h]=\int_0^h\left(1-\frac th\right)^{n-1}\dd t
+=\frac hn.
+\]
+因此 $\E L=\E H/n$，且
+\[
+\E[LH]=\E\!\left[H\E(L\mid H)\right]=\frac1n\E H^2,
+\qquad \Cov(L,H)=\frac1n\Var(H).
+\]
+把全部样本变为 $1-X_i$ 不改变联合分布，却把最小值变为 $1-H$，所以 $L\overset d=1-H$，从而 $\Var(L)=\Var(H)>0$。最终
+\[
+\boxed{\Corr(L,H)=\frac1n.}
+\]
+条件分布均按连续密度所确定的版本理解；不把零概率事件 $H=h$ 当作普通事件比值。

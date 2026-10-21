@@ -1,0 +1,25 @@
+\problem{P12}{总和筛选引起的相关性}{正交变换与截断矩}
+$X,Z$ 为独立标准正态变量。对固定 $c\ge0$，只保留满足 $X+Z>c$ 的样本。求保留样本中 $X,Z$ 的均值、方差、协方差和相关系数，证明相关系数为负，并算出 $c=0$ 的结果。记标准正态密度和分布函数为 $\phi,\Phi$。
+\solution 作正交变换
+\[
+S=\frac{X+Z}{\sqrt2},\quad D=\frac{X-Z}{\sqrt2},
+\quad a=\frac c{\sqrt2}.
+\]
+$S,D$ 仍是独立标准正态。筛选只限制 $S>a$，所以 $D$ 的分布及其与 $S$ 的独立性均保留。由 $\phi'(s)=-s\phi(s)$ 分部积分，
+\[
+\lambda:=\E(S\mid S>a)=\frac{\phi(a)}{1-\Phi(a)},\quad
+\E(S^2\mid S>a)=1+a\lambda.
+\]
+记 $v=1+a\lambda-\lambda^2$。由 $X=(S+D)/\sqrt2$、$Z=(S-D)/\sqrt2$，条件矩为
+\[
+\boxed{\begin{gathered}
+\E X=\E Z=\lambda/\sqrt2,\qquad
+\Var X=\Var Z=(v+1)/2,\\
+\Cov(X,Z)=(v-1)/2,\qquad
+\operatorname{Corr}(X,Z)=\frac{v-1}{v+1}.
+\end{gathered}}
+\]
+此处所有矩均针对筛选后的总体。由于条件下 $S>a$，有 $\lambda>a$；又 $\lambda>0$，故 $v=1-\lambda(\lambda-a)<1$，相关系数严格为负。截断分布非退化，亦有 $v>0$。
+
+$c=0$ 时 $\lambda=\sqrt{2/\pi}$、$v=1-2/\pi$，于是均值为 $1/\sqrt\pi$、方差为 $1-1/\pi$、协方差为 $-1/\pi$、相关系数为 $-1/(\pi-1)$。
+\insight 筛选依赖两个变量的总和，破坏了原来的独立性。沿总和与差值两个方向分解，可以把二维条件计算化为一个截断正态的矩。

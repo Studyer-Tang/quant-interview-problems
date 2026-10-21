@@ -1,0 +1,26 @@
+\problem{P38}{A Zero-Sum Bonus for the Middle Rank}{Conditional ranks and payoffs}
+Three participants draw distinct numbers uniformly without replacement from $1,\ldots,M$, where $M\ge3$. Write the sorted numbers as $A<B<C$. The middle participant receives $C-A$, and each endpoint participant pays $(C-A)/2$. Given that your number is $x$, find your conditional expected net payoff $g(x)$ and determine its maximizers. Evaluate the optimal number and payoff when $M=9$.
+\solution The other two numbers form a uniform unordered pair among $D=\binom{M-1}{2}$ possibilities. You are in the middle for $(x-1)(M-x)$ pairs. Conditional on this event, the low and high numbers are uniform on their respective sides, so their mean range is
+\[
+\frac{x+1+M}{2}-\frac x2=\frac{M+1}{2}.
+\]
+If you are smallest, both other numbers exceed $x$, giving $\binom{M-x}{2}$ pairs. Put $L=M-x$. The maximum of two numbers sampled from $1,\ldots,L$ has mean
+\[
+\sum_{b=2}^Lb(b-1)\big/\binom L2=\frac{2(L+1)}3.
+\]
+Your conditional payoff is therefore $-(M-x+1)/3$. By reflection, if you are largest the conditional payoff is $-x/3$, with $\binom{x-1}{2}$ pairs. Impossible rank cases contribute zero pairs and require no conditional mean.
+
+Combining the three cases gives
+\[
+\begin{aligned}
+g(x)=\frac1D\bigg[&\frac{M+1}{2}(x-1)(M-x)\\
+&-\frac{M-x+1}{3}\binom{M-x}{2}
+-\frac{x}{3}\binom{x-1}{2}\bigg].
+\end{aligned}
+\]
+Simplification yields
+\[
+\boxed{g(x)=\frac{2M(x-1)(M-x)}{(M-1)(M-2)}-\frac M3.}
+\]
+The product $(x-1)(M-x)$ is largest at integers nearest $(M+1)/2$. There is one maximizer for odd $M$ and two adjacent maximizers for even $M$. For $M=9$, the optimal number is $x=5$ and $g(5)=15/7$.
+\insight Both the probability of each rank and its conditional mean range matter. Although the three payoffs sum to zero in every outcome, observing a central number creates a positive conditional expectation.

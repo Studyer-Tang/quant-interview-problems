@@ -1,0 +1,22 @@
+\answer{OR25}
+对 $tW_t$ 用积分分部公式，得到
+\[
+ TW_T=\int_0^T W_t\,dt+\int_0^T t\,dW_t.
+\]
+因此
+\[
+ X=\int_0^T(T-t)\,dW_t,\qquad
+ Y=\int_0^T t\,dW_t.
+\]
+两个被积函数都是确定的平方可积函数，所以两积分的均值均为0。伊藤等距及其交叉形式给出
+\[
+ \Var X=\int_0^T(T-t)^2dt=\frac{T^3}{3},\qquad
+ \Var Y=\int_0^Tt^2dt=\frac{T^3}{3},
+\]
+\[
+ \Cov(X,Y)=\int_0^Tt(T-t)dt=\frac{T^3}{6}.
+\]
+交叉形式也可将等距公式应用于两个被积函数的和，再展开平方得到。由于 $T>0$，两个方差均非零，故
+\[
+ \boxed{\Corr(X,Y)=\frac{T^3/6}{T^3/3}=\frac12}.
+\]

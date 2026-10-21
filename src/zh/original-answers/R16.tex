@@ -1,0 +1,48 @@
+\answer{OR16}
+从任意未吸收状态，接下来的 $a+b$ 步若全向右便会吸收，其概率为 $2^{-(a+b)}$。因此 $\tau$ 有几何尾，所有阶矩均有限。
+
+对称的独立增量使下列过程成为鞅：
+\[
+ S_n,\qquad S_n^2-n,\qquad S_n^3-3nS_n,
+\]
+\[
+ S_n^4-6nS_n^2+3n^2+2n.
+\]
+例如分别展开 $(S_n\pm1)^j$ 再取平均即可核实。先在有界停时 $\tau\wedge N$ 应用可选停止，再令 $N\to\infty$。停止后的位置绝对值不超过 $\max(a,b)$，且 $\tau$ 的矩有限，故支配收敛允许这一极限。
+
+设 $r=\Prob(S_\tau=b)$。前两个鞅分别给出
+\[
+ br-a(1-r)=0,\qquad
+ \E\tau=\E S_\tau^2=b^2r+a^2(1-r),
+\]
+所以
+\[
+ \boxed{r=\frac a{a+b}},\qquad \boxed{\E\tau=ab}.
+\]
+为求二阶矩，令 $A=\E[\tau\ind_{\{S_\tau=b\}}]$、$B=\E[\tau\ind_{\{S_\tau=-a\}}]$。三次鞅给出
+\[
+ A+B=ab,\qquad
+ bA-aB=\frac{\E S_\tau^3}{3}=\frac{ab(b-a)}3.
+\]
+解这两个线性方程，得
+\[
+ A=\frac{ab(2a+b)}{3(a+b)},\qquad
+ B=\frac{ab(a+2b)}{3(a+b)}.
+\]
+于是
+\[
+ \E(\tau S_\tau^2)=b^2A+a^2B
+       =\frac{ab(a^2+ab+b^2)}3,
+\]
+\[
+ \E S_\tau^4=ab(a^2-ab+b^2).
+\]
+代入四次鞅的停止等式
+\[
+ 0=\E S_\tau^4-6\E(\tau S_\tau^2)
+       +3\E\tau^2+2\E\tau,
+\]
+最终得到
+\[
+ \boxed{\E\tau^2=\frac{ab(a^2+3ab+b^2-2)}3}.
+\]

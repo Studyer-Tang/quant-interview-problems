@@ -1,0 +1,25 @@
+\problem{P29}{泊松抽样后的类别覆盖}{泊松分解}
+先抽取 $N\sim\operatorname{Pois}(\lambda)$，$\lambda>0$，再独立进行 $N$ 次类别抽样，每次落入第 $i$ 类的概率为 $p_i\ge0$，$i=1,\ldots,d$，且 $\sum p_i=1$。$N$ 与抽样序列独立。令 $X_i$ 为各类出现次数，$D$ 为出现过的类别数。证明 $X_i$ 相互独立，并求 $\E D$、$\Var D$ 和 $\Cov(D,N)$。
+\solution 对任意非负整数 $x_1,\ldots,x_d$，令 $s=\sum x_i$。先给定总数再用多项分布，
+\[
+\begin{aligned}
+\Prob(X_i=x_i,\ 1\le i\le d)
+&=\frac{e^{-\lambda}\lambda^s}{s!}
+\frac{s!}{\prod_i x_i!}\prod_i p_i^{x_i}\\
+&=\prod_{i=1}^d\frac{e^{-\lambda p_i}(\lambda p_i)^{x_i}}{x_i!}.
+\end{aligned}
+\]
+所以各 $X_i$ 独立且服从 $\operatorname{Pois}(\lambda p_i)$；$p_i=0$ 时该计数恒为零。令 $I_i=\ind\{X_i>0\}$、$q_i=1-e^{-\lambda p_i}$，则 $D=\sum I_i$ 是独立指示变量之和，
+\[
+\boxed{\E D=\sum_i q_i,\qquad \Var D=\sum_i q_i(1-q_i).}
+\]
+又 $N=\sum X_i$，跨类别协方差均为零。由 $I_iX_i=X_i$，
+\[
+\Cov(I_i,X_i)=\lambda p_i-q_i\lambda p_i
+=\lambda p_i e^{-\lambda p_i},
+\]
+故
+\[
+\boxed{\Cov(D,N)=\sum_i\lambda p_i e^{-\lambda p_i}.}
+\]
+\insight 固定总抽样数时各类计数相互制约；随机化为泊松总数后，联合概率恰好分解，覆盖方差也随之简化。

@@ -1,0 +1,21 @@
+\problem{P30}{A Fixed Source or a Fresh Source}{Bayesian identification}
+Two coin types have head probabilities $1/4$ and $3/4$. Protocol $F$ selects a type with equal probabilities once and keeps it. Protocol $R$ independently selects a type with equal probabilities before every toss. Tosses are independent conditional on their selected types. The two protocols have equal prior probabilities. Find the posterior probability of $F$ after the ordered outcomes $HH$ and $HT$. Also find the covariance of the first two head indicators under each protocol and explain why one observation cannot distinguish them.
+\solution Both protocols have marginal head probability $1/2$ on every toss. A single outcome therefore has the same likelihood under either protocol and leaves the prior unchanged. For two outcomes,
+\[
+\begin{array}{c|cc}
+&HH&HT\\ \hline
+F&\tfrac12[(1/4)^2+(3/4)^2]=5/16&3/16\\
+R&1/4&1/4
+\end{array}
+\]
+With equal priors, Bayes' formula gives
+\[
+\boxed{\Prob(F\mid HH)=\frac59,\qquad
+\Prob(F\mid HT)=\frac37.}
+\]
+Let $I_1,I_2$ be the head indicators. Under $F$, the latent head probability $P$ is equally likely to be $1/4$ or $3/4$. Conditional independence implies
+\[
+\Cov(I_1,I_2)=\E(P^2)-(\E P)^2=\Var(P)=\frac1{16}.
+\]
+Under $R$, independent selection and tossing make $I_1,I_2$ independent, so their covariance is zero.
+\insight Identical one-observation distributions can conceal different dependence structures. Repeated outcomes favor a fixed source, whereas alternating outcomes relatively favor a fresh source.

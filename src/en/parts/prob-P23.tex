@@ -1,0 +1,22 @@
+\problem{P23}{The Gaps before and after Crossing}{Renewal density}
+Let $U_i$ be independent uniforms on $(0,1)$, $S_k=\sum_{i=1}^kU_i$, $S_0=0$, and $N=\min\{k:S_k>1\}$. Define the pre-crossing gap $A=1-S_{N-1}$ and overshoot $O=S_N-1$. Find their joint density, the density of the final increment $J=U_N$, and $\Prob(O>A)$.
+\solution For $0<s<1$, the density of the $k$th positive partial sum is $s^{k-1}/(k-1)!$. Summing over all positive partial sums gives the renewal density
+\[
+u(s)=\sum_{k\ge1}\frac{s^{k-1}}{(k-1)!}=e^s.
+\]
+The first increment cannot exceed $1$, so the last pre-crossing sum is positive; there is no contribution from an atom at $S_0=0$. A pre-crossing sum $s$ followed by increment $v$ contributes density $e^s\dd s\dd v$ on $s+v>1$. Positive increments ensure that this crossing step is unique.
+
+The change of variables $a=1-s$, $o=s+v-1$ has absolute Jacobian one. Therefore
+\[
+\boxed{f_{A,O}(a,o)=e^{1-a},\quad 0<a<1,\quad0<o<1-a.}
+\]
+Its integral is $\int_0^1e^{1-a}(1-a)\dd a=1$. Since $J=A+O$,
+\[
+\boxed{f_J(j)=\int_0^je^{1-a}\dd a=e-e^{1-j},\quad0<j<1.}
+\]
+The inequality $O>A$ requires $a<1/2$, giving
+\[
+\boxed{\Prob(O>A)=\int_0^{1/2}e^{1-a}(1-2a)\dd a
+=2\sqrt e-e.}
+\]
+\insight Sum over possible pre-crossing locations and append the final increment. This produces the joint law on both sides of the boundary without enumerating stopping times individually.

@@ -1,0 +1,29 @@
+\answer{OR11}
+Write $q=1-p$ and $u=u_1$. Since a downward jump has size 1, a walk from $n$ to 0 must first visit $n-1,\ldots,1$ in order. Applying the strong Markov property and translation invariance at these descending hitting times gives
+\[
+ u_n=u^n.
+\]
+There may be arbitrarily many rightward jumps between successive descending records; the leftward jumps need not be consecutive. Conditioning on the first step from 1 gives
+\[
+ u=p+qu_3=p+qu^3,
+\]
+and hence
+\[
+ (u-1)(qu^2+qu-p)=0.
+\]
+The positive root of the quadratic factor is
+\[
+ r=\frac{\sqrt{1+4p/q}-1}{2}.
+\]
+If $p\ge2/3$, then $r\ge1$ and the other quadratic root is negative. Thus the only possible value in $[0,1]$ is 1.
+
+If $p<2/3$, the mean increment is $2-3p>0$, so the strong law implies that the walk tends to positive infinity almost surely. Consequently $u\ne1$. Indeed, if every integer's left neighbor were reached almost surely, repeated use of the strong Markov property would imply that every negative integer is visited almost surely, contradicting convergence to positive infinity. We must therefore choose $u=r<1$. Thus
+\[
+ \boxed{u_n=
+ \begin{cases}
+ \left(\dfrac{\sqrt{1+4p/(1-p)}-1}{2}\right)^n,
+       &0<p<2/3,\\[4pt]
+ 1,&2/3\le p<1.
+ \end{cases}}
+\]
+A first-step equation may have multiple roots in the probability range. Drift, or the minimal nonnegative solution property, identifies the correct root.

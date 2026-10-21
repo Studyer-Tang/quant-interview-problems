@@ -1,0 +1,19 @@
+\answer{OR01}
+Partition the tosses into disjoint blocks of length $n$. Each block consists entirely of heads with probability $2^{-n}$, independently of the other blocks. Thus $T_n$ is bounded by $n$ times a geometric random variable and has finite mean.
+
+Let $e_k$ be the expected number of additional tosses when the current run of heads has length $k$, for $0\le k\le n$. The terminal condition is $e_n=0$. A tail resets the run to zero, so
+\[
+ e_k=1+\tfrac12e_{k+1}+\tfrac12e_0,
+ \qquad 0\le k<n.
+\]
+Substitution backwards from $e_n=0$ gives
+\[
+ e_0=\left(1+\frac{e_0}{2}\right)
+       \sum_{j=0}^{n-1}2^{-j}
+     =\left(1+\frac{e_0}{2}\right)(2-2^{1-n}).
+\]
+Rearranging yields $2^{-n}e_0=2-2^{1-n}$ and therefore
+\[
+ \boxed{\E T_n=2^{n+1}-2}.
+\]
+A run requires retaining the current progress: a tail destroys all consecutive heads accumulated so far.

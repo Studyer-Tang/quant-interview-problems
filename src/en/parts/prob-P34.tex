@@ -1,0 +1,21 @@
+\problem{P34}{Combining Correlated Sensors}{Gaussian conditioning; sufficient statistics}
+Let $X\sim N(\mu,s^2)$ with $s^2>0$. Two sensors report $Z_1=X+\varepsilon_1$ and $Z_2=X+\varepsilon_2$. The noise pair is independent of $X$, jointly normal and centered, with common variance $\tau^2>0$ and correlation $-1<\rho<1$. Find the posterior law of $X$, show that the difference of the readings adds no information, and examine both endpoint limits of $\rho$.
+\solution Set $M=(Z_1+Z_2)/2$ and $D=Z_1-Z_2$. Then $M=X+\bar\varepsilon$, with
+\[
+ v:=\Var(\bar\varepsilon)=\frac{\tau^2(1+\rho)}2,
+ \quad \Var(D)=2\tau^2(1-\rho).
+\]
+Equal noise variances give $\Cov(\bar\varepsilon,D)=0$, and $\Cov(X,D)=0$. Joint normality therefore makes $D$ independent of $(X,M)$. Since $(M,D)$ and $(Z_1,Z_2)$ determine each other, the posterior depends only on the average $M$.
+Multiplying the prior density by the likelihood of $M$ gives the following part of the exponent involving $x$:
+\[
+ -\frac12\left\{\frac{(x-\mu)^2}{s^2}
+                  +\frac{(M-x)^2}{v}\right\}.
+\]
+Completing the square yields
+\[
+ X\mid Z_1,Z_2\sim N(m_*,V_*),\qquad
+ V_*=(s^{-2}+v^{-1})^{-1},\quad
+ m_*=V_*\left(\frac\mu{s^2}+\frac Mv\right).
+\]
+As $\rho\uparrow1$, $v\to\tau^2$: the readings become duplicates and carry the information of one sensor. As $\rho\downarrow-1$, $v\to0$, so the average noise cancels and posterior variance tends to zero. In the endpoint model, $M=X$ almost surely. For fixed $s^2,\tau^2$, $V_*$ is strictly increasing in $\rho$.
+\insight Decompose multiple measurements into a signal-bearing direction and a pure-noise direction before conditioning. Correlation determines whether the measurements complement or duplicate one another.

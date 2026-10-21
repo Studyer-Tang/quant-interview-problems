@@ -1,0 +1,24 @@
+\problem{P03}{Estimating a Probability after Stopping}{Negative binomial sampling}
+Independent Bernoulli trials have success probability $p\in(0,1)$. Sampling stops at the $r$th success, where $r\ge2$, and $T$ denotes the number of trials. Prove that $(r-1)/(T-1)$ is unbiased for $p$, and determine whether the observed success proportion $r/T$ is unbiased.
+\solution For $T=t$, the first $t-1$ trials must contain exactly $r-1$ successes and the last trial must succeed. Thus
+\[
+\Prob(T=t)=\binom{t-1}{r-1}p^r(1-p)^{t-r},\quad t\ge r.
+\]
+The identity
+\[
+\frac{r-1}{t-1}\binom{t-1}{r-1}=\binom{t-2}{r-2}
+\]
+and the negative binomial series give, with $j=t-r$,
+\[
+\begin{aligned}
+\E\frac{r-1}{T-1}
+&=p^r\sum_{j=0}^\infty\binom{j+r-2}{r-2}(1-p)^j\\
+&=p^r p^{-(r-1)}=p.
+\end{aligned}
+\]
+Moreover, for every possible $t$,
+\[
+\frac rt-\frac{r-1}{t-1}=\frac{t-r}{t(t-1)}\ge0.
+\]
+Since $\Prob(T>r)>0$, the inequality is strict after taking expectations. Hence $\boxed{\E(r/T)>p}$: the natural proportion is upward biased. At the boundary $p=1$, both estimates equal $1$ because $T=r$.
+\insight The stopping rule forces the last observation to be a success. Removing that forced success and using the preceding $T-1$ trials corrects the bias; fixed-sample intuition alone does not justify a stopped-sample estimator.

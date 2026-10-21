@@ -1,0 +1,27 @@
+\answer{OA22}
+If $x>y$, then $3x-2y=x+2(x-y)\ge4$. If $x=y$, integrality excludes $x=1$, so $3x-2y=x\ge2$. It remains to consider $y=x+d$ with $d\ge1$.
+
+Set
+\[
+ P=(x+1)(x+2)\cdots(x+d).
+\]
+The given fraction is $x!P/(P+1)$. Since $P$ and $P+1$ are coprime, integrality is equivalent to $P+1\mid x!$.
+
+Suppose, for a contradiction, that $x-2d\le1$, or $x\le2d+1$. Let $p$ be any prime divisor of $P+1$. Divisibility gives $p\le x$. If $p\le d$, one of the $d$ consecutive integers $x+1,\ldots,x+d$ is divisible by $p$, contradicting $p\nmid P$. Hence $p>d$. If also $p\le y/2$, then
+\[
+ x<2d+2\le2p\le y.
+\]
+Thus $2p$ is a factor in the product $P$, again a contradiction. Every prime divisor must therefore lie in
+\[
+ \frac y2<p\le x.
+\]
+If $d\ge x$, this interval is empty, contradicting $P+1>1$. Otherwise the number of integers in the interval is
+\[
+ x-\left\lfloor\frac{x+d}{2}\right\rfloor
+ =\left\lceil\frac{x-d}{2}\right\rceil\le d,
+\]
+where the last bound follows from $x\le2d+1$ and $d\ge1$. Moreover, $p>y/2>x/2$, so each such prime occurs only once in $x!$. Since $P+1\mid x!$, the integer $P+1$ is a product of at most $d$ distinct primes, each at most $x$. Consequently,
+\[
+ P+1\le x^d<(x+1)\cdots(x+d)=P,
+\]
+a contradiction. Hence $3x-2y\ge2$. For $(x,y)=(4,5)$, the given fraction equals $20$ and $3x-2y=2$, so the constant is sharp.

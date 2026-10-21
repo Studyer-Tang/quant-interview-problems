@@ -1,0 +1,17 @@
+\problem{P09}{Simulating a Die with an Unknown Biased Coin}{}
+You may only toss one coin independently, with an unknown head probability $p\in(0,1)$, and have no other randomness. Design an algorithm that does not know $p$ and outputs each of $1,\ldots,6$ with exactly equal probability. Prove uniformity and almost-sure termination, and find the expected number of coin tosses used by your algorithm.
+\solution First extract fair bits. Toss twice: output 0 for HT, output 1 for TH, and discard HH or TT and repeat. HT and TH each have probability $p(1-p)$, so an accepted output is fair. Successive outputs use disjoint segments of independent trials; after one segment ends, the next has the same fresh distribution. The extracted bits are consequently independent.
+
+Let $b$ be the mean toss count per fair bit. A pair is accepted with probability $2p(1-p)>0$, giving a geometric tail, and
+\[
+b=2+\bigl(1-2p(1-p)\bigr)b
+  =\frac1{p(1-p)}.
+\]
+Read three fair bits as $Z\in\{0,\ldots,7\}$. If $Z\le5$, output $Z+1$; otherwise discard the block and repeat. All eight values are equally likely, so the accepted six remain uniform. A block is accepted with probability $3/4$.
+
+Writing $E$ for the total expected toss count, one block costs $3b$ in expectation and a rejection starts fresh. Hence
+\[
+E=3b+\frac14E,\qquad
+\boxed{E=\frac4{p(1-p)}}.
+\]
+Both acceptance probabilities are positive, proving almost-sure termination. This is the cost of the stated algorithm, not a claim of optimality. Fair-bit extraction becomes expensive as $p$ approaches either endpoint.

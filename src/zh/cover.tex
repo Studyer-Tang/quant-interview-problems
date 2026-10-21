@@ -1,0 +1,27 @@
+\begin{titlepage}\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+\definecolor{coveryellow}{HTML}{FFD000}
+\definecolor{covernavy}{HTML}{173C78}
+\fill[coveryellow] (current page.south west) rectangle (current page.north east);
+\fill[white] ([yshift=-60mm]current page.north west) rectangle (current page.north east);
+\node[anchor=north west,inner sep=0pt,text=coveryellow]
+  at ([xshift=10mm,yshift=-11mm]current page.north west)
+  {\resizebox{136mm}{19mm}{\coverdisplay Quantitative Finance}};
+\node[anchor=north west,inner sep=0pt,text=coveryellow]
+  at ([xshift=10mm,yshift=-35mm]current page.north west)
+  {\resizebox{136mm}{19mm}{\coverdisplay Problems \& Solutions}};
+\node[anchor=north west,inner sep=0pt,text=covernavy,
+  font=\sffamily\bfseries\fontsize{16}{20}\selectfont]
+  at ([xshift=19mm,yshift=-78mm]current page.north west) {ttqqj};
+\node[anchor=north west,inner sep=0pt,text=covernavy,
+  font=\covercjk\bfseries\fontsize{36}{44}\selectfont]
+  at ([xshift=19mm,yshift=-101mm]current page.north west)
+  {量化笔试习题集};
+\node[anchor=north west,inner sep=0pt,align=left,text=covernavy,
+  font=\sffamily\fontsize{17}{22}\selectfont]
+  at ([xshift=19mm,yshift=-137mm]current page.north west)
+  {Quantitative Interview\\Problems};
+\node[anchor=south west,inner sep=0pt,text=covernavy,
+  font=\covercjk\fontsize{10.5}{13}\selectfont]
+  at ([xshift=19mm,yshift=17mm]current page.south west) {中文版};
+\end{tikzpicture}\null\end{titlepage}

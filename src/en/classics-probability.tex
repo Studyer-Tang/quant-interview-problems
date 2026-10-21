@@ -1,0 +1,54 @@
+\problem{CP01}{A Random Needle across Parallel Lines}{Geometric probability and counts}
+Parallel lines in the plane are spaced $h>0$ apart. A needle has length $l>0$. Its center's distance to the nearest line is uniform on $[0,h/2]$, and its acute angle to the lines is uniform on $[0,\pi/2]$, independently. Find the probability of hitting at least one line and the expected number of intersections. The needle may be longer than the spacing.
+\solution Write $\Theta$ for the angle, $D$ for the center distance, and $r=l/h$. The perpendicular projection has length $l\sin\Theta$, so a hit occurs exactly when $D\le l\sin\Theta/2$. Conditioning on the angle gives
+\[
+p(r)=\frac2\pi\int_0^{\pi/2}\min(1,r\sin\theta)\dd\theta.
+\]
+For $r\le1$, this is $2r/\pi$. For $r>1$, split the integral at $\theta_0=\arcsin(1/r)$ to obtain
+\[
+\boxed{p(r)=\begin{cases}
+2r/\pi,&0<r\le1,\\
+\dfrac2\pi\left(r-\sqrt{r^2-1}+\arccos(1/r)\right),&r>1.
+\end{cases}}
+\]
+For the intersection count $J$, fix the angle. The needle projects to an interval of length $b=l\sin\theta$, while the lines form a lattice of spacing $h$. Reflection of the center across a line leaves the count unchanged, so the uniform-distance model gives the same count law as a uniform shift over one period. Under that shift, the expected number of lattice points in any interval of length $b$ is $b/h$: integrating and summing the coverage indicators gives a total shift length of $b$. Therefore
+\[
+\boxed{\E J=\E\left(\frac{l\sin\Theta}{h}\right)=\frac{2l}{\pi h}.}
+\]
+When $l\le h$, at most one intersection occurs almost surely, so the probability and expectation coincide. A long needle can cross several lines, and the two quantities differ.
+\insight A random-needle model must specify both position and direction laws. Conditioning on the angle reduces the problem to length ratios and handles short and long needles alike.
+
+\problem{CP02}{A Coloring with No Monochromatic Set}{The probabilistic method}
+A finite vertex set $V$ has $m$ specified subsets, each containing at least $k\ge2$ vertices. If $m<2^{k-1}$, prove that the vertices can be colored red and blue so that every specified subset contains both colors. Explain how to choose colors one vertex at a time without enumerating all colorings.
+\solution First color vertices independently with equal probabilities. A subset of size $s$ is monochromatic with probability $2^{1-s}\le2^{1-k}$. If $Z$ counts monochromatic specified subsets, then
+\[
+\E Z\le m2^{1-k}<1.
+\]
+If every coloring had a monochromatic subset, we would have $Z\ge1$ always, contradicting this expectation. Thus some coloring has $Z=0$. The union bound also gives success probability at least $1-m2^{1-k}>0$.
+
+To make deterministic choices, maintain the conditional expectation after fixing some colors. The average of the two conditional expectations obtained by coloring the next vertex red or blue equals the current value. At least one choice does not increase it; select that color.
+
+These conditional expectations are explicit. A subset already containing both colors has monochromatic probability zero. If its fixed vertices all have one color and $u$ vertices remain uncolored, the probability is $2^{-u}$. If no vertex has been fixed, it is $2^{1-s}$. Sum these probabilities over subsets. After every vertex is fixed, the conditional expectation is the integer $Z$, still less than one, and must therefore be zero.
+\insight Randomness can prove the existence of a deterministic object. Choosing the smaller conditional expectation at each step converts that proof into a construction. The numerical condition is sufficient, not necessarily necessary.
+
+\problem{CP03}{A One-Time Pad and Key Reuse}{Conditional independence and leakage}
+Messages and keys lie in $\mathbb Z_q=\{0,\ldots,q-1\}$, where $q\ge2$, with encryption $C=M+K\pmod q$. The key $K$ is independent of the message $M$. Prove that a uniform key makes $C$ independent of $M$. Conversely, if every message value has positive probability, prove that this independence requires a uniform key. Then encrypt two independent uniform messages using the same independent uniform key. Find their conditional joint distribution given both ciphertexts and identify the information that is revealed exactly.
+\solution If the key is uniform, then for every $m,c$,
+\[
+\Prob(C=c\mid M=m)=\Prob(K=c-m)=\frac1q.
+\]
+The conditional distribution does not depend on $m$, so the ciphertext is uniform and independent of the message, even if the message prior is not uniform.
+
+Conversely, independence and full message support imply, for fixed $c$, that $\Prob(K=c-m)=\Prob(C=c)$ for every $m$. As $m$ runs through $\mathbb Z_q$, so does $c-m$. All key probabilities are equal and must be $1/q$. Full support matters: a constant message is independent of any ciphertext.
+
+With reuse, each key $k$ and fixed ciphertext pair $(c_1,c_2)$ determine the unique message pair $(c_1-k,c_2-k)$. Every original triple $(M_1,M_2,K)$ has probability $q^{-3}$, so the ciphertext pair has probability $q\cdot q^{-3}=q^{-2}$. Consequently,
+\[
+\boxed{\begin{aligned}
+&\Prob(M_1=m_1,M_2=m_2\mid C_1=c_1,C_2=c_2)\\
+&\qquad=\begin{cases}
+1/q,&m_2-m_1=c_2-c_1\pmod q,\\
+0,&\text{otherwise}.
+\end{cases}\end{aligned}}
+\]
+Each individual message remains uniform conditionally, but their difference is revealed exactly by $C_2-C_1$. The message pair is reduced from $q^2$ possibilities to $q$, so joint perfect secrecy fails.
+\insight Secrecy of individual ciphertexts does not guarantee joint secrecy. Reusing a key creates dependence, and subtraction removes the key while exposing a relation between messages.

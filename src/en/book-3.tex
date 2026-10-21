@@ -1,0 +1,248 @@
+\chapter{Statistics and Linear Algebra}
+
+\section{Regression Models}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/3-1}
+
+
+\problem{A01}{Measurement Error and Instruments}{Population regression; identification}
+Let $T,U,V,\varepsilon$ be mutually independent, centered random variables with finite variances, where $s=\Var(T)>0$ and $u=\Var(U)>0$. The observed variables are
+\[
+ W=T+U,\qquad Z=T+V,\qquad Y=\beta T+\varepsilon.
+\]
+Find the population regression slope of $Y$ on $W$. Can $\beta$ be identified from the covariances of $(W,Z,Y)$ alone? If $k$ readings of the same $T$, with independent identically distributed measurement errors, are averaged, how does the ordinary regression bias change? All regressions include an intercept.
+\solution Independence eliminates the cross-covariances, giving
+\[
+ \Var(W)=s+u,\quad \Cov(W,Y)=\beta s,
+ \quad \Cov(Z,W)=s,\quad \Cov(Z,Y)=\beta s.
+\]
+The ordinary slope is $\beta s/(s+u)$, which is attenuated toward zero. Unless $\beta=0$, it differs from the coefficient of the latent variable. Since $s>0$, the instrumental-variable ratio is well defined and identifies
+\[
+ \boxed{\beta=\frac{\Cov(Z,Y)}{\Cov(Z,W)}}.
+\]
+The instrument must correlate with the latent regressor and be uncorrelated with both the measurement error and the response noise.
+For readings $W_j=T+U_j$, suppose the $U_j$ are mutually independent, independent of $(T,\varepsilon)$, and have variance $u$. Then $\bar W=T+\bar U$ has measurement-error variance $u/k$, so
+\[
+ \beta_k=\frac{\beta s}{s+u/k},\qquad
+ \beta_k-\beta=-\frac{\beta u}{ks+u}\longrightarrow0.
+\]
+Averaging reduces measurement noise; it does not create $k$ independent realizations of the latent variable.
+\insight Computing a projection coefficient and identifying a structural coefficient are different tasks. List the observable covariances and look for a ratio that eliminates the unknown variance.
+
+\problem{A02}{The Gain from an Extra Regressor}{Orthogonal projection; partial determination}
+Let the fixed design $X\in\R^{n\times k}$ have full column rank and contain an intercept. Add a column $z\notin\operatorname{col}(X)$, with $n>k+1$. Let $S_0$ be the residual sum of squares using $X$, and $S_1>0$ that using $(X,z)$. Write $M=I-X(X^\top X)^{-1}X^\top$ and $r=Mz$. Find the added coefficient and $S_0-S_1$, and relate the partial coefficient of determination to the usual $t$ statistic. State assumptions for an exact $t$ test.
+\solution For a fixed added coefficient $b$, minimizing over the old coefficients leaves $\|My-br\|^2$. Since $r\ne0$, completing the square gives
+\[
+ \widehat b=\frac{r^\top y}{r^\top r},\qquad
+ S_0-S_1=\frac{(r^\top y)^2}{r^\top r}=:D.
+\]
+The decrease is nonnegative and is zero exactly when $r^\top y=0$. It measures alignment with the old residual, rather than correlation with the raw response.
+Put $\nu=n-k-1$. With $\widehat\sigma^2=S_1/\nu$, the standard error and squared statistic are
+\[
+ \operatorname{se}(\widehat b)=\sqrt{\frac{S_1}{\nu r^\top r}},
+ \qquad t^2=\frac{\nu D}{S_1}.
+\]
+Since $S_0=S_1+D$,
+\[
+ \boxed{R^2_{\rm partial}:=\frac{D}{S_0}
+       =\frac{t^2}{t^2+\nu}}.
+\]
+These algebraic identities require no random model. Under the correctly specified model $y=X\alpha+bz+\varepsilon$, conditional normal errors $\varepsilon\sim N(0,\sigma^2I)$ with $\sigma^2>0$ yield $t\sim t_\nu$ under $b=0$: the normal coefficient component is independent of the orthogonal residual, whose scaled squared norm is $\chi^2_\nu$. Without normality, the finite-sample $t$ law does not follow from these identities.
+\insight One extra regressor adds one orthogonal direction. The fitting gain, significance statistic, and partial explained fraction all derive from that projection.
+
+\problem{A03}{Prediction after Sign Selection}{Conditional distributions; prediction risk}
+Let $X,Y$ be independent standard normal variables, and retain only $S=\{XY>0\}$. In this conditional population, find the best affine predictor of $Y$ from $X$ and the best predictor under squared loss. Compare their mean squared errors.
+\solution For a standard normal variable, sign and magnitude are independent, and $\Prob(S)=1/2$. After selection the signs agree, with each common sign equally likely; the magnitudes remain independent half-normal variables. Thus the conditional means are zero, the variances are one, and
+\[
+ \E[XY\mid S]=\E|X|\,\E|Y|=\frac2\pi.
+\]
+The optimal affine predictor is $\widehat Y_{\rm lin}=2X/\pi$, with zero intercept and risk $1-4/\pi^2$.
+Given $X=x\ne0$ and $S$, only the sign of $Y$ is determined. Hence
+\[
+ m(x)=\E[Y\mid X=x,S]
+ =\operatorname{sign}(x)\sqrt{2/\pi}.
+\]
+This minimizes squared loss among all measurable predictors: for any $g$, conditional squared error decomposes into the conditional variance plus $(m(X)-g(X))^2$. The half-normal variance is $1-2/\pi$, so the optimal risk is $1-2/\pi$, improving on the linear risk by
+\[
+ \frac2\pi-\frac4{\pi^2}>0.
+\]
+The value assigned at $x=0$ is immaterial because that event has probability zero.
+\insight Selection can create correlation and a nonlinear conditional mean. Determine the conditional distribution before comparing linear and unrestricted prediction.
+
+\par\Needspace{8\baselineskip}
+\subsection*{Section Exercises}
+\input{original-practice/A02}
+\input{original-practice/A03}
+
+\section{Estimation}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/3-2}
+
+
+\problem{A04}{A Mean from Correlated Observations}{Generalized least squares; optimal weights}
+Observe $Y_i=\mu+\varepsilon_i$, $i=1,\ldots,n$, where $n\ge2$, $\E\varepsilon_i=0$, and
+\[
+ \Cov(\varepsilon_i,\varepsilon_j)=\sigma^2\rho^{|i-j|},
+ \qquad \sigma^2>0,\quad0\le\rho<1.
+\]
+Find the minimum-variance linear unbiased estimator and its variance. Compare it with the arithmetic mean and determine the limit as $\rho\uparrow1$.
+\solution Write the correlation matrix as $R$. Direct multiplication verifies $R^{-1}=T/(1-\rho^2)$, where $T$ is tridiagonal: its two endpoint diagonal entries are $1$, its interior diagonal entries are $1+\rho^2$, and adjacent off-diagonal entries are $-\rho$. There are no interior entries when $n=2$.
+An estimator $w^\top Y$ is unbiased exactly when $\mathbf1^\top w=1$. Lagrange multipliers minimize $w^\top Rw$ at $w=R^{-1}\mathbf1/(\mathbf1^\top R^{-1}\mathbf1)$. The endpoint row sums are $1/(1+\rho)$; interior row sums are $(1-\rho)/(1+\rho)$. Thus, with $D=2+(n-2)(1-\rho)$,
+\[
+ \widehat\mu=\frac{Y_1+Y_n+(1-\rho)\sum_{i=2}^{n-1}Y_i}{D},
+ \qquad
+ \boxed{\Var(\widehat\mu)=\frac{\sigma^2(1+\rho)}{D}}.
+\]
+Positive definiteness makes the solution unique. Alternatively, any other unbiased weights are $w+h$, where $\mathbf1^\top h=0$. The cross term vanishes, and the variance increases by $\sigma^2h^\top Rh\ge0$.
+For $\rho=0$ this is the arithmetic mean. For $n>2$ and $\rho>0$, endpoints receive more weight because interior observations correlate with neighbors on both sides. For $n=2$ the weights remain equal. With $n$ fixed and $\rho\uparrow1$, the endpoint weights approach $1/2$ each and the minimum variance approaches $\sigma^2$, rather than zero.
+\insight More readings do not necessarily mean more independent information. Optimal linear weights depend on the inverse covariance matrix; normality is unnecessary.
+
+\problem{A05}{Penalizing Identical Regressors}{Elastic net; uniqueness}
+Let $\|x\|^2=1$ and $z=x^\top y$, and suppose both regressors equal $x$. For $\lambda>0$ and $\eta\ge0$, find all minimizers of
+\[
+ \begin{aligned}
+ \min_{b_1,b_2}\quad&\frac12\|y-x(b_1+b_2)\|^2\\
+ &+\lambda(|b_1|+|b_2|)+\frac\eta2(b_1^2+b_2^2).
+ \end{aligned}
+\]
+Explain why an arbitrarily small positive quadratic penalty changes uniqueness of the coefficient allocation.
+\solution Set $s=b_1+b_2$. For fixed $s$, the triangle inequality gives $|b_1|+|b_2|\ge|s|$, while $b_1^2+b_2^2\ge s^2/2$. Both lower bounds hold with equality at $b_1=b_2=s/2$. Ignoring a constant, the remaining problem is
+\[
+ \min_s\ \frac12(s-z)^2+\lambda|s|+\frac\eta4s^2.
+\]
+Differentiating on each side of zero and checking the subgradient at zero yields
+\[
+ s^*=\frac{\operatorname{sign}(z)(|z|-\lambda)_+}{1+\eta/2}.
+\]
+If $\eta>0$, equality in the squared-norm bound forces the unique allocation $b_1=b_2=s^*/2$. If $\eta=0$, the sum remains unique. For $s^*>0$, all solutions are $(t,s^*-t)$ with $0\le t\le s^*$; for $s^*<0$, they have $s^*\le t\le0$. If $s^*=0$, the assumption $\lambda>0$ forces both coefficients to be zero.
+Thus a nonzero lasso fit admits multiple allocations between identical regressors. Any $\eta>0$ selects the equal allocation and also shrinks their total coefficient. The boundary $|z|=\lambda$ belongs to the zero-solution case.
+\insight First fix the combined fitted contribution of collinear variables, then optimize how that contribution is allocated.
+
+\problem{A06}{Least Squares under a Constraint}{Constrained projection; penalty limit}
+Let $X$ have full column rank, $A=X^\top X$, and $\widehat\beta=A^{-1}X^\top y$. For a nonzero vector $c$ and a scalar $d$, minimize residual sum of squares subject to $c^\top\beta=d$, and find its increase over the unconstrained minimum. For $\lambda\ge0$, also solve the penalized problem with objective $\|y-X\beta\|^2+\lambda(c^\top\beta-d)^2$ and analyze $\lambda\to\infty$.
+\solution The normal equations eliminate the cross term, so
+\[
+ \|y-X\beta\|^2=\|y-X\widehat\beta\|^2
+ +(\beta-\widehat\beta)^\top A(\beta-\widehat\beta).
+\]
+Write $q=c^\top A^{-1}c>0$ and $e=c^\top\widehat\beta-d$. The multiplier equation puts the correction in direction $A^{-1}c$. Enforcing the constraint gives
+\[
+ \boxed{\widehat\beta_c=\widehat\beta-\frac e q A^{-1}c},
+ \qquad \Delta\mathrm{RSS}=\frac{e^2}{q}.
+\]
+Positive definiteness guarantees uniqueness. If $e=0$, the constraint costs nothing.
+For the penalized minimizer $\beta_\lambda$, the first-order condition is
+\[
+ A(\beta_\lambda-\widehat\beta)
+ +\lambda c(c^\top\beta_\lambda-d)=0.
+\]
+Multiplication by $c^\top A^{-1}$ shows that the constraint error is $e/(1+\lambda q)$. Therefore
+\[
+ \beta_\lambda=\widehat\beta-
+ \frac{\lambda e}{1+\lambda q}A^{-1}c
+ \longrightarrow\widehat\beta_c.
+\]
+A finite penalty generally does not enforce the constraint exactly. Unless $e=0$, the discrepancy vanishes only at order $1/\lambda$.
+\insight This projection uses the metric defined by $A$, not the ordinary Euclidean metric. The initial constraint error and the cost of its correction are measured by $e$ and $q$.
+
+\input{parts/prob-P34}
+
+\par\Needspace{8\baselineskip}
+\subsection*{Section Exercises}
+\input{original-practice/A05}
+
+\section{Matrices and Quadratic Forms}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/3-3}
+
+
+\input{parts/prob-P07}
+
+\problem{A25}{A Sharp One-Sided Tail Bound}{Moment constraints; equality}
+Suppose $\E X=0$ and $\Var(X)=\sigma^2>0$. For $t>0$, maximize $\Prob(X\ge t)$ over all such distributions and characterize equality. Is the same bound attained for the strict event $X>t$?
+\solution For every $a\ge0$, $X\ge t$ implies $(X+a)^2\ge(t+a)^2$. Therefore
+\[
+ \Prob(X\ge t)\le\frac{\E(X+a)^2}{(t+a)^2}
+ =\frac{\sigma^2+a^2}{(t+a)^2}.
+\]
+The derivative with respect to $a$ has the sign of $at-\sigma^2$, so the sharpest bound uses $a=\sigma^2/t$:
+\[
+ \boxed{\Prob(X\ge t)\le\frac{\sigma^2}{\sigma^2+t^2}}.
+\]
+For equality, the squared term must vanish off the event and equal the threshold on it. Thus $X$ must take only the values $t$ and $-\sigma^2/t$. The mean condition forces $\Prob(X=t)=\sigma^2/(\sigma^2+t^2)$, with the remaining probability at the lower point. Its second moment is $\sigma^2$, so this is the unique equality distribution.
+The strict event has the same upper bound. If it attained the bound, the non-strict bound would also be an equality, forcing the distribution just found. But its mass at $t$ does not belong to the strict event, a contradiction. There is consequently no maximum. Using upper point $t+\varepsilon$ and lower point $-\sigma^2/(t+\varepsilon)$ gives strict-tail probabilities approaching the bound, so it is the supremum.
+\insight Shift before applying a squared-moment bound to retain one-sided information; optimize the shift as well.
+
+\problem{A29}{Coherence of Unit Vectors}{Gram matrices; trace inequalities}
+Let $m>d\ge1$, and let $u_1,\ldots,u_m$ be unit vectors in $\R^d$. Prove
+\[
+ \max_{i\ne j}|u_i^\top u_j|^2\ge\frac{m-d}{d(m-1)}.
+\]
+Give two necessary and sufficient conditions for equality, and construct an equality example for $d=2,m=3$.
+\solution The Gram matrix $G$ is positive semidefinite, has rank at most $d$, and satisfies $\operatorname{tr}G=m$. Pad its eigenvalues with zeros to obtain $d$ entries. Cauchy--Schwarz yields
+\[
+ \operatorname{tr}(G^2)\ge\frac{m^2}{d}.
+\]
+If $M=\max_{i\ne j}|u_i^\top u_j|^2$, then
+\[
+ \operatorname{tr}(G^2)=m+\sum_{i\ne j}|u_i^\top u_j|^2
+ \le m+m(m-1)M.
+\]
+Combining the inequalities proves the bound. Equality holds exactly when $G$ has $d$ nonzero eigenvalues, all equal to $m/d$, and all off-diagonal inner products have the same absolute value. The first condition is equivalent to
+\[
+ \sum_{i=1}^m u_i u_i^\top=\frac md I_d.
+\]
+In the plane, take unit vectors with angles $0,\pi/3,2\pi/3$. Their pairwise inner products have absolute value $1/2$, whose square is $1/4=(3-2)/(2\cdot2)$, attaining the bound.
+\insight The spectrum controls the sum of squared inner products, and averaging forces at least one large pair. Absolute size, rather than sign, is the relevant quantity.
+
+\problem{A30}{Eigenvalues after a Rank-One Update}{Minimax principle; spectral perturbation}
+A real symmetric matrix $A$ has eigenvalues $\lambda_1\le\cdots\le\lambda_n$. Let $B=A+tuu^\top$, where $t\ge0$ and $u\in\R^n$, and write its eigenvalues as $\mu_1\le\cdots\le\mu_n$. Prove, for $i<n$,
+\[
+ \lambda_i\le\mu_i\le\lambda_{i+1}.
+\]
+Also show that $\mu_n\ge\lambda_n$, that each eigenvalue increase is at most $t\|u\|^2$, and that their sum is exactly $t\|u\|^2$.
+\solution Every Rayleigh quotient increases by $t(u^\top x)^2/\|x\|^2\ge0$, so the minimax principle gives $\mu_i\ge\lambda_i$. The increase in any quotient is at most $t\|u\|^2$; applying the same principle gives $\mu_i\le\lambda_i+t\|u\|^2$.
+For the sharper interlacing upper bound, let $E$ span the first $i+1$ eigenvectors of $A$. If $u\ne0$, the space $E\cap u^\perp$ has dimension at least $i$. The update vanishes there, and the Rayleigh quotient of $A$ is at most $\lambda_{i+1}$. Insert an $i$-dimensional subspace of this intersection into the minimax formula for $B$ to obtain $\mu_i\le\lambda_{i+1}$. If $u=0$ or $t=0$, the assertions are immediate.
+Finally, taking traces gives
+\[
+ \sum_{i=1}^n(\mu_i-\lambda_i)
+ =\operatorname{tr}(tuu^\top)=t\|u\|^2.
+\]
+Thus the total spectral displacement is fixed, and no ordered eigenvalue decreases. When $n=1$, the interlacing assertion is empty but the other statements still hold.
+\insight A rank-one perturbation vanishes on a subspace of codimension one. This yields finer location control than a norm bound alone.
+
+\input{classics-statistics}
+
+\par\Needspace{8\baselineskip}
+\subsection*{Section Exercises}
+\input{original-practice/A30}
+
+\section{Exercises}
+\noindent\textbf{Key Ideas and Methods.}\enspace
+\input{section-notes/3-4}
+
+
+\pagebreak
+\exercise{AG1-1}{Compatibility of Observed Moments}
+Use the independent centered model in A01. The observed moments are
+\[
+ \begin{aligned}
+ \Var(W)&=5,\quad\Var(Z)=4,\quad\Cov(W,Z)=3,\\
+ \Cov(W,Y)&=\Cov(Z,Y)=6.
+ \end{aligned}
+\]
+ Identify $\beta$ and the variances of $T,U,V$, and find the regression slope of $Y$ on $W$. If only $\Cov(Z,Y)$ changes to $5$, can the same model still hold?
+
+\exercise{AG1-2}{A Strict Tail Event}
+Over all distributions with $\E X=0$ and $\Var(X)=1$, maximize $\Prob(X\ge2)$ and find the supremum of $\Prob(X>2)$. Give the first equality distribution and a sequence approaching the second supremum.
+
+\exercise{AG1-3}{Sparse Estimation with a Budget}
+A centered design satisfies $X^\top X/n=I_3$ and $X^\top y/n=(3,1,-1)^\top$. Solve
+\[
+ \min_{b_j\ge0,\ \sum_jb_j\le2}
+ \frac{\|y-Xb\|^2}{2n}+\frac12\sum_{j=1}^3b_j.
+\]
+Find the budget multiplier and explain why independent coordinate thresholding alone is insufficient.
+
+\exercise{AG1-4}{The Cost of a Coefficient Constraint}
+A full-rank least-squares problem has $X^\top X=\operatorname{diag}(1,4)$ and unconstrained solution $(2,-1)^\top$. Impose that the two coefficients sum to zero. Find the constrained solution and the increase in residual sum of squares, and check by direct one-variable minimization.

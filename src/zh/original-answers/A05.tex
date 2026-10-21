@@ -1,0 +1,18 @@
+\answer{OA05}
+令 $c=X^\top y/n$。展开目标函数之差得
+\[
+ L(\beta)-L(0)
+ =\frac{\|X\beta\|^2}{2n}-c^\top\beta
+   +\lambda\|\beta\|_1.
+\]
+若 $\|c\|_\infty\le\lambda$，由 $c^\top\beta\le\|c\|_\infty\|\beta\|_1$，右侧非负，故零向量最优。
+反之，若某个坐标满足 $|c_j|>\lambda$，令 $\beta=t\operatorname{sign}(c_j)e_j$，其中 $t>0$。此时
+\[
+ L(\beta)-L(0)
+ =\frac{t^2\|X_j\|^2}{2n}-t(|c_j|-\lambda).
+\]
+对充分小的 $t$，负的一次项支配二次项，目标值严格下降。因此充要条件为
+\[
+ \boxed{\lambda\ge\frac{\|X^\top y\|_\infty}{n}}.
+\]
+在该条件下，若 $\lambda>0$，零解还必然唯一：若另一最优解满足 $X\beta\ne0$，损失对拟合值的严格凸性会使它与零解的中点取得更小目标值；若 $X\beta=0$ 而 $\beta\ne0$，惩罚项严格增加。若 $\lambda=0$，条件化为 $X^\top y=0$，此时所有最优解恰为 $\ker X$，只有当 $X$ 满列秩时零解才唯一。

@@ -1,0 +1,112 @@
+% !TeX program = xelatex
+\documentclass[UTF8,fontset=fandol,10pt,openany]{ctexbook}
+\newcommand{\BookTitle}{量化笔试习题集}
+\newcommand{\BookSubject}{方法、例题与训练}
+\newcommand{\BodyLeading}{14.0}
+\newcommand{\ProblemName}{例题}
+\newcommand{\SolutionName}{解答}
+\newcommand{\InsightName}{方法}
+\newcommand{\PitfallName}{注意}
+\newcommand{\AlternativeName}{另一解法}
+
+\usepackage[paperwidth=156mm,paperheight=234mm,inner=20mm,outer=17mm,top=19mm,bottom=19mm,headheight=12pt,headsep=7mm,footskip=9mm]{geometry}
+\usepackage{fontspec}
+\newfontfamily\coverdisplay[Path=fonts/]{Anton-Regular.ttf}
+\newCJKfontfamily\covercjk[Path=fonts/,BoldFont=SourceHanSansSC-Bold.otf]{SourceHanSansSC-Bold.otf}
+\setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\setmonofont{lmmono10-regular.otf}[Scale=MatchLowercase]
+\usepackage{newtxtext}
+\usepackage{amsmath,amsthm,mathtools}
+\usepackage{newtxmath,bm}
+\DeclareMathAlphabet{\mathsf}{OT1}{phv}{m}{n}
+\SetMathAlphabet{\mathsf}{bold}{OT1}{phv}{b}{n}
+\usepackage{graphicx,xcolor,booktabs,longtable,array,enumitem,microtype}
+\usepackage{fancyhdr,titlesec,hyperref,needspace,etoolbox,tikz}
+\usetikzlibrary{calc}
+\definecolor{ink}{HTML}{171717}
+\definecolor{mist}{HTML}{F4F4F4}
+\definecolor{accent}{HTML}{303030}
+\definecolor{coverblue}{HTML}{103A5A}
+\definecolor{coverdark}{HTML}{0B2C46}
+\definecolor{covergold}{HTML}{E9C86E}
+\definecolor{coverpale}{HTML}{C6D5DC}
+\hypersetup{hidelinks,pdftitle={\BookTitle},pdfauthor={ttqqj},pdfsubject={\BookSubject},bookmarksdepth=3}
+\setcounter{tocdepth}{1}
+\linespread{1}
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{1pt plus .2pt}
+\setlength{\emergencystretch}{1.2em}
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+\raggedbottom
+\let\cleardoublepage\clearpage
+\setlist{nosep,topsep=3pt,leftmargin=1.7em}
+\makeatletter
+\renewcommand\normalsize{%
+  \@setfontsize\normalsize{10.5}{\BodyLeading}%
+  \abovedisplayskip=5pt plus 1pt minus 1pt
+  \belowdisplayskip=5pt plus 1pt minus 1pt
+  \abovedisplayshortskip=3pt plus 1pt
+  \belowdisplayshortskip=3pt plus 1pt}
+\makeatother
+\AtBeginDocument{\normalsize}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\footnotesize\thepage}
+\fancyhead[RE]{\footnotesize\itshape\nouppercase{\leftmark}}
+\fancyhead[LO]{\footnotesize\itshape\nouppercase{\rightmark}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\ifnum\value{secnumdepth}>0 \thesection\quad\fi#1}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+\titleformat{\chapter}[display]{\centering\bfseries}{\fontsize{19}{22}\selectfont\thechapter}{6pt}{\titlerule[.4pt]\vspace{8pt}\fontsize{16}{20}\selectfont}
+\titlespacing*{\chapter}{0pt}{8pt}{22pt}
+\titleformat{\section}{\centering\bfseries\fontsize{11.5}{14}\selectfont}{\thesection}{.65em}{}
+\titlespacing*{\section}{0pt}{11pt plus 2pt}{5pt}
+\titleformat{\subsection}{\bfseries\normalsize}{\thesubsection}{.6em}{}
+\titlespacing*{\subsection}{0pt}{7pt}{3pt}
+\titleformat{\paragraph}[runin]{\bfseries\normalsize}{}{0pt}{}
+\titlespacing*{\paragraph}{0pt}{6pt}{.6em}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\Corr}{\operatorname{Corr}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ind}{\mathbf{1}}
+\newcommand{\dd}{\,\mathrm{d}}
+\pretocmd{\section}{\par\Needspace{8\baselineskip}}{}{}
+\makeatletter
+\newcommand{\problem}[3]{%
+  \par\Needspace{5\baselineskip}\addvspace{8pt}%
+  \refstepcounter{subsection}\def\@currentlabel{#1}\label{prob:#1}%
+  \addcontentsline{toc}{subsection}{#1. #2}%
+  \noindent\textbf{\ProblemName~#1.\quad #2}\par\nopagebreak[4]\smallskip}
+\newcommand{\algproblem}[2]{%
+  \par\Needspace{5\baselineskip}\addvspace{8pt}%
+  \refstepcounter{subsection}\def\@currentlabel{#1}\label{alg:#1}%
+  \addcontentsline{toc}{subsection}{#1. #2}%
+  \noindent\textbf{\ProblemName~#1.\quad #2}\par\nopagebreak[4]\smallskip}
+\makeatother
+\newcommand{\solution}{\par\smallskip\noindent\textbf{\SolutionName.}\enspace}
+\newcommand{\insight}{\par\smallskip\noindent\textit{\InsightName.}\enspace}
+\newcommand{\pitfall}{\par\smallskip\noindent\textit{\PitfallName.}\enspace}
+\newcommand{\alternative}{\par\smallskip\noindent\textit{\AlternativeName.}\enspace}
+\newcommand{\exercise}[2]{\par\Needspace{3\baselineskip}\addvspace{5pt}\phantomsection\label{ex:#1}\noindent\textbf{\hyperref[ans:#1]{#1}.\quad #2}\par\nopagebreak[4]}
+\newcommand{\answer}[1]{\par\Needspace{4\baselineskip}\addvspace{6pt}\phantomsection\label{ans:#1}\noindent\textbf{\hyperref[ex:#1]{#1}.}\par\nopagebreak[4]}
+\newenvironment{methodbox}[1]{\par\addvspace{6pt}\noindent\textbf{#1}\par\nopagebreak[4]\smallskip}{\par\addvspace{5pt}}
+\begin{document}
+\input{cover}
+\frontmatter
+\begingroup
+\fontsize{9.5}{11.0}\selectfont
+\setlength{\parskip}{0pt}
+\tableofcontents
+\endgroup
+\mainmatter
+\input{chapters}
+\backmatter
+\setcounter{secnumdepth}{-1}
+\input{answers}
+\end{document}
