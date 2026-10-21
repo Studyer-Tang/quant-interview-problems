@@ -33,7 +33,7 @@ These conditional expectations are explicit. A subset already containing both co
 
 \problem{CP03}{A One-Time Pad and Key Reuse}{Conditional independence and leakage}
 Messages and keys lie in $\mathbb Z_q=\{0,\ldots,q-1\}$, where $q\ge2$, with encryption $C=M+K\pmod q$. The key $K$ is independent of the message $M$. Prove that a uniform key makes $C$ independent of $M$. Conversely, if every message value has positive probability, prove that this independence requires a uniform key. Then encrypt two independent uniform messages using the same independent uniform key. Find their conditional joint distribution given both ciphertexts and identify the information that is revealed exactly.
-\solution If the key is uniform, then for every $m,c$,
+\solution For uniform $K$, any $m$ with $\Prob(M=m)>0$ and any $c$ satisfy
 \[
 \Prob(C=c\mid M=m)=\Prob(K=c-m)=\frac1q.
 \]

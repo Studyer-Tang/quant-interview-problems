@@ -47,7 +47,7 @@ These are no action, purchase, and sale. Every right-hand side must use the prev
 Every legal strategy belongs to exactly one last-action case. Removing that action gives the corresponding prior state, and appending it to any finite prior state is feasible. Induction proves both the upper bound and attainability. Return $V_T(0)\ge0$, since no action is always feasible. Time is $O(T(K+1))$ and rolling-array space is $O(K+1)$; stored choices recover a schedule. If $K=0$ or $T=0$, return zero. Allowing negative cash is a material assumption; a cash constraint would require further feasibility checks.
 
 \algproblem{ALG05}{Counting Paths through at Most One Obstacle}
-An $R\times C$ binary grid marks obstacles by 1. Move only right or down from the upper-left to the lower-right cell, visiting at most one obstacle, with endpoints counted by the same rule. Find the number of paths modulo an integer $M\ge2$ in $O(RC)$ time and $O(C)$ space.
+An $R\times C$ binary grid, with $R,C\ge1$, marks obstacles by 1. Move only right or down from the upper-left to the lower-right cell, visiting at most one obstacle, with endpoints counted by the same rule. Find the number of paths modulo an integer $M\ge2$ in $O(RC)$ time and $O(C)$ space.
 \solution Let $A_{i,j}$ and $B_{i,j}$ count paths reaching $(i,j)$ after visiting zero and exactly one obstacle. Sum the corresponding counts from above and from the left, obtaining $a,b$. At a zero cell, set $(A,B)=(a,b)$; at an obstacle, set $(A,B)=(0,a)$. Reduce every addition modulo $M$.
 
 Initialize the start separately as $(1,0)$ if it is zero and $(0,1)$ otherwise. Other out-of-grid predecessors contribute zero. Return $A_{R-1,C-1}+B_{R-1,C-1}\pmod M$.
@@ -66,7 +66,7 @@ D_{i,j}=1+\min(D_{i-1,j},D_{i,j-1}).
 \]
 When the last characters agree, their two matches in any supersequence can both be moved to the later matched position, so sharing that final position is harmless. For different last characters, the two alternatives exhaust an optimum. Induction on prefix lengths proves the recurrence.
 
-Backtrack from $(|a|,|b|)$. On equal characters record that character and move diagonally; otherwise follow a minimum predecessor and record the removed last character. At a boundary, record the remaining prefix, then reverse the record. Time and storage are $O((|a|+1)(|b|+1))$.
+Backtrack from $(|a|,|b|)$. On equal characters record that character and move diagonally; otherwise follow a minimum predecessor and record the removed last character. At a boundary, append the remaining prefix in reverse order, then reverse the entire record. Time and storage are $O((|a|+1)(|b|+1))$.
 
 If $L$ is the longest common subsequence length, the answer is also $|a|+|b|-L$. Shared matched positions form a common subsequence, so at most $L$ positions can be shared. Conversely, align a longest common subsequence and insert the intervening characters of both strings to attain this bound.
 

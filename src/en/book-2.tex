@@ -404,7 +404,7 @@ For two types with $p=2/3,q=1/3$, $\E N=2+2pq=22/9$ and $\bar c=2$, so the mean 
 
 
 \problem{R19}{A Digital Payoff under Funding Constraints}{Replication and superhedging}
-A stock starts at 100. In each of two periods its price is multiplied by 2 or $1/2$, and every path has positive probability. Cash earns zero interest; arbitrary fractional stock positions can be traded without friction. The terminal payoff is $\ind_{\{S_2\ge100\}}$. First allow borrowing and short selling, and find the exact replication cost and holdings. Then require both stock holdings and cash to be nonnegative after each rebalance. Find the smallest initial wealth covering the payoff on every path.
+A stock starts at 100. In each of two periods its price is multiplied by 2 or $1/2$, and every path has positive probability. Cash earns zero interest; arbitrary fractional stock positions can be traded without friction. Trading must be self-financing: no funds are added or withdrawn after the initial investment. The terminal payoff is $\ind_{\{S_2\ge100\}}$. First allow borrowing and short selling, and find the exact replication cost and holdings. Then require both stock holdings and cash to be nonnegative after each rebalance. Find the smallest initial wealth covering the payoff on every path.
 \solution At the up node with stock price 200, both terminal payoffs are 1, replicated by cash 1. At the down node with price 50, successor prices are 100 and 25. Holdings $(\Delta,B)$ solve
 \[
  100\Delta+B=1,\qquad25\Delta+B=0,
@@ -613,7 +613,7 @@ and covariance
 The two observations have a nonsingular covariance matrix because $\Var J>0$, so these formulas define a continuous conditional version for every real $a,b$. Taking $s=T/4,t=3T/4$ gives $K_*(s,t)=-11T/256<0$. Fixing total area allows an unusually high value at one time to be compensated by a lower value elsewhere, unlike the original positive Brownian covariances.
 
 \problem{R28}{Hitting a Boundary before Independent Failure}{A discounted boundary problem}
-Let $X_t=x+\sigma W_t$, where $0<x<L$ and $\sigma>0$, and let $\tau$ be its first hit of 0 or $L$. An independent exponential failure clock $\zeta$ has rate $\lambda>0$. Success means reaching $L$ before both 0 and failure. Find the success probability and the mean duration conditional on success, including their limits as $\lambda\downarrow0$.
+Let $W$ be standard Brownian motion and $X_t=x+\sigma W_t$, where $0<x<L$ and $\sigma>0$. Let $\tau$ be its first hit of 0 or $L$. An independent exponential failure clock $\zeta$ has rate $\lambda>0$. Success means reaching $L$ before both 0 and failure. Find the success probability and the mean duration conditional on success, including their limits as $\lambda\downarrow0$.
 \solution Independence of the failure clock gives
 \[
  u_\lambda(x)=\E_x[e^{-\lambda\tau}\ind_{\{X_\tau=L\}}].

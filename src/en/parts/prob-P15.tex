@@ -4,7 +4,7 @@ A register retains $r\ge1$ binary bits, including leading zeroes. Each step disc
 \[
  \boxed{\pi(s)=p^{w(s)}(1-p)^{r-w(s)}}.
 \]
-Every initial state has exactly this law after $r$ steps, proving stationarity and uniqueness. For $n<r$, the all-zero start leaves the first $r-n$ bits fixed at zero, while the last $n$ bits are independent fresh bits. The law is therefore $\pi$ conditioned on $A_n=$ ``the first $r-n$ bits are zero.'' For any event $A$, the total variation distance between $\pi$ and its conditional law on $A$ is $1-\pi(A)$: sum the absolute probability differences separately on $A$ and its complement. Hence
+Every initial state has exactly this law after $r$ steps, proving stationarity and uniqueness. For $n<r$, the all-zero start leaves the first $r-n$ bits fixed at zero, while the last $n$ bits are independent fresh bits. The law is therefore $\pi$ conditioned on $A_n=$ ``the first $r-n$ bits are zero.'' For an event $A$ with $\pi(A)>0$, the total variation distance between $\pi$ and its conditional law on $A$ is $1-\pi(A)$: sum the absolute probability differences separately on $A$ and its complement. Hence
 \[
  \boxed{d_{\rm TV}(\mathcal L(S_n),\pi)=
  \begin{cases}1-(1-p)^{r-n},&0\le n<r,\\0,&n\ge r.\end{cases}}

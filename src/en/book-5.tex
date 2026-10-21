@@ -54,7 +54,7 @@ Given strictly positive prices $p_0,\ldots,p_{T-1}$ and an integer $L\ge1$, allo
 \[
 D=\max\left(0,\max_{1\le j-i\le L}\left(1-\frac{p_j}{p_i}\right)\right).
 \]
-If $D>0$, return an optimum, breaking ties first by the earliest end and then by the earliest start. Otherwise return zero and no interval. Design a linear-time algorithm.
+For $T<2$, define $D=0$. If $D>0$, return an optimum, breaking ties first by the earliest end and then by the earliest start. Otherwise return zero and no interval. Design a linear-time algorithm.
 \solution For a fixed end $j$, the drawdown increases with $p_i$ because $p_j>0$. Thus find the largest price in the eligible window
 \[
 \max(0,j-L)\le i\le j-1.
