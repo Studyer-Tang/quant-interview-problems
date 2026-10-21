@@ -26,6 +26,11 @@
 如果这份资料给你带来了实质性的帮助，也想感谢一下笔者，欢迎请我喝一杯奶茶。打赏随意，感谢你的心意！
 
 <!-- DONATION_QR_START -->
+<p>
+  <img src="assets/donate/alipay.jpg" alt="支付宝收款码" width="280">
+</p>
+
+支付宝扫一扫，请我喝杯奶茶。
 <!-- DONATION_QR_END -->
 
 ## 许可
